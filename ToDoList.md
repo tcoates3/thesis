@@ -12,7 +12,6 @@
    - Somehow get access to the DESY dCache so I can download more testbeam data later on, especially for thesis work
 3. **Physics Analysis, Processing**
    - Try to port the CLIC analysis to Feynman so it can be automated/batchrun (and if not, speak to Leo) (The reason was moving the massive amounts of generated data to Feynman; we have on the order of 10TB to work with)
-   - Poke Yixuan and Victoria regarding the observables for CP-violation; especially if the jet angle resolution is good enough to get sensitivities on the up-down asymmetry
    - Finish processing all runs through the analysis
    - Merge Treemaker results? There shouldn't be any reason not to merge continually but there's also no particular reason to do it either, since the .root files take up so little space compared to the .slcio files.
 3. **Physics Analysis, Other**
