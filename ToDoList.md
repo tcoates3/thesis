@@ -28,7 +28,7 @@
 - - -
 
 To rebase/merge with git:
-	git checkout origin master
-	git pull
-	git checkout fork qtestworking
-	git rebase
+`git checkout origin master`
+`git pull`
+`git checkout fork qtestworking`
+`git rebase`
