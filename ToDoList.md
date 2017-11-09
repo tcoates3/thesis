@@ -1,6 +1,6 @@
 # The Question(s)
 
->Is there a way we can use the same software over and over again for testbeams, while making the software equally useful for all people, easy to use and bind, and presentable?
+>Is there a way we can use the same software for most testbeams, while making the software equally useful for all people, easy to use and bind, and presentable?
 
 >When the next-generation of lepton colliders are built, will their detectors be able to identify the presence of BSM physics in the Higgs sector by looking at ee->tth events?
 
@@ -20,7 +20,7 @@
    - Try to find more information on how to quantify CP violation in tth events
 4. **Papers and Literature**
    - Read papers about ILC/CLIC and tth analysis
-   - Write conference proceedings for ACAT  (11th Nov)
+   - Write conference proceedings for ACAT (11th Nov)
 5. **Miscellany**
    - Test out the Valencia algorithm on some of the tth stuff (if possible with this large sample size?)
 
