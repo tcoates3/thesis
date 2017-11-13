@@ -15,7 +15,11 @@
    - Somehow get access to the DESY dCache so I can download more testbeam data later on, especially for thesis work
 3. **Physics Analysis, Processing**
    - Finish processing all runs through the analysis
+   - Start a parallel analysis using the Valencia algorithm for comparison to the normal process
+   - Run the semi-leptonic CP-violating Higgs runs through the normal analysis, and analysis using the Valencia algorithm
 3. **Physics Analysis, Other**
+   - Email Victoria and Yixuan regarding possible presentations, and suggestions for dinner
+   - Find a restaurant for dinner on Monday night
    - Read papers about previous analyses of tth stuff
    - Try to find more information on how to quantify CP violation in tth events
 4. **Papers and Literature**
