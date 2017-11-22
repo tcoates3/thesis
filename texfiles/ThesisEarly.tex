@@ -1,20 +1,8 @@
 \documentclass[a4paper,11pt]{report}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % University of Sussex thesis template
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Modification History
-%
-% Based on usthesis.cls by Jonathon Read
-% http://www.cogs.susx.ac.uk/users/jlr24/latex.html
-% Modified by Anthony Smith, Feb 2007
-% Incorporated into single thesis.tex file, Anthony Smith, 30 June 2008
-% Minor alterations to page numbering, AJS, 25 July 2008
-% New alternative hyperref options for print version, AJS, 11 Sep 2008
-% "DRAFT" on header, AJS, 12 Sep 2008
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LINE SPACING
@@ -22,14 +10,12 @@
 \renewcommand{\baselinestretch}{\linespacing}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY STYLE
 \usepackage{natbib}
 % \bibliographystyle{plain} for [1], [2] etc.
 \bibliographystyle{apalike}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OTHER FORMATTING/LAYOUT DECLARATIONS
@@ -55,12 +41,10 @@
 \pagestyle{plain}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ANY OTHER DECLARATIONS HERE:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HYPERREF
@@ -71,18 +55,15 @@
 %\renewcommand{\backrefpagesname}{Cited on}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BEGIN DOCUMENT
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PREAMBLE: roman page numbering i, ii, iii, ...
 \pagenumbering{roman}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% TITLE PAGE: The title page should give the following information:
@@ -113,7 +94,6 @@ March 2019
 \end{flushleft}		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DECLARATIONS
 \chapter*{Declaration}
@@ -127,7 +107,6 @@ Signature:
 % AUTHOR
 Tom Coates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SUMMARY PAGE
@@ -152,9 +131,8 @@ Tom Coates
 \renewcommand{\baselinestretch}{1.0}
 \small\normalsize
 % SUMMARY HERE (300 word limit for most subjects):
-
+[Summary text] [Max. 300 words for most subjects]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
@@ -162,11 +140,8 @@ Tom Coates
 \renewcommand{\baselinestretch}{\linespacing}
 \small\normalsize
 % ACKNOWLEDGEMENTS HERE:
-
-[Text for acknowledgements]
-
+[Acknowledgements text]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TABLE OF CONTENTS, LISTS OF TABLES & FIGURES
@@ -181,60 +156,23 @@ Tom Coates
 \addcontentsline{toc}{chapter}{List of Figures}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MAIN THESIS TEXT: arabic page numbering 1, 2, 3, ...
 \newpage
 \pagenumbering{arabic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Introduction}
-\section{The Standard Model}
-\section{The Higgs Boson}
-\section{CP violation in the Higgs sector}
-\section{Data acquisition software and testbeams}
+\include{chapter-intro}
 
-\chapter{Future Linear Colliders}
+\include{chapter-linearcolliders}
 
-\section{The International Linear Collider}
-\subsection{Introduction}
-\subsection{Physics case}
-\subsection{Detectors}
+\include{chapter-daqsoftware}
 
-\section{The Compact Linear Collider}
-\subsection{Introduction}
-\subsection{Physics case}
-\subsection{Detectors}
+\include{chapter-aida2020testbeams}
 
-\chapter{DAQ Software}
+\include{chapter-clicanalysis}
 
-\section{EUDAQ}
-\subsection{Introduction}
-\subsection{DQM4HEP Inteface}
-
-\section{DQM4HEP}
-\subsection{Introduction}
-\subsection{Adaptation to other detectors}
-\subsection{Documentation}
-\subsection{EUDAQ Interface}
-
-\chapter{AIDA-2020 Testbeams}
-
-\section{Introduction}
-
-\section{CALICE AHCAL}
-
-\section{CALICE SiWECAL}
-
-\section{ATLAS HGCAL}
-
-\section{Combined Testbeams}
-
-\chapter{Determination of CP-violating Higgs sensitivity in CLIC ILD}
-
-\section{Simulation parameters}
-
-\chapter{Discussion and Conclusions}
+\include{chapter-discussionsconclusions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY
@@ -244,12 +182,10 @@ Tom Coates
 \bibliography{bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % START APPENDICES
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %-----------------------------------------------------
 % Appendix: Code
