@@ -1,0 +1,45 @@
+\chapter{Physics studies for the Compact Linear Collider}
+[...]
+
+\section{Physics generation and samples}
+[...]
+
+\section{Detector models}
+[...]
+
+\section{Previous work}
+[...]
+
+\section{Sensitivity to cross-sections and Yukawa coupling}
+
+[...] The combined uncertainties, based on both the semi-leptonic and fully hadronic channels, are:
+
+Cross-section: $$\Delta\sigma = 7.30\% $$
+
+Top-Higgs Yukawa coupling: $$ \frac{\Delta g_{tth}}{g_{tth}} = 3.86\% $$
+
+\section{Determination of sensitivity to CP-violation}
+One of the primary goals for CLIC is to determine any additional sources of CP-violation within	 the Standard Model, or any sources that may indicate BSM physics. The top-Higgs Yukawa coupling is one of the processes that can investigate this, a Higgs bosons with an odd CP quantum number (or ``CP-odd'' Higgs bosons) may be an indication of BSM physics, and determining the mixing ratio or angle between these Higgs bosons is an important result.
+
+\subsection{Up-down asymmetry}
+The up-down asymmetry is a simple observable that has already been identified for investigating CP-violation in the $tth$ process. It is found by defining a plane from the vectors of the incoming electron and produced antitop, then finding the ratio of top quarks that are emitted above and below this plane. If there is no CP-violation in this process, the ratio will be even.
+
+Using the up-down asymmetry as an observable requires that the $W^+$ and $W^-$ can be distinguished from each other, and has thus far only been used for the semi-leptonic decay channel. In the semi-leptonic case, the lepton produced by the decay of one of the W bosons identifies its charge, and thus the charge of the top quark that it has decayed from. While this method was not previously possible in the fully hadronic case, I discuss a method for applying it in Section \ref{physics/CP/jetcharge}, using jet charge determination.
+
+\subsection{Jet charge determination} \label{physics/CP/jetcharge}
+[...]
+
+However, the jet charge can be determined by summing the charges of all particles in the jet weighted by their $p_T$, normalised by the $p_T$ of the entire jet:
+		
+\begin{displaymath}
+	\mathcal{Q}_\kappa^i = \frac{1}{(p_T^{jet})^\kappa} \sum_{j \in jet} Q_j (p_T^j)^\kappa
+\end{displaymath}
+
+Where $\kappa$ is some parameter between 0 and 1, typically set to 1. The efficiency [?] of this method is strongly dependent upon the efficiency of the jet reconstruction, which means the choice of jet clustering algorithm and its parameters are important. Previous analyses of $tth$ events have used the $k_t$ algorithm, as the relative difference between the jet shapes is more important than their absolute shapes, so other algorithms do not provide any benefits.
+
+[...]
+
+For improvements to the jet clustering algorithm, the Valencia algorithm gives better performance within the cleaner final states of a lepton collider, and many analyses are now transitioning to using the Valencia or Durham [?] algorithms.
+
+\subsection{Results}
+[...]
