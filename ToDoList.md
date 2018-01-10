@@ -13,9 +13,12 @@
    - Implement more quality tests (especially Kolmogorov-Smirnov now that reference histograms are possible)
    - Try to implement fully-parameterised functionality for the mean/RMS tests
    - Somehow get access to the DESY dCache so I can download more testbeam data later on, especially for thesis work
+   - Confirm that the corrections for the TWEPP proceedings have been accepted (deadline is mid-day 11th January)
 3. **Physics Analysis, Processing**
-   - Process the new 2417 slcios through Treemaker, then delete the slcio files
-   - Finish processing all runs through the analysis
+   - Monitor processing of all non-signal samples (nearly done)
+   - Process the signal sample (remember that this is two-step, for a reason I can't remember)
+   - Once all processing is done, combine all the root files and put them on my public folder for Yixuan
+   - Then try to replicate the process he did to extract the cross-section and Yukawa coupling precision
    - Start writing some code to try to do the jet charge determination, both at MC-level and reconstruction-level
    - Read paper sent by Yixuan regarding possible CP observables
 4. **Papers and Literature**
