@@ -1,45 +1,314 @@
 \chapter{Physics studies for the Compact Linear Collider}
+
+\epigraph{Somewhere, something incredible is waiting to be known.}{Carl Sagan}
+
+One of the primary goals of future lepton colliders like the ILC and CLIC is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the Standard Model to be probed with unprecedented accuracy and coverage.
+
+One of the measurements that will be uniquely accessible to CLIC or the ILC is a precision measurement of the top-Higgs Yukawa coupling. This serves as a further test for the Standard Model and [...] % Why is this number imporant?
+
+Another important avenue to pursue is CP-violation in the Higgs sector. Since Higgs physics is still an emerging field, it is not yet known whether CP-violation is present in the Higgs sector to the degree that the Standard Model predicts. It is also a fertile area for investigation of BSM physics, as many BSM models predict additional Higgs bosons, or Higgs bosons with characteristics that differ from the SM Higgs.
+
+The $e^+ e^- \rightarrow t\overline{t}h$ event (see Fig. \ref{figure:physics/SM/feynman-tth}) is one process that is both accessible to CLIC's design energy and extremely useful for interrogating the Higgs sector for CP-violation and BSM physics. The production of Higgs bosons allows for several observables that would be sensitive to any Higgs bosons with an odd CP quantum number (or ``CP-odd'' Higgs bosons). Determining the mixing ratio or angle between these Higgs bosons is therefore an important result.
+
 [...]
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[line width=1.3 pt,scale=2]
+		\draw[fermion]  (0,1) -- (1,0) ;
+		\draw[fermionbar]  (0,-1) -- (1,0) ;
+		\draw[vector]  (1,0) -- (2.5,0) ;
+		\draw[fermion]  (2.5,0) -- (3.5,1) ;
+		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
+		\draw[scalar]  (2.75,0.25) -- (3.5,0.) ;
+		\node at (-0.3, 1) {$e^-$};
+		\node at (-0.3, -1) {$e^+$};
+		\node at (3.8, 1) {$t$};
+		\node at (3.8, -1) {$\overline{t}$};
+		\node at (3.8, 0) {$H^0$};
+	\end{tikzpicture} 
+	\caption{A Feynman diagram of the tth event.}
+	\label{figure:physics/SM/feynman-tth}
+\end{figure}
+
+There are three final states of the tth event, which depend on the decays of the $W^\pm$ boson. The $W^\pm$ can decay into either a quark-antiquark pair, or a lepton-neutrino pair, so there are three possible final states: the \emph{fully hadronic} case, where both $W^\pm$ particles decay into quark pairs; the \emph{leptonic} case, where both decay into lepton-neutrino pairs; and the \emph{semi-leptonic} case, where one decays into a quark pair and the other into a lepton-neutrino pair. In general, the leptonic final state is not utilised for this analysis, so is not discussed further. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
+
+[...]
+
+[...] The invariant mass of the Higgs boson can be determined by summing the invariant masses of pairs of bottom quarks; the pair with the lowest $\chi^2$ have decayed from the Higgs boson.
+
+[...]
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[line width=1.3 pt,scale=2.25]
+		% Initial electrons
+		\draw[fermion]  (0,1) -- (1,0) ;
+		\draw[fermionbar]  (0,-1) -- (1,0) ;
+		% The central bar
+		\draw[vector]  (1,0) -- (2.5,0) ;
+		% The final top quarks
+		\draw[fermion]  (2.5,0) -- (3.5,1) ;
+		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
+		% The Higgs boson radiating off
+		\draw[scalar]  (2.75,0.25) -- (3.5,0.) ;
+		% The W+ and bottom quark coming off the top quark
+		\draw[vector]  (3.5,1) -- (4.5,1.5) ;
+		\draw[fermion]  (3.5,1) -- (4.5,0.5) ;
+		% The W- and anti-bottom quark coming off the anti-top quark
+		\draw[fermionbar]  (3.5,-1) -- (4.5,-0.5) ;
+		\draw[vector]  (3.5,-1) -- (4.5,-1.5) ;
+		% The quark-antiquark pair coming off the W+
+		\draw[fermion]  (4.5, 1.5) -- (5.5,2) ;
+		\draw[fermion]  (4.5, 1.5) -- (5.5,1) ;
+		% The quark-antiquark pair coming off the W-
+		\draw[fermionbar]  (4.5, -1.5) -- (5.5,-1) ;
+		\draw[fermionbar]  (4.5, -1.5) -- (5.5,-2) ;
+		% Labels
+		\node at (-0.3, 1) {$e^-$};
+		\node at (-0.3, -1) {$e^+$};
+		\node at (3.8, 1) {$t$};
+		\node at (3.8, -1) {$\overline{t}$};
+		\node at (3.8, 0) {$H^0$};
+		\node at (5.0, 1.5) {$W^+$};
+		\node at (4.8, 0.5) {$b$};
+		\node at (4.8, -0.5) {$\overline{b}$};
+		\node at (5.0, -1.5) {$W^-$};
+		\node at (5.8,2) {$q$};
+		\node at (5.8,1) {$\overline{q}$};
+		\node at (5.8,-1) {$q$};
+		\node at (5.8,-2) {$\overline{q}$};
+	\end{tikzpicture} 
+	\caption{An extended Feynman diagram of the tth event, showing the fully-hadronic decay channel with the final state $q\overline{q}q\overline{q}b\overline{b}$, where $q$ and $\overline{q}$ indicate a quark-antiquark pair. \newline}
+	\label{figure:physics/SM/feynman-tth-hadronic}
+	\begin{tikzpicture}[line width=1.3 pt,scale=2.25]
+		% Initial electrons
+		\draw[fermion]  (0,1) -- (1,0) ;
+		\draw[fermionbar]  (0,-1) -- (1,0) ;
+		% The central bar
+		\draw[vector]  (1,0) -- (2.5,0) ;
+		% The final top quarks
+		\draw[fermion]  (2.5,0) -- (3.5,1) ;
+		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
+		% The Higgs boson radiating off
+		\draw[scalar]  (2.75,0.25) -- (3.5,0.) ;
+		% The W+ and bottom quark coming off the top quark
+		\draw[vector]  (3.5,1) -- (4.5,1.5) ;
+		\draw[fermion]  (3.5,1) -- (4.5,0.5) ;
+		% The W- and anti-bottom quark coming off the anti-top quark
+		\draw[fermionbar]  (3.5,-1) -- (4.5,-0.5) ;
+		\draw[vector]  (3.5,-1) -- (4.5,-1.5) ;
+		% The lepton-neutrino pair coming off the W+
+		\draw[fermion]  (4.5, 1.5) -- (5.5,2) ;
+		\draw[fermion]  (4.5, 1.5) -- (5.5,1) ;
+		% The quark-antiquark pair coming off the W-
+		\draw[fermionbar]  (4.5, -1.5) -- (5.5,-1) ;
+		\draw[fermionbar]  (4.5, -1.5) -- (5.5,-2) ;
+		% Labels
+		\node at (-0.3, 1) {$e^-$};
+		\node at (-0.3, -1) {$e^+$};
+		\node at (3.8, 1) {$t$};
+		\node at (3.8, -1) {$\overline{t}$};
+		\node at (3.8, 0) {$H^0$};
+		\node at (5.0, 1.5) {$W^+$};
+		\node at (4.8, 0.5) {$b$};
+		\node at (4.8, -0.5) {$\overline{b}$};
+		\node at (5.0, -1.5) {$W^-$};
+		\node at (5.8,2) {$\ell$};
+		\node at (5.8,1) {$\nu$};
+		\node at (5.8,-1) {$q$};
+		\node at (5.8,-2) {$\overline{q}$};
+	\end{tikzpicture} 
+	\caption{An extended Feynman diagram of the tth event, showing the semi-hadronic decay channel  with the final state $\ell\nu q\overline{q}b\overline{b}$, where $\ell$ and $\nu$ indicate a lepton-neutrino pair of the same flavour but opposite [sign?].}
+	\label{figure:physics/SM/feynman-tth-semileptonic}
+\end{figure}
 
 \section{Physics generation and samples}
 [...]
 
+The Monte Carlo samples were generated predominantly using Whizard 1.95, though for the Higgs events, Physsim was used due to technical contraints of Whizard. All samples were simulated at $\sqrt{s} = 1.4TeV$ and unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1} and a light Standard Model Higgs boson with mass 125 GeV/c\textsuperscript{2}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. The first two rows are the ttH signal channels, all other rows are background. The number of jets refers to the decay of the top-quark pair. The number of events in 1.5 ab\textsuperscript{-1} has been calculated from the integrated luminosity and sample weight.
+
+\begin{table}[htp]
+\centering
+	\begin{tabular}{ c l c r r }
+	\hline \hline
+	ProdID & Process & Cross-section (fb) & Sample weight & Events in 1.5 ab\textsuperscript{-1} \\ \hline \hline
+	2435 & $t\overline{t}H$, 6 jets, $H \rightarrow b\overline{b}$ & 0.431 & 0.03 & 647 \\
+	2441 & $t\overline{t}H$, 4 jets, $H \rightarrow b\overline{b}$ & 0.415 & 0.03 & 623 \\ \hline
+	2429 & $t\overline{t}H$, 2 jets, $H \rightarrow b\overline{b}$ & 0.100 & 0.006 & 150 \\
+
+	2438 & $t\overline{t}H$, 6 jets, $H \not\rightarrow b\overline{b}$ & 0.315 & 0.02 & 473	 \\
+	2444 & $t\overline{t}H$, 4 jets, $H \not\rightarrow b\overline{b}$ & 0.303 & 0.02 & 455 \\
+	2432 & $t\overline{t}H$, 2 jets, $H \not\rightarrow b\overline{b}$ & 0.073 & 0.004 & 110 \\
+
+	2450 & $t\overline{t}Z$, 6 jets & 1.895 & 0.1 & 2843 \\
+	2453 & $t\overline{t}Z$, 4 jets & 1.825 & 0.1 & 2738 \\
+	2447 & $t\overline{t}Z$, 2 jets & 0.439 & 0.03 & 659 \\
+	
+	2423 & $t\overline{t}b\overline{b}$, 6 jets & 0.549 & 0.03 & 824 \\
+	2426 & $t\overline{t}b\overline{b}$, 4 jets & 0.529 & 0.03 & 794 \\
+	2420 & $t\overline{t}b\overline{b}$, 2 jets & 0.127 & 0.008 & 191 \\
+
+	2417 & $t\overline{t}$ & 125.8 & 1.5 & 203700 \\ \hline
+
+	\end{tabular}
+	\caption{Table of all signal and background samples used for this analysis.}
+	\label{table:physics/SM/generatedsamples}
+\end{table}
+
 \section{Detector models}
 [...]
 
-\section{Previous work}
-[...]
+[...] henceforth referred to as CLIC\textunderscore SiD.
 
 \section{Sensitivity to cross-sections and Yukawa coupling}
+[...]
 
-[...] The combined uncertainties, based on both the semi-leptonic and fully hadronic channels, are:
+\subsection{Analysis method}
+[...]
+
+\subsubsection{Sample processing}
+
+The first step is the initial jet clustering. This is done using the $k_t$ algorithm with parameters [?], using an exclusive clustering mode to form 8 jets -- 6 jets from the produced quarks and 2 beam jets. The $k_t$ algorithm is used over choices like anti-$k_t$ and Valencia, because the important features are the \emph{relative} shapes of the jets, rather than absolute properties, so there is no need to use more computationally-intensive [is this true?] algorithms.
+
+Once initial jet clustering is finished, a Marlin processor that finds isolated leptons is used. It searches for either 0, 1, or 2 isolated leptons, and this information can be used to make decisions about whether to process the event already:
+
+\begin{table}[htp]
+\centering
+	\begin{tabular}{ | c | l | l | }
+	\hline
+	Leptons & Channel & Action \\ \hline
+	0 & Fully hadronic & Use for fully hadronic analysis \\ \hline
+	1 & Semi-leptonic & Use for semi-leptonic analysis \\ \hline
+	2 & Fully leptonic & Discard \\ \hline
+	\end{tabular}
+\end{table}
+
+Following this, the two beam jets are removed from the processing, and a further step of jet re-clustering is performed, using the Durham algorithm, to [...] %Why is this done? Why Durham?
+
+[...] [Flavour tagging]
+
+[...] [Tau finding]
+
+The final step is to use use PandoraPFAs to generate Particle Flow Objects (PFOs) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
+
+\subsubsection{Analysis processing [?]}
+Once the sample has been processed, it must be analysed. The first step of this is a program used to extract various kinematic variables of both particles in the events ($m_0$, $p_t$) and the event itself ($\Psi$, $T$). This is the Treemaker program, and [...] [Chi-squared extraction of invariant masses] [Feeding into TMVA to generate BDTs]
+
+[...]
+
+A flow diagram of the analysis process, and the rejection points, is shown in Fig. \ref{figure:physics/SM/CLIC-analysis-algorithm}.
+
+% The flow diagram below is of questionable usefulness. Maybe add an extra rejection stage at the reconstruction step (if the chi-squared of the Higgs invariant mass is bad, this indicates an event with no Higgs which should be discarded.
+
+% Consider also folding the diagram a bit; we can run horizontally from start to lepton decision, then downwards but dog-legging the boxes. This will make the diagram a little bit more compact, though maybe at the expense of immediate readability.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[node	distance = 3cm, auto, scale=0.6, every node/.style={scale=0.6}]
+		\node [block, minimum width=4em, minimum height=4em, text width=3em] (start) {Start};
+	   	\node [block, below of=start] (jetclus) {Jet clustering ($k_t$)};
+		\node [block, below of=jetclus] (lepton) {Isolated lepton finder};
+		\node [decision, below of=lepton] (leptondecision) {No. of leptons};		
+		\node [block, right of=leptondecision, fill=red!20, node distance = 5cm] (twoleptons) {Reject};
+		\node [left of=leptondecision, node distance = 6.5cm] (dummytwo) {};
+	   	\node [block, below of=leptondecision] (jetreclus) {Jet re-clustering (Durham)};
+		\node [block, below of=jetreclus] (flavtag) {Flavour tagging};
+		\node [block, below of=flavtag] (recon) {Reconstruction (PandoraPFAs)};
+		\node [block, below of=recon] (neuralnet) {Boosted Decision Trees (TMVA)};
+		\node [block, below of=neuralnet, minimum width=4em, minimum height=4em, text width=3em] (result) {Result};
+
+		\path [line] (start) -- (jetclus);
+		\path [line] (jetclus) -- (lepton);
+		\path [line] (lepton) -- (leptondecision);
+		\path [line] (leptondecision) -- node {0-1 \linebreak}(jetreclus);
+		\path [line] (leptondecision) -- node {2 \linebreak} (twoleptons);
+		\path [line] (jetreclus) -- (flavtag);
+		\path [line] (flavtag) -- (recon);
+		\path [line] (recon) -- (neuralnet);
+		\path [line] (neuralnet) -- (result);
+	\end{tikzpicture}
+	\caption{A flow diagram of the algorithm for analysis of ttH events, and rejection.}	
+	\label{figure:physics/SM/CLIC-analysis-algorithm}
+\end{figure}
+
+[...]
+
+\subsection{Results}
+[...] 
+
+The combined uncertainty for the cross-section of both decay channels is:
 
 Cross-section: $$\Delta\sigma = 7.30\% $$
 
-Top-Higgs Yukawa coupling: $$ \frac{\Delta g_{tth}}{g_{tth}} = 3.86\% $$
+Then using this and a linear approximation from QCD [ref], the value of the uncertainty on the top-Higgs Yukawa coupling can be computed:
+
+$$\frac{\Delta g_{tth}}{g_{tth}} = 0.503 \frac{\Delta\sigma(t\overline{t}H)}{\sigma(t\overline{t}H)} = 3.86\% $$
+
+These results were contributed to a paper that summarised the top physics potential for CLIC at $\sqrt{s}$ = 1.4 TeV, published in [journal][ref] and will be submitted to CERN's European Strategy Update in [month] 2019 [ref].
 
 \section{Determination of sensitivity to CP-violation}
-One of the primary goals for CLIC is to determine any additional sources of CP-violation within	 the Standard Model, or any sources that may indicate BSM physics. The top-Higgs Yukawa coupling is one of the processes that can investigate this, a Higgs bosons with an odd CP quantum number (or ``CP-odd'' Higgs bosons) may be an indication of BSM physics, and determining the mixing ratio or angle between these Higgs bosons is an important result.
-
-\subsection{Up-down asymmetry}
-The up-down asymmetry is a simple observable that has already been identified for investigating CP-violation in the $tth$ process. It is found by defining a plane from the vectors of the incoming electron and produced antitop, then finding the ratio of top quarks that are emitted above and below this plane. If there is no CP-violation in this process, the ratio will be even.
-
-Using the up-down asymmetry as an observable requires that the $W^+$ and $W^-$ can be distinguished from each other, and has thus far only been used for the semi-leptonic decay channel. In the semi-leptonic case, the lepton produced by the decay of one of the W bosons identifies its charge, and thus the charge of the top quark that it has decayed from. While this method was not previously possible in the fully hadronic case, I discuss a method for applying it in Section \ref{physics/CP/jetcharge}, using jet charge determination.
-
-\subsection{Jet charge determination} \label{physics/CP/jetcharge}
 [...]
 
-However, the jet charge can be determined by summing the charges of all particles in the jet weighted by their $p_T$, normalised by the $p_T$ of the entire jet:
+\subsection{CP-sensitive observables}
+[...]
+
+\subsubsection{Up-down asymmetry}
+The up-down asymmetry is a conceptually simple observable that has already been identified for investigating CP-violation in the tth process. It is found by defining a plane from the vectors of the incoming electron and produced antitop, then finding the ratio of top quarks that are emitted above and below this plane (see Fig. \ref{figure:physics/SM/up-down}). If there is no CP-violation in this process, the ratio will be even.
+
+Using the up-down asymmetry as an observable requires that the $W^+$ and $W^-$ can be distinguished from each other, and has thus far only been used for the semi-leptonic decay channel. In this case, the lepton produced by the decay of one of the W bosons identifies its charge, and thus the charge of the top quark that it has decayed from. While this method was not previously possible in the fully hadronic case, a method for applying it by using jet charge determination is discussed in Section \ref{section:physics/CP/jetcharge}.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[line width=1.3 pt,scale=1.8]
+	
+		\coordinate (origin) at (0,0) ;
+		\coordinate (electron) at (-3.5,0) ;
+		\coordinate (projection) at (2.5,0) ;
+		\coordinate (top) at (1,2) ;
+		\coordinate (antitop) at (3,-1) ;
+
+		\filldraw[fill=gray!5] (-2,0.75) -- (3,0.75) -- (2,-0.75) -- (-3,-0.75) -- cycle ;
+
+		\draw[fermion] (electron) -- (origin) ;
+		\draw[dashed] (origin) -- (2.5,0) ;
+		
+		\draw[fermionbar] (origin) -- (antitop) ;
+		\draw[fermion] (origin) -- (top) ;
+		
+		\draw pic[draw, -, "$\theta$", angle radius = 1cm] {angle = antitop--origin--top} ;
+		\draw[dotted] pic[draw, -, "$\phi$", angle radius = 2.5cm] {angle = antitop--origin--projection} ;
+		
+		\node at (-3.65,0.05) {$e^-$};
+		\node at (3.1,-1) {$\overline{t}$};
+		\node at (1.05,2.15) {$t$};
+	\end{tikzpicture}
+	\caption{Geometric diagram of the up-down asymmetry in tth events. The paths of the electron and antitop quark, and the angle $\phi$ between them define a plane. ``Up-going'' top quarks go above the plane, ``down-going'' top quarks go below.}
+	\label{figure:physics/SM/up-down}
+\end{figure}
+
+\subsubsection{[other ones]}
+[...]
+
+\subsection{Jet charge determination} \label{section:physics/CP/jetcharge}
+Previous analyses that have utilised the up-down asymmetry as an observable have focused exclusively on the semi-leptonic decay channel of tth events, as the presence of a lepton emitted by the top or antitop quark offers a simple and statistically robust method to distinguish between the two top quarks. In the hadronic decay channel each top emits a jet, and even in the ideal case where each particle resulting from the jet can be accurately reconstructed, the net charge will \emph{still} be an integer, since no particles with a non-integer charge can result from these decays.
+
+However, techniques developed in recent years, intended primarily for observations in ATLAS at the LHC, have refined methods for this, and using the work of [reference], it is now possible to obtain the total net charge of the jet -- that is, the charge of the initial quark that creates the jet. 
+
+This technique is strongly-dependent upon the accuracy and efficiency of both particle reconstruction and jet clustering, but these techniques are constantly improving, and Pandora Particle Flow Algorithms (PFAs) and new jet clustering methods are becoming increasingly sophisticated. Combined with the cleaner final states in a lepton collider, these techniques allow the charge of a jet to be determined with useful confidence.
+
+The charge of a jet can be determined by summing the charges of all particles in the jet, weighted by $p_T$ and normalised by the $p_T$ of the entire jet:
 		
 \begin{displaymath}
 	\mathcal{Q}_\kappa^i = \frac{1}{(p_T^{jet})^\kappa} \sum_{j \in jet} Q_j (p_T^j)^\kappa
 \end{displaymath}
 
-Where $\kappa$ is some parameter between 0 and 1, typically set to 1. The efficiency [?] of this method is strongly dependent upon the efficiency of the jet reconstruction, which means the choice of jet clustering algorithm and its parameters are important. Previous analyses of $tth$ events have used the $k_t$ algorithm, as the relative difference between the jet shapes is more important than their absolute shapes, so other algorithms do not provide any benefits.
+Where $\kappa$ is some parameter between 0 and 1, typically set to 1. With this technique, it is possible to determine between quarks with charges of $+1/3e$, $-1/3e$, $+2/3e$, and $-2/3e$ with [some level of confidence].
 
-[...]
+\subsubsection{Jet clustering algorithms}
+Since this method relies upon jets it is strongly dependent upon jet reconstruction, and thus on the choice of jet clustering algorithm and parameters. Previous analyses of tth events have used a two-step reclustering approach, using the $k_t$ algorithm for the initial clustering and the Durham algorithm for reclustering. These algorithms were chosen as the relative difference between the jet shapes is more important than their absolute shapes, so other algorithms do not provide any benefits.
 
-For improvements to the jet clustering algorithm, the Valencia algorithm gives better performance within the cleaner final states of a lepton collider, and many analyses are now transitioning to using the Valencia or Durham [?] algorithms.
+The Valencia algorithm, however, gives improved performance in the cleaner final states of a lepton collider, for which it was especially designed, and many analyses are now transitioning to using the Valencia algorithm.
 
 \subsection{Results}
 [...]
