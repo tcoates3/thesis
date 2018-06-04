@@ -21,7 +21,7 @@
 5. **Thesis Writing**
    - Finish a draft of the CLIC analysis chapter by the end of May
 6. **Miscellany**
-   - *Call* Oliver Schafer about DESY password reset (j2M4W6ih ?)
+   - *Call* Oliver Schafer about DESY password reset
    - Do paperwork for annual review
    - Send off expenses docs/receipts (1391.31+422.89+724.38+224.94+578.65)
    - Send a summary of expenses (place, dates, funding, cost guestimate) to Fab
