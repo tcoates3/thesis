@@ -3,6 +3,10 @@
 % ???
 \usepackage{wrapfig}
 
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{.5\textwidth}
+\renewcommand{\textflush}{flushright}
+
 % tikz settings
 \usepackage{tikz}
 \usetikzlibrary{quotes,angles,shapes,snakes,arrows,decorations.markings,decorations.pathmorphing,decorations.markings,decorations.text}
@@ -37,17 +41,7 @@
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
     minimum height=2em]
 
-% epigraph settings, used for quotations
-\usepackage{epigraph}
-\usepackage{calc}
-\newcommand{\mytextformat}{\itshape\epigraphsize}
-\newenvironment{mytext}{\mytextformat}{}
-\newenvironment{mysource}{\scshape\hfill}{}
-\renewcommand{\textflush}{mytext} 
-\renewcommand{\sourceflush}{mysource}
-\let\originalepigraph\epigraph 
-\renewcommand\epigraph[2]%
-   {\setlength{\epigraphwidth}{\widthof{\mytextformat#1}}\originalepigraph{#1}{#2}}
+
 
 % Mathematical symbols, etc.
 \usepackage{amsmath}
@@ -202,18 +196,8 @@ Tom Coates
 \chapter*{Acknowledgements}
 \renewcommand{\baselinestretch}{\linespacing}
 \small\normalsize
-% ACKNOWLEDGEMENTS HERE:
 
-% Fab, Yixuan, Victoria, Remi, Adrian, Katja, David, Matthew, Jenny, ...?
-
-% Academic
-I'd first like to thank my supervisor Fabrizio Salvatore, for being exactly as hands-on and hands-off as I needed, when I needed it, and without whose help I wouldn't have been able to do this. Thanks to all of the \emph{Forschung mit Lepton Collidern} group at DESY in Hamburg for [...] but especially to Katja Kr\"{u}ger, Adrian Irles-Quiles (now at LAL Orsay), and R\'{e}mi Et\'{e}.
-
-% Personal
-I'd like to thank my highschool physics teachers Mr Coombes and Mr Thomas, who both nurtured my early love for physics (and I'll also take this opportunity to apologise for never doing my homework). [...] 
-
-% Funding
-I would like to thank the UK's Science and Technology Funding Council for gratiously providing enough money to prevent me from either starving or freezing to death while performing this research. Thanks also to Linear Collider UK for providing vital funding for travel and a community for linear collider researchers during the dark times, when the UK science bodies were not fully committed to funding linear collider research and when no-one was sure whether either the ILC or CLIC would ever be built; and to the AIDA-2020 collaboration for [...].
+%\include{chapter-acknowledgements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
