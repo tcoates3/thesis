@@ -19,4 +19,3 @@
 6. **Miscellany**
    - *Call* Oliver about DESY password reset
    - Do paperwork for annual review
-   - Send off expenses docs
