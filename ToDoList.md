@@ -6,10 +6,8 @@
 
 # Master To Do List
 1. **EUDAQ and DQM4HEP**
-   - Make a repo for the DREAM testbeam software
-   - Implement the Kolmogorov-Smirnov test (shouldn't take long with TMath::KolmogorovTest and TH1::KolmogorovTest)
    - Implement the chi-squared test for histograms using TH1::Chi2Test (?)
-   - Start work on implementing the event streamer for (one of) the DREAM data types
+   - Start work on implementing the event streamer for the DREAM SiPM data
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful
    - Continue writing the user's guide documentation
 3. **Physics Analysis**
