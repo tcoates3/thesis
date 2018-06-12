@@ -6,10 +6,13 @@
 
 # Master To Do List
 1. **EUDAQ and DQM4HEP**
-   - Implement the chi-squared test for histograms using TH1::Chi2Test (?)
+   - Open a pull request for the Kolmogorov and Chi2 tests
+   - Write and commit unit tests for the Kolmogorov and Chi2 tests
+   - Rewrite the given nTuplizeMADA.cpp script so that it reads in data and the XML header into a new ROOT file
    - Start work on implementing the event streamer for the DREAM SiPM data
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful
    - Continue writing the user's guide documentation
+   - Incoporate Remi's changes into the qtest documentation (esp. once core docs pull request is closed)
 3. **Physics Analysis**
    - Look through the data that Jenny has sent
    - Start writing some code to try to do the jet charge determination, both at MC-level and reconstruction-level
