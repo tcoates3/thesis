@@ -7,7 +7,7 @@
 # Master To Do List
 1. **EUDAQ and DQM4HEP**
    - Test the file reader for the DREAM SiPM
-   - Implement a basic analysis module for the DREAM SiPM (hitmap?)
+   - Finish the analysis module for the DREAM SiPM (hitmap?)
    - Implement a file reader for the DREAM calorimeter
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful
    - Continue writing the user's guide documentation
@@ -19,4 +19,3 @@
    - [...]
 6. **Miscellany**
    - *Call* Oliver about DESY password reset
-   - Submit annnual review (by 29nd)
