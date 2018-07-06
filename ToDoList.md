@@ -6,10 +6,10 @@
 
 # Master To Do List
 1. **EUDAQ and DQM4HEP**
-   - Bugfix DREAM SiPM module
    - Implement DREAM calorimeter module
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful
    - Continue writing the user's guide documentation
+   - Create an example repo (dqm4hep-custom?) that has basic CMake files, and highly-commented file readers, event streamers, and analysis modules to help people write their own plugins and modules.
 3. **Physics Analysis**
    - Look through the data that Jenny has sent
    - Start writing some code to try to do the jet charge determination, both at MC-level and reconstruction-level
