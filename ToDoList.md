@@ -16,5 +16,11 @@
    - Test out the Valencia algorithm on some of the tth stuff (if possible with this large sample size?)
 4. **Thesis Writing**
    - [...]
+5. **Jobs**
+   - DESY fellowship, CERN fellowship, ...?
+   - Ask Fab, Katja, and one other person for recommendation letters for DESY and CERN fellowships.
+   - Redo CV (and also check whether it has to be different from a regular CV)
 6. **Miscellany**
    - *Call* Oliver about DESY password reset
+   - Book flight and accommodation, and do insurance for the DREAM testbeam
+   - Do required paperwork for getting a dosimeter for the DREAM testbeam
