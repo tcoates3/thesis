@@ -6,7 +6,6 @@
 
 # Master To Do List
 1. **EUDAQ and DQM4HEP**
-   - Implement DREAM calorimeter module
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful
    - Continue writing the user's guide documentation
    - Create an example repo (dqm4hep-custom?) that has basic CMake files, and highly-commented file readers, event streamers, and analysis modules to help people write their own plugins and modules.
@@ -22,5 +21,3 @@
    - Redo CV (and also check whether it has to be different from a regular CV)
 6. **Miscellany**
    - *Call* Oliver about DESY password reset
-   - Book flight and accommodation, and do insurance for the DREAM testbeam
-   - Do required paperwork for getting a dosimeter for the DREAM testbeam
