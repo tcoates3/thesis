@@ -8,6 +8,7 @@
 1. **EUDAQ and DQM4HEP**
    - Assess the qtests by making plots of "goodness" against parameters to see how the "goodness" varies and whether it's useful.
    - Once Nicola has moved testbeam data where it's accessible, start working on the postmortem combined monitoring. (This will be good to show at a DREAM meeting.)
+   - Write the sections for the qtests and DREAM testbeam in the CHEP proceedings.
    - Continue writing the user's guide documentation.
    - Create an example repo (dqm4hep-custom?) that has basic CMake files, and highly-commented file readers, event streamers, and analysis modules to help people write their own plugins and modules.
 3. **Physics Analysis**
