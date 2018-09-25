@@ -17,19 +17,19 @@ One of the aims of the AIDA-2020 project is to improve this situation by develop
 \subsubsection{The AIDA-2020 project}
 The AIDA-2020 project is an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by CERN.
 
-The overarching goal of the project is to develop common infrastructures and tools for physics testbeams, and software is one such important tool. By creating a suite of tools that are designed with a variety of uses in mind, the amount of effort and development time necessary to plan and implement data acquisition and monitoring setups can be significantly reduced or eliminated, speeding up the planning and deployement of physics testbeams. This allows more science to be done faster. The two tools within AIDA-2020 that facillitate this are EUDAQ and DQM4HEP, discussed in more detail below.
+The overarching goal of the project is to develop common infrastructures and tools for physics testbeams, and software is one such important tool. By creating a suite of tools that are designed with a variety of uses in mind, the amount of effort and development time necessary to plan and implement data acquisition and monitoring setups can be significantly reduced or eliminated, speeding up the planning and deployement of physics testbeams. This allows more science to be done faster. The two tools within AIDA-2020 that facillitate this are EUDAQ and DQM4hep, discussed in more detail below.
 
 \section{EUDAQ}
 [...]
 
-\section{DQM4HEP}
-DQM4HEP is an online monitoring and data quality monitoring tool developed for physics testbeams for high-energy and particle physics. It is designed to be able to fulfil the requirements of monitoring for physics testbeams in a generic way. The structure of the program allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into specific and independent processes. The components that are specific to particular users -- the analysis and standalone modules -- are written in standard C++ code, meaning they are capable of performing any data unpacking, processing or analysis that is necessary. The framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. It also means that the framework does not need special rules for handling particular datatypes, allowing it to handle \emph{anything} that can be packed into, decoded from, and accessed by normal C++ methods. This results in a framework that is able to deal with any kind of data, including user-defined data types, making it more flexible, portable and easily reusable.
+\section{DQM4hep}
+DQM4hep is an online monitoring and data quality monitoring tool developed for physics testbeams for high-energy and particle physics. It is designed to be able to fulfil the requirements of monitoring for physics testbeams in a generic way. The structure of the program allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into specific and independent processes. The components that are specific to particular users -- the analysis and standalone modules -- are written in standard C++ code, meaning they are capable of performing any data unpacking, processing or analysis that is necessary. The framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. It also means that the framework does not need special rules for handling particular datatypes, allowing it to handle \emph{anything} that can be packed into, decoded from, and accessed by normal C++ methods. This results in a framework that is able to deal with any kind of data, including user-defined data types, making it more flexible, portable and easily reusable.
 
 \subsection{Prerequisites and dependencies}
 
-DQM4HEP is a C++ application, written in the C++11 standard, that can run on Windows, OSX, or any Linux distribution [?]. 
+DQM4hep is a C++ application, written in the C++11 standard, that can run on Windows, OSX, or any Linux distribution [?]. 
 
-Since DQM4HEP is designed to be modular, there are two tiers of requirements. Core requirements, that are necessary for the compilation and operation of the core program, and secondary requirements, which are necessary for certain modules or plugins that are optional.
+Since DQM4hep is designed to be modular, there are two tiers of requirements. Core requirements, that are necessary for the compilation and operation of the core program, and secondary requirements, which are necessary for certain modules or plugins that are optional.
 
 [...]
 
@@ -39,7 +39,7 @@ Since DQM4HEP is designed to be modular, there are two tiers of requirements. Co
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/GlobalArchitectureDiagram.pdf}
-	\caption{The global online architecture of DQM4HEP.}
+	\caption{The global online architecture of DQM4hep.}
 	\label{figure:daq/dqm4hep/architecture}
 \end{figure}
 
@@ -47,9 +47,9 @@ Since DQM4HEP is designed to be modular, there are two tiers of requirements. Co
 [...]
 
 \subsection{Data quality testing}
-One of the important areas of DQM4HEP that was not yet completed was data quality monitoring, which is an array of tests or programs that assess the data being taken in real time to allow testbeam operators and shifters without detailed knowledge of the hardware, software, or physics to determine whether the device under test is performing as intended, and to quickly identify and address any errors or inconsistencies. Data quality monitoring (DQM) uses a variety of methods for measuring the `quality' or `goodness' of data, mainly relying upon statistical or comparative methods.
+One of the important areas of DQM4hep that was not yet completed was data quality monitoring, which is an array of tests or programs that assess the data being taken in real time to allow testbeam operators and shifters without detailed knowledge of the hardware, software, or physics to determine whether the device under test is performing as intended, and to quickly identify and address any errors or inconsistencies. Data quality monitoring (DQM) uses a variety of methods for measuring the `quality' or `goodness' of data, mainly relying upon statistical or comparative methods.
 
-DQM4HEP did not have any infrastructure to support data quality tests, but this was added during the core refactoring for the release version [?]. Once this was in place, a variety of data quality tests were developed and implemented, ranging from basic tests, such as comparing the mean of a data sample against predefined values of mean and standard deviation, to more complex tests, such as the Kolmogorov-Smirnov test, which is a comparison between a sample and a reference histogram.
+DQM4hep did not have any infrastructure to support data quality tests, but this was added during the core refactoring for the release version [?]. Once this was in place, a variety of data quality tests were developed and implemented, ranging from basic tests, such as comparing the mean of a data sample against predefined values of mean and standard deviation, to more complex tests, such as the Kolmogorov-Smirnov test, which is a comparison between a sample and a reference histogram.
 
 [Illustrative pictures would go here; one of a pair of histograms demonstrating the quality of data with a mean/stddev test, and the other demonstrating a reference histogram, then by the side of it a picture of a sample histogram compared to the reference, maybe colour-highlighted?]
 
@@ -57,6 +57,16 @@ DQM4HEP did not have any infrastructure to support data quality tests, but this 
 
 \section{Adaptation to other detectors}
 [...]
+
+To utilise DQM4hep with any new detector, either two or three new plugins must be created depending on whether the detector is to be monitored online, offline, or both.
+
+If the data is to be monitored offline, then a file reader plugin must be written. If the data is to be monitored online, then a streamer plugin must be written. Both of these plugins are similar in structure and differ only on where they get the data from -- a file reader loads a file from disk, whereas a streamer loads it from the data acquisition system. Once the information is accessible from the reader plugin, it packages the data into events, and emits them to the framework's network handling to be received by any other plugins that are listening for them. The incoming data can be of any type, since the methods for reading it are provided in the reader plugin itself. Previously, reader plugins have been created to read binary files, raw text files, SLCIO data files, and ROOT trees. [...]
+
+An analysis module is a type of plugin which takes data that is packaged into events by a reader plugin and performs some analysis on it. Each analysis module can only read events from one reader, but [...] 
+
+Writing new readers and analysis modules is relatively simple, especially if the data has already been packaged into well-structured formats such as ROOT or SLCIO. [...]
+
+% Place an example file reader here, well-commented?
 
 \section{Integration with EUDAQ}
 [...]
