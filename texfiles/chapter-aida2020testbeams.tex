@@ -1,23 +1,78 @@
-\chapter{AIDA-2020 testbeams}
+\chapter{Testbeams}
 
 \epigraph{I love fools' experiments. \\I am always making them.}{Charles Darwin}
+
+One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams.
+
+% Sections at the beginning detailing my contributions in the chapter.
 
 [...]
 
 \section{Introduction}
+
+Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg and at the Super Proton Synchrotron (SPS) at CERN. 
+
 [...]
 
-\section{The CALICE-AHCAL}
+DQM4hep was largely tested and developed during testbeams of the SiWECAL [...]
+
+\section{CALICE testbeams}
 [...]
 
-\section{The CALICE-SiWECAL}
+[...] DQM4hep was used in testbeams of the AHCAL over the course of the years 2016-2018, occurring predominantly at the DESY II facility, with one in May 2017 taking place at the CERN SPS.
+
+\subsection{May 2016 at DESY II}
+[...] [This was the three-week one, where we got some real shit done.]
+
+\subsection{December 2016 at DESY II}
 [...]
+
+\subsection{May 2017 at CERN SPS}
+[...] During the CERN testbeam, development of the analysis modules for DQM4hep had largely been completed. This meant that after the initial set-up stage, very little management of the monitoring  software was necessary, and instead it was simply being used during shifts to monitor the beam and hardware, as intended. The monitor was used [...]
+
+[Pictures]
 
 \section{DREAM combined testbeam}
 [...]
 
-The combined testbeam comprised four separate dectors: a calorimeter, a muon detector and preshower, a drift chamber, and a silicon photomultiplier. [...]
+The combined testbeam took place between 5th-12th September 2018 at the CERN SPS beamline facility. [...]
 
-Importantly, none of these detectors or the teams responsible for their construction and operation were part of AIDA-2020, which was useful as a testbed for the generic nature of the DQM4hep framework - previous testbeams had only used AIDA-2020 detectors, many of which used filetypes or structures defined within the collaboration. By attempting to use DQM4hep to monitor non-AIDA-2020, it was possible to test that the design of the framework was truly generic and adaptable to any kind of detector with any filetype.
+Importantly, none of these detectors or the teams responsible for their construction and operation were part of AIDA-2020, which was useful as a testbed for the generic nature of the DQM4hep framework -- previous testbeams had only used AIDA-2020 detectors, many of which used filetypes or structures defined within the collaboration, which were already supported by the framework. By attempting to use DQM4hep to monitor non-AIDA-2020, it was possible to test that the design of the framework was truly generic and adaptable to any kind of detector with any filetype.
+
+\subsection{Detectors present at the combined testbeam}
+The combined testbeam comprised four separate dectors: a calorimeter, a muon detector and preshower, a drift chamber, and a silicon photomultiplier. One of the biggest challenges involved in the testbeam was operating these four different detectors [...]
+
+\subsubsection{RD52 calorimeter}
+The calorimeter was formed of two layers of 36 tiles each, totaling 72 tiles, stacked behind each other. One layer used Cherenkov detectors, the other used scintillator tiles. In addition, there was a group of leakage detectors that detected whether individual events were contained within the calorimeter or not. [DWC - Delayed Wire Chamber?]
+
+\subsubsection{Muon chamber and preshower}
+[...]
+
+\subsubsection{Silicon photomultiplier GEM}
+[...]
+
+\subsubsection{Drift chamber}
+[...]
+
+\subsection{Results}
+Existing monitoring within the DREAM collaboration could produce accurate histograms with raw data, creating simple plots of the total energy of each channel per event. This facility was reproduced in DQM4hep quickly using for-loops in both the C++ code and XML steering files, allowing this to be done with comparatively little code.
+
+Further to this, the flexibility of using C++ code rather than ROOT macros allowed some analysis to be done in a nearly-online fashion. One of the first important quantities is $R$, also called the energy ratio:
+
+\begin{displaymath}
+	R = \frac{E_1}{\sum_{i=1}^{10} E_i}
+\end{displaymath}
+
+Where $E_i$ is the energy of the $i^{th}$ most energetic channel in the event, e.g. $E_1$ is the most energetic channel. Once the ratio $R$ is calculated, a plot can be made of $E_{total}$ vs. $R$ for an entire run that shows separation of electrons from muons and pions:
+
+\begin{center}
+	[Figure]
+\end{center}
+
+Using an appropriate cut on this plot, it is possible to distinguish electron events. Adding in the information from the muon detector [the one in RD52], muons and pions can also be separated. Using this, we can then produce spectra for each type of particle in the run:
+
+\begin{center}
+	[Figure]
+\end{center}
 
 [...]
