@@ -54,9 +54,11 @@ A plot was made of the average ADC per event summed over all channels, against t
 \subsection{Tower ADC calibration}
 [...]
 
-Due to a large number of tasks for setting up the testbeam, there was not time to perform a high voltage calibration on the individual towers of the calorimeter, so the calorimeter ADCs were not calibrated to each other [?]. In order to fix this, 
+Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter ADCs were not calibrated to each other [?]. In order to fix this, 
 
-For this purpose, a dedicated set of calibration runs were taken. There were 29 calibration runs, all using a 20 GeV electron beam, each pointed at towers 1-29. Towers 30-36 did not receive these calibration runs because [reason]. The run numbers corresponding to each tower is given in Table \ref{table:idea/calibrationruns}.
+Two sets of calibration runs were performed. The first set covered Towers 1-29 using an 80 GeV secondary beam ($\pi$ and $e^{-}$), with the beam pointed at each tower in sequence for 29 runs. The second set used a 20 GeV electon beam, covering Towers 30-36 plus Tower 15. Tower 15 recieved runs in both sets in order to calibrate the two sets to each other. 
+
+[...] The run numbers corresponding to each tower is given in Table \ref{table:idea/calibrationruns}.
 
 \begin{table}[h]
 \centering
@@ -83,7 +85,57 @@ For this purpose, a dedicated set of calibration runs were taken. There were 29 
 	\label{table:idea/calibrationruns}
 \end{table}
 
-The process for calibrating the towers was to [...] This created a plot of the distribution of raw ADCs in all towers, shown in Fig. \ref{figure:testbeam/results/calibrationbefore}. Creating a plot of all the data in all of the calibration runs, the mean value on the y-axis was 180.8 GeV for the scintillator, and 178.4 GeV for the Cherenkov. These values were chosen as the average to calibrate to, then a series of calibration coefficients applied to the other channels. These calibration coefficients are shown on Table \ref{table:idea/calibrationcoeffs}.
+%
+%\begin{table}[h]
+%\centering
+%	\begin{tabular}{ c c c c }
+%	\hline \hline
+%	\textbf{Tower} & \textbf{Run No.} & \textbf{Beam energy} & \textbf{Beam type} \\ \hline \hline
+%	 1 & 12545 & 80 GeV & secondary \\
+%	 2 & 12556 & 80 GeV & secondary \\
+%	 3 & 12558 & 80 GeV & secondary \\
+%	 4 & 12560 & 80 GeV & secondary \\
+%	 5 & 12601 & 80 GeV & secondary \\
+%	 6 & 12638 & 80 GeV & secondary \\
+%	 7 & 12598 & 80 GeV & secondary \\
+%	 8 & 12514 & 80 GeV & secondary \\
+%	 9 & 12518 & 80 GeV & secondary \\
+%	10 & 12521 & 80 GeV & secondary \\
+%	11 & 12600 & 80 GeV & secondary \\
+%	12 & 12636 & 80 GeV & secondary \\
+%	13 & 12539 & 80 GeV & secondary \\
+%	14 & 12628 & 80 GeV & secondary \\
+%	15 & 12512 & 80 GeV & secondary \\
+%	15 & 12659 & 20 GeV & electrons \\
+%	16 & 12526 & 80 GeV & secondary \\
+%	17 & 12567 & 80 GeV & secondary \\
+%	18 & 12633 & 80 GeV & secondary \\
+%	19 & 12591 & 80 GeV & secondary \\
+%	20 & 12612 & 80 GeV & secondary \\
+%	21 & 12530 & 80 GeV & secondary \\
+%	22 & 12528 & 80 GeV & secondary \\
+%	23 & 12569 & 80 GeV & secondary \\
+%	24 & 12639 & 80 GeV & secondary \\
+%	25 & 12610 & 80 GeV & secondary \\
+%	26 & 12609 & 80 GeV & secondary \\
+%	27 & 12607 & 80 GeV & secondary \\
+%	28 & 12604 & 80 GeV & secondary \\
+%	29 & 12602 & 80 GeV & secondary \\
+%	30 & 12664 & 20 GeV & electrons \\
+%	31 & 12677 & 20 GeV & electrons \\
+%	32 & 12672 & 20 GeV & electrons \\
+%	33 & 12671 & 20 GeV & electrons \\
+%	34 & 12670 & 20 GeV & electrons \\
+%	35 & 12669 & 20 GeV & electrons \\
+%	36 & 12667 & 20 GeV & electrons \\ \hline
+%	\end{tabular}
+%	\caption{Table of the run numbers and corresponding tower numbers for the calibration runs.}
+%	\label{table:idea/calibrationruns}
+%\end{table}
+
+The process for calibrating the towers was to make individual histograms of each tower's ADCs (pedestal subtracted) for the entire run where the beam was centered on them, in order to find the mean and standard deviation. These histograms were then combined to show the overall responses of the entire set of calibration runs, which visualises the differences between the Towers. These can be seen in Fig. \ref{figure:testbeam/results/calibrationbefore}. 
+
+Since Tower 15 was present in both runs, this was chosen as the reference, and all the other towers were given a coefficient that leveled their mean ADC to the same value as Tower 15, in both sets of calibration runs. The ADC values for each tower are then multiplied by the approproiate calibration coefficient to [level] them. [...] [Difference between scintillator and Cherenkov] [...] The calibration coefficients are shown on Table \ref{table:idea/calibrationcoeffs}.
 
 \begin{table}[h]
 \centering
@@ -128,6 +180,11 @@ The process for calibrating the towers was to [...] This created a plot of the d
 [...]
 
 \subsubsection{Using the ancillary detectors}
+
+The RD52 calorimeter was designed with a set of ancillary detectors to help discriminate between particle of different types. These provide a first selection of different particles, allowing us to use kinematic properties from within the calorimeter itself to perform a second particle selection, and then compare the two. [...]
+
+The two ancillary detectors used for particle selection are the [] muon trigger. [...]
+
 [...]
 
 \subsubsection{Using the calorimeter}

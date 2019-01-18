@@ -2,29 +2,54 @@
 
 \epigraph{I love fools' experiments. \\I am always making them.}{Charles Darwin}
 
-One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams.
-
 % Sections at the beginning detailing my contributions in the chapter.
+
+One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was developed during testbeams of the SiWECAL, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic natures. 
 
 [...]
 
 \section{Introduction}
 
-Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg and at the Super Proton Synchrotron (SPS) at CERN. 
+The CALICE testbeams were done with the CALICE collaboration, working within the \textit{Forschung mit Lepton Collidern} (EN: "Research with Lepton Colliders", or FLC) on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. The AHCAL is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure. \cite{proceedings-ahcal-prototype} % Citation here isn't working
 
 [...]
 
-DQM4hep was largely tested and developed during testbeams of the SiWECAL [...]
+Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg, Germany and at the Super Proton Synchrotron (SPS) at CERN in Geneva, Switzerland. [...]
 
-\section{CALICE testbeams}
-[...]
-
-[...] DQM4hep was used in testbeams of the AHCAL over the course of the years 2016-2018, occurring predominantly at the DESY II facility, with one in May 2017 taking place at the CERN SPS.
+[...] DQM4hep was used as the online monitoring and data quality monitoring tool for the AHCAl beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
 
 \subsection{May 2016 at DESY II}
+The testbeam where DQM4hep was deployed for another detector for the first time was during a testbeam of the AHCAL at DESY II during May 2016. The testbeam was to be two weeks in duration, with a one-week setup and preparation period. There were a variety of goals for this long testbeam as a whole, including testing some of the data acquisition hardware and software, developing calibration methods, and to test the deployment of DQM4hep. [...]
+
+% Check that all of these are actually right, then reference the report for it. 
+
 [...] [This was the three-week one, where we got some real shit done.]
 
-Before and during testbeam, the majority of development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. However, file reader and streamer plugins for the SLCIO data format were already present, which meant that the only part needing work was the analysis modules themselves.
+Before and during testbeam, the majority of development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. 
+
+However, file reader and streamer plugins for the LCIO data format were already available in the now-deprecated \texttt{dqm4ilc} package, which meant that the framework could open and access the data format already.
+
+[Talk about the data format?]
+The data for the AHCAL was in an LCIO format called LCGenericObject, which is a generic format for use when the existing data formats are not suited. It comprises a header that contains user-defined parameters. These parameters usually include a timestamp, the typename of the object, and a string describing the content of the data and how to parse it. For instance:
+
+% This section commented out because it breaks formatting -- we need a better way to handle it.
+%\begin{verbatim}
+%--------------- print out of LCGenericObject collection --------------- 
+%
+%  flag:  0x0
+% parameter DAQquality [int]: 1, 
+% parameter DataDescription [string]: i:CycleNr,i:BunchXID,i:EvtNr,i:ChipID,i:NChannels,i:TDC14bit[NC],i:ADC14bit[NC], 
+% parameter Timestamp [string]: Thu, 25 May 2017 05:38:25 +0200, 
+% parameter TypeName [string]: CaliceObject, 
+%
+% [   id   ] i:Type,i:EventCnt,i:TS_Low,i:TS_High - isFixedSize: false
+% --------------------------------------------------------
+% [00000852] i:99; i:0; i:0; i:121; i:36; i:13365; i:13383; i:13378; i:13370; i:13336; i:13351; i:13361; i:13365; i:13357; i:13338; i:13345; i:13368; i:13386; i:13380; i:13386; i:13391; i:13382; i:13363; i:13395; i:13342; i:13378; i:13335; i:13327; i:13376; i:13342; i:13373; i:13406; i:13323; i:13361; i:13395; i:13378; i:13365; i:13362; i:13378; i:13384; i:13355; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;  --------------------------------------------------------
+%\end{verbatim}
+
+In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, each holding a number of elements equal to the \texttt{NChannels} variable, in this case 36. Each element of these arrays corresponds to a single physical scintillator tile within the detector, and identifies which chip it belongs to using \texttt{ChipID}. 
+
+[...]
 
 To begin with, two analysis modules were developed: 
 
@@ -56,7 +81,7 @@ During May 2017, testbeam time at CERN's Super Proton Synchrotron (SPS) facility
 
 [...]
 
-During this testbeam, development of the analysis modules for DQM4hep had largely been completed and the data format of the detector had been fixed for some time. Because of this, after the initial set-up and verification stages, very little management of the monitoring software was necessary. It was instead used as intended -- a tool for shifters to use to troubleshoot problems with the beam or detectors. It was successfully used to identify dead channels on several of the boards [confirm this].
+During this testbeam, the analysis modules were mature, and represented the majority of the needed online monitoring for the testbeam, especially because the data format of the detector had been fixed for some time. Because of this, after the initial set-up and verification stages, very little management or editing of the monitoring software was necessary. It was instead used as intended -- a tool for shifters to use to troubleshoot problems with the beam or detectors. It was successfully used to identify dead channels on several of the boards [confirm this].
 
 [...]
 
