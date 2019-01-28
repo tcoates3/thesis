@@ -29,7 +29,7 @@ Before and during testbeam, the majority of development for AHCAL-specific analy
 
 However, file reader and streamer plugins for the LCIO data format were already available in the now-deprecated \texttt{dqm4ilc} package, which meant that the framework could open and access the data format already.
 
-[Talk about the data format?]
+\subsubsection{Data format}
 The data for the AHCAL was in an LCIO format called LCGenericObject, which is a generic format for use when the existing data formats are not suited. It comprises a header that contains user-defined parameters. These parameters usually include a timestamp, the typename of the object, and a string describing the content of the data and how to parse it. For instance:
 
 % This section commented out because it breaks formatting -- we need a better way to handle it.
@@ -51,6 +51,7 @@ In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, ea
 
 [...]
 
+\subsubsection{Analysis modules}
 To begin with, two analysis modules were developed: 
 
 \begin{itemize}
