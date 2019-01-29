@@ -19,8 +19,6 @@ The AIDA-2020 project is an EU-funded research programme for developing infrastr
 
 The overarching goal of the project is to develop common infrastructures and tools for physics testbeams, and software is one such important tool. By creating a suite of tools that are designed with a variety of uses in mind, the amount of effort and development time necessary to plan and implement data acquisition and monitoring setups can be significantly reduced or eliminated, speeding up the planning and deployment of physics testbeams. This allows more science to be done faster. The two tools within AIDA-2020 that facillitate this are EUDAQ and DQM4hep, discussed in more detail below.
 
-[My contributions to this chapter]
-
 \section{EUDAQ}
 [...]
 
@@ -29,11 +27,14 @@ Data Quality Monitoring for High-Energy Physics (abbreviated DQM4hep) is an onli
 
 \subsection{Prerequisites and dependencies}
 
-DQM4hep is a C++ application, written in the C++11 standard, that can run on Windows, OSX, or any Linux distribution [?]. The only requirements for installation are a C++11-compliant compiler, cmake 3.4 or higher, and ROOT 6. All other prerequisites or dependencies are downloaded and compiled by the framework's installer. 
+DQM4hep is a C++ application, written in the C++11 standard, that can run on any Linux distribution. The only requirements for installation are a compiler compliant with the C++11 standard, cmake 3.4 or higher, and ROOT 6. All other prerequisites or dependencies are downloaded and compiled by the framework's installer. 
 
 [...]
 
 \subsection{Programming paradigms and structure}
+
+The two core principles for DQM4hep are genericity and modularity. The core of the system is based on a plugin system to allow shared libraries to be loaded and hook classes for further use. \cite{aida2020-milestone-dqm4hep}
+
 [...]
 
 \begin{figure}[h]
@@ -44,6 +45,12 @@ DQM4hep is a C++ application, written in the C++11 standard, that can run on Win
 \end{figure}
 
 \subsection{Visualisation and graphical user interface}
+As of writing, the graphic user interfaceand visualisation suite is still under active development.  Previous versions of DQM4hep have utilised the Qt framework for GUI and visualisation.
+
+The decision to remove the Qt-based GUI from the framework was because of integration with ROOT -- running DQM4hep previously required an installation of ROOT that had the \texttt{--enable-Qt} flag, and the majority of ROOT installations in remotely-accsible file systems based at CERN and DESY (which are heavily used for analysis and testbeams) were not compiled with this flag. 
+
+The removal of the Qt-based UI however allows for greater freedom with UI development. The intended goal is to have a browser-based UI, removing dependency on specific software frameworks, allowing it to function on any device. [...]
+
 [...]
 
 \subsection{Data quality testing}
@@ -73,11 +80,18 @@ Writing new readers and analysis modules is relatively simple, especially if the
 [...]
 
 \section{Documentation and user guide}
+
+One of the biggest hurdles to promoting a new framework is the lack of understanding of it's installation, deployment, and usage. Many research teams will continue to use their existing software solutions, which may be suboptimal or difficult to use, according to the principle of `better the devil you know than the devil you don't`. The first step to overcoming this is to produce clear, readable and complete documentation across the entire range of features the framework has.
+
 [...]
 
-[Doxygen]
+Many particle physics software frameworks provide documentation in the form of Doxygen, a documentation generator tool. Doxygen is extremely useful, as the documentation for functions and objects is written within the code itself, ensuring that documentation is written as the code is written. Doxygen also automatically compiles a documentation guide using HTML, automatically listing the relationships between objects, structures, functions, etc. that can be compiled and viewed locally, or hosted on the internet as a reference.
 
-Of importance was producing a set of user information distinct from the developer documentation. These would be user's guides and walkthroughs, intended for \emph{users} of the framework, who have no interest in the mechanics of the program, but simply using it for their testbeam.
+One issue with Doxygen documentation is that is not holistic. Doxygen compiles documentation for individual structures of the program, not of the program as a whole. Doxygen is extremely useful for developers, as well as alread-experienced users. However it doesn't aid new users in learning to use   a piece of software, 
+
+[...]
+
+An important aspect with this holistic documentation was that it was to be very distinct from the developer documents (i.e. Doxygen). These were to be a set of guides and walkthroughs for common procedures, intended for \emph{users} of the framework with little to no interest in the mechanics of it.
 
 [...]
 

@@ -10,7 +10,7 @@ One of the most important aspects of testing and developing DQM4hep was to ensur
 
 \section{Introduction}
 
-The CALICE testbeams were done with the CALICE collaboration, working within the \textit{Forschung mit Lepton Collidern} (EN: "Research with Lepton Colliders", or FLC) on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. The AHCAL is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure. \cite{proceedings-ahcal-prototype} % Citation here isn't working
+The CALICE testbeams were done with the CALICE collaboration, working within the \textit{Forschung mit Lepton Collidern} (EN: "Research with Lepton Colliders", or FLC) on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. The AHCAL is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure. \cite{proceedings-ahcal-prototype}
 
 [...]
 
@@ -66,6 +66,11 @@ Creating the hitmap was nontrivial, as the information coming from the data acqu
 For every testbeam, there was a mapping file that described the position of each board and channel in $(i, j, k)$ co-ordinates. To implement the hitmap analysis module, the module used DQM4hep's libraries for XML parsing to build two functions inside the analysis module class --  \texttt{electronicsToIJK} and \texttt{IJKToElectronics} -- that converted either from electronics number to geometric co-ordinates, or vice versa.
 
 Using this method ensured that, given the geometry file was provided, whatever changes in geometry or set-up of the experiment were always reflected in the hitmaps, and no alteration of hard-coded information or recompilation of the modules was required.
+
+[...]
+
+\subsubsection{Results}
+% Some graphs of the results, talking about how it went etc.
 
 [...]
 
