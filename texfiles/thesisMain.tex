@@ -62,7 +62,7 @@
 % BIBLIOGRAPHY STYLE
 %\usepackage{natbib}
 \usepackage{cite}
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -219,19 +219,22 @@ Tom Coates
 \pagenumbering{arabic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\include{chapter-intro} \label{intro}
+% These labels have to be moves into the beginning of the included chapter, since these labels point at the last (sub)section of the relevant chapter, not the beginning of the chapter.
+% They should also be labelled according to the newer standard, e.g. chapter:colliders
 
-\include{chapter-linearcolliders} \label{colliders}
+\include{chapter-intro}
 
-\include{chapter-daqsoftware} \label{daq}
+\include{chapter-linearcolliders}
 
-\include{chapter-aida2020testbeams} \label{aida2020testbeams}
+\include{chapter-daqsoftware}
 
-\include{chapter-dreamtestbeam} \label{ideatestbeam}
+\include{chapter-aida2020testbeams}
 
-\include{chapter-clicanalysis} \label{physics}
+\include{chapter-dreamtestbeam}
 
-\include{chapter-discussionsconclusions} \label{discussion}
+\include{chapter-clicanalysis}
+
+\include{chapter-discussionsconclusions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY
