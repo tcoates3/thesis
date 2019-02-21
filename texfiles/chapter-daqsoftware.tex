@@ -18,11 +18,9 @@ An alternative to this is to develop a suite of tools or frameworks that are gen
 \subsection*{Online monitoring and data quality monitoring}
 The area of this that we have chosen to contribute to is the development of online monitoring and data quality monitoring tools. Data from testbeams is often not processed fully until well after it has been taken, sometimes after the testbeam has ended, due to contraints on time or processing power. If there were errors, incongruencies, or any other issues with the data, these issues cannot be identified immediately, and as a result may be present in multiple runs, spoiling data and wasting precious time during the already extremely time-sensitive environment of a testbeam.
 
-Online monitoring addresses these issues by allowing the experimenters to see a ``preview'' of the data being collected and what it would look like when properly processed, meaning that any potential issues can be quickly identified and fixed in a timely manner. It can provide both a quantitative and qualitative look into how the detectors are responding, [...] % Need a little more on online monitoring here.
+Online monitoring addresses these issues by allowing the experimenters to see a ``preview'' of the data being collected. It can provide both a quantitative and qualitative look into how the detectors are responding, and what the data willl look like when properly processed, allowing any potential issues to be identified and fixed in a timely manner. This means that good online monitoring can improve the efficiency of a testbeam, increasing the ``yield'' of data from a given experiment.
 
-Another aspect of this is data quality monitoring (DQM), which assesses the `quality' of the data being taken. It's important to note that the definition of data's `quality' varies depending on the hardware, software, and goals of the experiment, but will usually constitute a variety of statistical measures. For example, an experimental dataset may be compared to a reference dataset from previous experiments, or the $\chi^2$ or p-value of a dataset may need to pass a certain threshold to be considered valid. 
-
-In this regard, data quality monitoring can be seen as an extension of the concept of online monitoring, focusing more closely on the quantitative aspects. In general, DQM provides the most benefit in more mature experiments, relying on previous experience with the detector and collected data to understand how the data appears when the device is functioning correctly.  
+Another aspect of this is data quality monitoring (DQM), which assesses the `quality' of the data being taken. The definition of data's `quality' will vary depending on the hardware, software, and goals of the experiment, but will usually constitute a some from of statistical measure. In this regard, data quality monitoring can be seen as an extension of the concept of online monitoring, focusing more closely on the quantitative aspects. In general, DQM provides the most benefit in more mature experiments, relying on previous experience with the detector and collected data to understand how the data appears when the device is functioning correctly.  
 
 In pursuit of all of the above aims, this chapter will discuss the Data Quality Monitoring For High-Energy Physics tool (DQM4hep) developed for online monitoring and data quality monitoring, going into detail on its properties, principles, applications and development. Deployment and usage of the framework will be discussed in greater detail in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}.
 
@@ -53,6 +51,20 @@ The plugin system for end-users consists of four different types of plugins: ana
 
 A diagrammatical representation of the overall structure of the framework can be seen in Fig. \ref{figure:daq/dqm4hep/architecture}.
 
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/GlobalArchitectureDiagram.pdf}
+	\caption{The global online architecture of DQM4hep. Each block is colour-coded to show which operator of the testbeam is responsible for the process.}
+	\label{figure:daq/dqm4hep/architecture}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/AnalysisModuleArchitecture.pdf}
+	\caption{The structure of running DQM4hep online using an analysis module.}
+	\label{figure:daq/dqm4hep/analysis-module}
+\end{figure}
+
 \subsubsection{Analysis modules}
 Analysis modules recieve events from the data aquisition system, processing the data according to a user-specified procedure to create ROOT TObjects like histograms, graphs, plots, etc. The analysis module then handles encapsulating these objects as monitor elements, and sending them to the rest of the framework for display and storage. 
 
@@ -70,52 +82,36 @@ A file reader is a type of plugin that reads a file from the disk and packs it i
 
 An example of the structure of the framework utilising a file reader plugin can be seen in Fig. \ref{figure:daq/dqm4hep/file-reader}.
 
-\subsubsection{File streamer plugins}
-A file streamer is a type of plugin that reads data from a stream and packs it into a data structure necessary for usage within DQM4hep. They are for receiving data from a data acquisition device for online monitoring. File streamers can be made for any kind of data stream, provided the user understands the data structure. File streamers are considered the ``default'' in DQM4hep.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/GlobalArchitectureDiagram.pdf}
-	\caption{The global online architecture of DQM4hep. Each block is colour-coded to show which operator of the testbeam is responsible for the process.}
-	\label{figure:daq/dqm4hep/architecture}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/AnalysisModuleArchitecture.pdf}
-	\caption{The structure of running DQM4hep online using an analysis module.}
-	\label{figure:daq/dqm4hep/analysis-module}
-\end{figure}
-
-\begin{figure}
+\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/StandaloneModuleArchitecture.pdf}
 	\caption{The structure of running DQM4hep online using a stand alone module.}
 	\label{figure:daq/dqm4hep/standalone-module}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/FileReaderModuleArchitecture.pdf}
 	\caption{The structure of running DQM4hep offline using a file reader module.}
 	\label{figure:daq/dqm4hep/file-reader}
 \end{figure}
 
-\subsection{Visualisation and graphical user interface} % Introduce the GUI, what it does, how it works. Define Qt and discuss it more.
+\subsubsection{File streamer plugins}
+A file streamer is a type of plugin that reads data from a stream and packs it into a data structure necessary for usage within DQM4hep. They are for receiving data from a data acquisition device for online monitoring. File streamers can be made for any kind of data stream, provided the user understands the data structure. File streamers are considered the ``default'' in DQM4hep.
+
+\subsection{Visualisation and graphical user interface}
 As of writing, the graphic user interface (GUI) and visualisation elements of the framework are still under active development for a new version. Therefore this topic will be split into two sections: one to describe the existing GUI, and one to discuss the motivations and goals for the new GUI under development. 
 
 \subsubsection{Current GUI and visualisation} 
-[...]
+The current version of the GUI is built with Qt, a free and open-source toolkit and framework for creating OS-independent graphic user interfaces and widgets. The motivation for choosing Qt was that ROOT provides an option for integration between ROOT and Qt, allowing ROOT classes like \texttt{TCanvas} to be ``embedded'' into Qt widgets. This simplified the implementation of a GUI, allowing a graphical interface based on Qt to be written, then graphics from ROOT simply opened within the existing widgets and windows. % We should cite this; this information is from here: (https://root.cern.ch/root/html534/guides/users-guide/ROOTandQt.html). 
 
-The current version of the GUI uses Qt, a free and open-source toolkit and framework for creating OS-independent graphic user interfaces and widgets. [...]
+This interface is used in multiple places, including the run control process and the monitoring GUI. The monitoring GUI is built on a system of canvases. Each canvas can have multiple plots open, which can be resized, maximised, minimised, etc. and manipulated as normal for ROOT plots. The user can also create new canvases for more space to arrange plots.
 
-Part of the reason for this was that ROOT provides an option for integration between ROOT and Qt, allowing ROOT classes like \texttt{TCanvas} to be ``embedded'' into Qt widgets. This simplified the implementation of a GUI, allowing a graphical interface based on Qt to be written, then graphics from ROOT simply opened within the existing widgets and windows. [...] % Info on Qt/ROOT interface got from here: (https://root.cern.ch/root/html534/guides/users-guide/ROOTandQt.html)
+In addition to this, there is an optional provision for a monitoring steering file, which contains presets of canvases, and the plots displayed on them. This is extremely useful when dealing with large datasets or large numbers of plots, as the plots required by the user can be opened automatically when the monitoring interface is run.
 
-[...]
+An example of the Qt-based monitoring GUI in use can 3be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. 
 
-An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. 
-
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{../Pictures/DQM4hepMonitoringGui.png}
 	\caption{An example of the current Qt-based monitoring GUI in use.}
@@ -123,28 +119,34 @@ An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref
 \end{figure}
 
 \subsubsection{New user interface and visualisation package}
-[...]
+For the newer versions of DQM4hep, the decision was made to overhaul the GUI and visualisation packages, removing Qt from the framework and moving to a web-based interface.
 
-The decision to remove the Qt-based GUI from the framework was made for two reasons. Firstly because of integration with ROOT -- running DQM4hep with a Qt-based GUI requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled, and the majority of ROOT installations in remotely-accesible file systems based at CERN and DESY (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system and environment of the machine, and thus less generic and easy to use.
+The removal of Qt was motivated by two reasons. Firstly, the integration with ROOT provided some complications, since running DQM4hep's Qt-based GUI requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled. The majority of ROOT installations in remotely-accesible file systems based at CERN and DESY (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system, compiler tools, and environment of the machine, and thus less generic and easy to use. % Also isn't Qt support getting removed from ROOT soon? We'd need a citation for that though.
 
-The removal of the Qt-based UI however allows for greater freedom with UI development. The intended goal is to have a browser-based GUI, removing dependency on any external GUI libraries and allowing it to function on any device. This will also make it more compact and portable, as the interfaces for run control, networking, and data monitoring and quality display can be simply run in different tabs of the same browser window.
+The removal of the Qt UI allows for greater freedom with UI development. The intended goal is to have a browser-based GUI, removing dependency on any external GUI libraries and allowing it to function on any device. This will also make it more user-friendly and convenient, as the interfaces for run control, networking, and data monitoring and quality display can be simply run in different tabs of a web browser.
 
-A mock-up of the web interface can be seen in Fig. \ref{figure:daq/dqm4hep/future-gui}.
+As of writing, the web interface is under active development by R\'{e}mi Et\'{e} and is not yet complete. However, a mock-up of the web interface can be seen in Fig. \ref{figure:daq/dqm4hep/future-gui}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=1.0\textwidth]{../Pictures/ScreenshotWebMonitoring.png}
 	\caption{A preview of the planned web-based monitoring interface.}
 	\label{figure:daq/dqm4hep/future-gui}
 \end{figure}
 
-\section{Data quality testing}
+\section{Data quality monitoring} % Maybe examples of qtests in action?
+Data quality monitoring is a type of data monitoring where the data is tested using some form of statistical or mathematical process to produce a value corresponding to the ``quality'' of the dataset. This can take many forms, such as comparing an experimental dataset to reference data acquired from previous experiments, or requiring that the $\chi^2$ or p-value of a dataset may need to pass a certain threshold to be considered valid.
 
-% This section is "too colloquial". It also needs a more in-depth explanation of what data quality tests are, what they do, and the motivation for including and using them. It should also have a section detailing how and when they're used (possibly with examples).
+The definition of the ``quality'' statistic will differ according to a variety of factors such as the type of data, the aim of an experiment, etc. Common examples are p-values, or binary tests where data that passes had a quality of 1, and 0 otherwise.
 
-One of the important areas of DQM4hep that was not yet completed was data quality monitoring, which is an array of tests or programs that assess the data being taken in real time to allow testbeam operators and shifters without detailed knowledge of the hardware, software, or physics to determine whether the device under test is performing as intended, and to quickly identify and address any errors or inconsistencies. Data quality monitoring (DQM) uses a variety of methods for measuring the `quality' or `goodness' of data, mainly relying upon statistical or comparative methods.
+One of the benefits of data quality monitoring is that it provides a more reproducible and robust set of checks on data-taking, allowing quantitative analysis of the performance of a detector prototype. It can also be used as a way for shifters without detailed knowledge of the hardware, software, or physics to determine whether the detector is performing as intended during a testbeam when experts are not available, by using the quality statistics as a guide.
 
-DQM4hep did not have any infrastructure to support data quality tests, but this was added during refactoring for the next release version. Once this was in place, a variety of data quality tests were developed and implemented. A quality test (or qtest) takes in a series of monitor elements (i.e. ROOT TObjects) and processes them with certain criteria. The qtest will then produce a numerical result or ``quality'' that shows whether the monitor element passed or failed the qtest, or to what extent. The exact meaning of the quality rating varies for each qtest. The existing quality tests are detailed below.
+Previous versions of DQM4hep did not have infrastructure to support data quality monitoring, but this was added during refactoring in preparation for the next release version. Once this was in place, this permitted an array of quality tests to be developed, implemented, and tested. 
+
+A quality test (or `qtest') processes a series of monitor elements (ROOT TObjects) according to a set of criteria defined in the test's code. This test produces a numberical result between 0 and 1, referred to as the ``quality''. Within the framework, quality tests are self-contained C++ code files, which hook into the framework's system for execution. Quality tests are run by using the executable \texttt{dqm4hep-run-qtests} and a steering file to define paramters, such as which files to load, which quality tests to execute, and what the passing and failing boundaries are for each quality test. 
+
+The quality tests that have been implemented in DQM4hep are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
+
 
 \subsection{Property within expected test}
 This is a quality test that takes either a TH1 or TGraph object, and finds some user-defined parameter. The parameter must be one of: mean, mean90, root mean square (RMS), root mean square 90 (RMS90), or median. It then checks whether either: that this parameter is within a user-specified range; or that it is above or below the user-specified threshold. If a range is being used, the result is the p-value of the property being within the specified range. If a threshold is being used, then the result is 1 if the property passes the threshold, 0 otherwise.
@@ -158,10 +160,8 @@ This is a quality test that takes either a TH1, TGraph, or TGraph2D object and p
 \subsection{Kolmogorov-Smirnov test}
 This is a quality test that takes either a TH1 or a TGraph object, and performs the Kolmogorov-Smirnov test between that object and a specified reference. The result is the p-value of the Kolmogorov-Smirnov test. The Kolmogorov-Smirnov test is intended for unbinned data, not histograms, but ROOT provides a function for performing the Kolmogorov-Smirnov test on histograms, so this is functionlity is also included for the sake of completeness.
 
-\subsection{$\chi^2$ test}
+\subsection{Pearson $\chi^2$ test} % We should probably cite the Pearson chi^2 test itself
 This is a quality test that takes a TH1 object and performs the Pearson $\chi^2$ test between that object and a specified reference. This test is analogous to the Kolmogorov-Smirnov test, but is designed specifically to work for binned histogram data. The result is the p-value output by the $\chi^2$ test. 
-
-%\section{Integration with EUDAQ}
 
 \section{Adaptation to other detectors}
 Due to the modularity and genericity of DQM4hep, the process of deploying it for a new detector is simple -- the only parts of DQM4hep that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special DQM4hep-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
@@ -176,7 +176,8 @@ For each analysis module that is being run, an XML steering file is required to 
 
 Examples of using DQM4hep with testbeams both within the AIDA-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.
 
-\section{Documentation and user manual}
+\section{Documentation and user manual} % I should also expand this section a lot, including elements of the documentation and giving a general, broader overview of how to use the program as a whole, and examples of usage and in use.
+
 One of the biggest hurdles to promoting a new framework is the lack of understanding of installing, deplying, and using it. Many research teams will continue to use their existing software solutions, which may be suboptimal or difficult to use, according to the principle of ``better the devil you know than the devil you don't''. The first step to overcoming this is to produce clear, readable and complete documentation across the entire range of features the framework has.
 
 To this end, DQM4hep has two sets of documentation: a Doxygen webite and a user manual.
@@ -188,5 +189,3 @@ One limitation with Doxygen documentation is that is not holistic. Doxygen relie
 To this end, DQM4hep also has a user manual, compiled using Read the Docs, which provides explanations and worked examples of individual components of the framework and running it as a whole. It also includes instructions and details on how to write plugins of all kinds, and how to run the framework both online and offline. 
 
 The user manual can be found here\cite{dqm4hep-user-manual}, and the Doxygen can be found here\cite{dqm4hep-doxygen}.
-
-% I should also expand this section a lot, including elements of the documentation and giving a general, broader overview of how to use the program as a whole, and examples of usage and in use.
