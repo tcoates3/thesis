@@ -124,6 +124,7 @@
 %%	(iv) the name of the University of Sussex;
 %%	(v) the month and year of submission.
 \thispagestyle{empty}
+\pdfbookmark[0]{Title page}{title_page}
 \begin{center}
 \includegraphics[width=6cm]{../Pictures/uslogonew.eps}
 \vskip40mm
@@ -149,6 +150,7 @@ June 2019
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DECLARATIONS
 \chapter*{Declaration}
+\pdfbookmark[0]{Declaration}{declaration}
 I hereby declare that this thesis has not been and will not be submitted in whole or in part to another University for the award of any other degree.
 
 % ADDITIONAL DECLARATIONS HERE (IF ANY)
@@ -192,11 +194,13 @@ Tom Coates
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
+
 \chapter*{Acknowledgements}
+%\include{chapter-acknowledgements}
+
+\pdfbookmark[0]{Acknowledgements}{acknowledgements}
 \renewcommand{\baselinestretch}{\linespacing}
 \small\normalsize
-
-%\include{chapter-acknowledgements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -246,15 +250,8 @@ Tom Coates
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % START APPENDICES
-\appendix
+%\appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\chapter{Code} \label{appenddix/code}
-
-\begin{verbatim}
-10 PRINT "LOOK AROUND YOU"
-20 GOTO 10
-\end{verbatim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END DOCUMENT

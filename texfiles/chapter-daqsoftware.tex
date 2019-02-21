@@ -13,19 +13,30 @@ In addition to this, the data acquisition solutions used during the testbeam pha
 
 During this stage, each individual detector component -- such as a vertex tracker or hadronic calorimeter -- will be developed by small teams, and the natural tendency is for each of these groups to set their own standards and develop their own tools, prioritising the features that are important to their specific case. However, in the past this approach has generated a variety of \textit{ad hoc} solutions for testbeam software, many of which cannot be applied outside of their original scope. This results in different teams solving the same problems and implementing the same solutions for each subdetector.
 
-One of the aims of the AIDA-2020 project is to improve this situation by developing generic and reusable software tools for testbeams and particle physics experiments.
+An alternative to this is to develop a suite of tools or frameworks that are generic -- capable of being used and deployed for a wide variety of different uses and detector types. In this way, we could greatly reduce the effort used to recreate the same solutions for each new detector, allowing more science to be done faster.
 
-\subsubsection{The AIDA-2020 project}
-The AIDA-2020 project is an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by CERN.
+\subsection*{Online monitoring and data quality monitoring}
+The area of this that we have chosen to contribute to is the development of online monitoring and data quality monitoring tools. Data from testbeams is often not processed fully until well after it has been taken, sometimes after the testbeam has ended, due to contraints on time or processing power. If there were errors, incongruencies, or any other issues with the data, these issues cannot be identified immediately, and as a result may be present in multiple runs, spoiling data and wasting precious time during the already extremely time-sensitive environment of a testbeam.
 
-The overarching goal of the project is to develop common infrastructures and tools for physics testbeams, and software is one such important tool. The AIDA-2020 collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis is part of Work Package 5 for data acquisition systems for beam tests [cite AIDA-2020 here]. 
+Online monitoring addresses these issues by allowing the experimenters to see a ``preview'' of the data being collected and what it would look like when properly processed, meaning that any potential issues can be quickly identified and fixed in a timely manner. It can provide both a quantitative and qualitative look into how the detectors are responding, [...] % Need a little more on online monitoring here.
 
-The goal of this work package is to create a suite of tools that are designed with a variety of uses in mind, thereby reducing the work and development time necessary to implement data acquisition and monitoring setups, speeding up the planning and deployment of physics testbeams. This allows more science to be done faster. One of the tools within AIDA-2020 that facillitates this is DQM4hep.
+Another aspect of this is data quality monitoring (DQM), which assesses the `quality' of the data being taken. It's important to note that the definition of data's `quality' varies depending on the hardware, software, and goals of the experiment, but will usually constitute a variety of statistical measures. For example, an experimental dataset may be compared to a reference dataset from previous experiments, or the $\chi^2$ or p-value of a dataset may need to pass a certain threshold to be considered valid. 
+
+In this regard, data quality monitoring can be seen as an extension of the concept of online monitoring, focusing more closely on the quantitative aspects. In general, DQM provides the most benefit in more mature experiments, relying on previous experience with the detector and collected data to understand how the data appears when the device is functioning correctly.  
+
+In pursuit of all of the above aims, this chapter will discuss the Data Quality Monitoring For High-Energy Physics tool (DQM4hep) developed for online monitoring and data quality monitoring, going into detail on its properties, principles, applications and development. Deployment and usage of the framework will be discussed in greater detail in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}.
+
+\subsection*{The AIDA-2020 project}
+This work on DQM4hep takes place within the context of the AIDA-2020 project, an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by CERN.
+
+The overarching goal of AIDA-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests [cite AIDA-2020 here]. 
+
+The goal of this work package is to create a suite of tools that are designed with a variety of possible uses in mind, thereby reducing the work and development time necessary to implement data acquisition and monitoring setups, speeding up the planning and deployment of physics testbeams. 
 
 \section{Overview of DQM4hep}
 Data Quality Monitoring for High-Energy Physics (abbreviated DQM4hep) is an online monitoring and data quality monitoring framework developed for physics testbeams for high-energy and particle physics, developed by R\'{e}mi Et\'{e} and Antoine Pingault. It is designed to be able to fulfil the requirements of monitoring for physics testbeams in a generic way. The framework is written in the C++11 standard and can run on any Linux distribution. The only requirements for installation are a compiler compliant with the C++11 standard, cmake 3.4 or higher, and ROOT 6. All other dependencies are downloaded and compiled automatically during installation. 
 
-The two core principles of DQM4hep are genericity and modularity. The framework is based upon a plugin system that allows shared libraries to be loaded and hook classes for further use \cite{aida2020-milestone-dqm4hep}. This structure allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into independent processes. The components that are specific to any particular use case are written by those users, and the rest of the framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. 
+The two core principles of DQM4hep are genericity and modularity. The framework is based upon a plugin system that allows shared libraries to be loaded and hook classes for further use \cite{aida2020-milestone-dqm4hep}. This structure allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into independent processes. The components that are specific to any particular use case are written by the users, and the rest of the framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. 
 
 The experiment-specific components have to be written by the user, but these components use standard C++ code with a few DQM4hep-specific functions to handle their integration into the framework, making them easy to understand for users who already have experience coding in C++. This also means that the framework is capable of working with any data format that can packed into, decoded from, and accessed with normal C++ methods, including those that can be loaded from external libraries. This results in a framework that is able to deal with any kind of data, including user-defined data types, making it more flexible, portable and easily reusable.
 
@@ -90,14 +101,19 @@ A file streamer is a type of plugin that reads data from a stream and packs it i
 	\label{figure:daq/dqm4hep/file-reader}
 \end{figure}
 
-\subsection{Visualisation and graphical user interface}
-As of writing, the graphic user interface and visualisation suite is still under active development. Previous versions of DQM4hep have utilised the Qt framework for GUI and visualisation.
+\subsection{Visualisation and graphical user interface} % Introduce the GUI, what it does, how it works. Define Qt and discuss it more.
+As of writing, the graphic user interface (GUI) and visualisation elements of the framework are still under active development for a new version. Therefore this topic will be split into two sections: one to describe the existing GUI, and one to discuss the motivations and goals for the new GUI under development. 
 
-The decision to remove the Qt-based GUI from the framework was made for two reasons. Firstly because of integration with ROOT -- running DQM4hep with a Qt-based GUI requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled, and the majority of ROOT installations in remotely-accsible file systems based at CERN and DESY (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system and environment of the machine, and thus less generic and easy to use.
+\subsubsection{Current GUI and visualisation} 
+[...]
 
-The removal of the Qt-based UI however allows for greater freedom with UI development. The intended goal is to have a browser-based GUI, removing dependency on any external GUI libraries and allowing it to function on any device. This will also make it more compact and portable, as the interfaces for run control, networking, and data monitoring and quality display can be simply run in different tabs of the same browser window.
+The current version of the GUI uses Qt, a free and open-source toolkit and framework for creating OS-independent graphic user interfaces and widgets. [...]
 
-An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. A mock-up of the web interface can be seen in Fig. \ref{figure:daq/dqm4hep/future-gui}.
+Part of the reason for this was that ROOT provides an option for integration between ROOT and Qt, allowing ROOT classes like \texttt{TCanvas} to be ``embedded'' into Qt widgets. This simplified the implementation of a GUI, allowing a graphical interface based on Qt to be written, then graphics from ROOT simply opened within the existing widgets and windows. [...] % Info on Qt/ROOT interface got from here: (https://root.cern.ch/root/html534/guides/users-guide/ROOTandQt.html)
+
+[...]
+
+An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. 
 
 \begin{figure}
 	\centering
@@ -105,6 +121,15 @@ An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref
 	\caption{An example of the current Qt-based monitoring GUI in use.}
 	\label{figure:daq/dqm4hep/old-gui}
 \end{figure}
+
+\subsubsection{New user interface and visualisation package}
+[...]
+
+The decision to remove the Qt-based GUI from the framework was made for two reasons. Firstly because of integration with ROOT -- running DQM4hep with a Qt-based GUI requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled, and the majority of ROOT installations in remotely-accesible file systems based at CERN and DESY (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system and environment of the machine, and thus less generic and easy to use.
+
+The removal of the Qt-based UI however allows for greater freedom with UI development. The intended goal is to have a browser-based GUI, removing dependency on any external GUI libraries and allowing it to function on any device. This will also make it more compact and portable, as the interfaces for run control, networking, and data monitoring and quality display can be simply run in different tabs of the same browser window.
+
+A mock-up of the web interface can be seen in Fig. \ref{figure:daq/dqm4hep/future-gui}.
 
 \begin{figure}
 	\centering
@@ -114,6 +139,9 @@ An example of the older Qt-based monitoring GUI in use can  be seen in Fig. \ref
 \end{figure}
 
 \section{Data quality testing}
+
+% This section is "too colloquial". It also needs a more in-depth explanation of what data quality tests are, what they do, and the motivation for including and using them. It should also have a section detailing how and when they're used (possibly with examples).
+
 One of the important areas of DQM4hep that was not yet completed was data quality monitoring, which is an array of tests or programs that assess the data being taken in real time to allow testbeam operators and shifters without detailed knowledge of the hardware, software, or physics to determine whether the device under test is performing as intended, and to quickly identify and address any errors or inconsistencies. Data quality monitoring (DQM) uses a variety of methods for measuring the `quality' or `goodness' of data, mainly relying upon statistical or comparative methods.
 
 DQM4hep did not have any infrastructure to support data quality tests, but this was added during refactoring for the next release version. Once this was in place, a variety of data quality tests were developed and implemented. A quality test (or qtest) takes in a series of monitor elements (i.e. ROOT TObjects) and processes them with certain criteria. The qtest will then produce a numerical result or ``quality'' that shows whether the monitor element passed or failed the qtest, or to what extent. The exact meaning of the quality rating varies for each qtest. The existing quality tests are detailed below.
@@ -160,3 +188,5 @@ One limitation with Doxygen documentation is that is not holistic. Doxygen relie
 To this end, DQM4hep also has a user manual, compiled using Read the Docs, which provides explanations and worked examples of individual components of the framework and running it as a whole. It also includes instructions and details on how to write plugins of all kinds, and how to run the framework both online and offline. 
 
 The user manual can be found here\cite{dqm4hep-user-manual}, and the Doxygen can be found here\cite{dqm4hep-doxygen}.
+
+% I should also expand this section a lot, including elements of the documentation and giving a general, broader overview of how to use the program as a whole, and examples of usage and in use.

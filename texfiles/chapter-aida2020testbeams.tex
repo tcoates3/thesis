@@ -3,82 +3,95 @@
  
 \epigraph{I love fools' experiments. \\I am always making them.}{Charles Darwin}
 
-% Sections at the beginning detailing my contributions in the chapter.
+One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was originally developed during testbeams of the SiWECAL, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic nature. 
 
-One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was developed during testbeams of the SiWECAL, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic natures. 
-
-[...]
+In this chapter, deployment, testing and usage of DQM4hep on testbeams within the AIDA-2020 collaboration will be discussed in detail. For a testbeam where DQM4hep was deployed outside of the AIDA-2020 community, see Chapter \ref{chapter:ideatestbeam}. Three testbeams will be described in detail, as they represent the different stages of using DQM4hep as a data monitoring tool, from first implementation and deployment, to further developments, and finally as a mature tool.
 
 \section{Introduction}
+The CALICE testbeams were done within the \textit{Forschung mit Lepton Collidern}\footnote{``Research with lepton colliders'' in English} group (FLC) based at DESY in Hamburg, working on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg, Germany and at the Super Proton Synchrotron (SPS) at CERN in Geneva, Switzerland. The goals for these testbeams varied over time but common focuses for the hardware were power-pulsing tests, and commissioning and calibration of new detector boards to test variations and changes to the manufacturing process. The testbeams were often used as testbeds for data acquisition electronics and software, such as the EUDAQ data acquisition software, the beam interface (BIF) device, and DQM4hep.
 
-The CALICE testbeams were done with the CALICE collaboration, working within the \textit{Forschung mit Lepton Collidern} (EN: "Research with Lepton Colliders", or FLC) on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. The AHCAL is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure. \cite{proceedings-ahcal-prototype}
+DQM4hep was used as an online monitoring and data quality monitoring tool for AHCAl tesbeams beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
+
+\subsection*{The AHCAL prototype} % Full dossier on the AHCAL here: https://iopscience.iop.org/article/10.1088/1748-0221/5/05/P05004/pdf
+The Analogue Hadronic Calorimeter (AHCAL) is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure\cite{proceedings-ahcal-prototype}.
 
 [...]
 
-Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg, Germany and at the Super Proton Synchrotron (SPS) at CERN in Geneva, Switzerland. [...]
+\section{May 2016 at DESY II}
+The first deployment of DQM4hep on an AHCAL testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test MIP calibration of a new AHCAL base unit (HBU), to test the power pulsing feature, and to perform TDC calibrations. In addition to these goals for the AHCAL, a device called a Beam Interface (BIF), another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. % Reference something for this - wiki pages are here (http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016) but ideally we want a report.
 
-[...] DQM4hep was used as the online monitoring and data quality monitoring tool for the AHCAl beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
+Before and during the testbeam, the majority of the development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. 
 
-\subsection{May 2016 at DESY II}
-The testbeam where DQM4hep was deployed for another detector for the first time was during a testbeam of the AHCAL at DESY II during May 2016. The testbeam was to be two weeks in duration, with a one-week setup and preparation period. There were a variety of goals for this long testbeam as a whole, including testing some of the data acquisition hardware and software, developing calibration methods, and to test the deployment of DQM4hep. [...]
+File reader and streamer plugins for the LCIO data format were already available in the now-deprecated \texttt{dqm4ilc} package, which meant that the framework could open and access the data format already.
 
-% Check that all of these are actually right, then reference the report for it. 
+\subsection{Data format}
+The data for the AHCAL is in an LCIO format, using an object type called LCGenericObject, which is a generic format for use when the existing data formats are not suitable. It comprises two parts: the block of data itself, held in 14-bit numbers; and a header containing user-defined parameters, in this case a timestamp, a typename for the object, and a description of the data contained in the object.
 
-[...] [This was the three-week one, where we got some real shit done.]
+The structure of a single event in LCGenericObject format can be seen below, which is the result of using the \texttt{dumpevent} tool to dump the contents of an LCIO event to the command line:
 
-Before and during testbeam, the majority of development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. 
+% Really we should be using a file from the May 2016 testbeam here, just for consistency
+\begin{verbatim}
+--------------- print out of LCGenericObject collection --------------- 
 
-However, file reader and streamer plugins for the LCIO data format were already available in the now-deprecated \texttt{dqm4ilc} package, which meant that the framework could open and access the data format already.
+  flag:  0x0
+ parameter DAQquality [int]: 1, 
+ parameter DataDescription [string]: i:CycleNr,i:BunchXID,i:EvtNr,i:ChipID,
+     i:NChannels,i:TDC14bit[NC],i:ADC14bit[NC], 
+ parameter Timestamp [string]: Thu, 25 May 2017 05:38:25 +0200, 
+ parameter TypeName [string]: CaliceObject, 
 
-\subsubsection{Data format}
-The data for the AHCAL was in an LCIO format called LCGenericObject, which is a generic format for use when the existing data formats are not suited. It comprises a header that contains user-defined parameters. These parameters usually include a timestamp, the typename of the object, and a string describing the content of the data and how to parse it. For instance:
-
-% This section commented out because it breaks formatting -- we need a better way to handle it.
-%\begin{verbatim}
-%--------------- print out of LCGenericObject collection --------------- 
-%
-%  flag:  0x0
-% parameter DAQquality [int]: 1, 
-% parameter DataDescription [string]: i:CycleNr,i:BunchXID,i:EvtNr,i:ChipID,i:NChannels,i:TDC14bit[NC],i:ADC14bit[NC], 
-% parameter Timestamp [string]: Thu, 25 May 2017 05:38:25 +0200, 
-% parameter TypeName [string]: CaliceObject, 
-%
-% [   id   ] i:Type,i:EventCnt,i:TS_Low,i:TS_High - isFixedSize: false
-% --------------------------------------------------------
-% [00000852] i:99; i:0; i:0; i:121; i:36; i:13365; i:13383; i:13378; i:13370; i:13336; i:13351; i:13361; i:13365; i:13357; i:13338; i:13345; i:13368; i:13386; i:13380; i:13386; i:13391; i:13382; i:13363; i:13395; i:13342; i:13378; i:13335; i:13327; i:13376; i:13342; i:13373; i:13406; i:13323; i:13361; i:13395; i:13378; i:13365; i:13362; i:13378; i:13384; i:13355; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;  --------------------------------------------------------
-%\end{verbatim}
+ [   id   ] i:Type,i:EventCnt,i:TS_Low,i:TS_High - isFixedSize: false
+ --------------------------------------------------------
+ [00000852] i:99; i:0; i:0; i:121; i:36; i:13365; i:13383; i:13378; i:13370;
+     i:13336; i:13351; i:13361; i:13365; i:13357; i:13338; i:13345; i:13368;
+     i:13386; i:13380; i:13386; i:13391; i:13382; i:13363; i:13395; i:13342;
+     i:13378; i:13335; i:13327; i:13376; i:13342; i:13373; i:13406; i:13323;
+     i:13361; i:13395; i:13378; i:13365; i:13362; i:13378; i:13384; i:13355;
+     i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;
+     i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;
+     i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;
+     i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288; i:12288;
+     i:12288; i:12288; i:12288; i:12288;
+ --------------------------------------------------------
+\end{verbatim}
 
 In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, each holding a number of elements equal to the \texttt{NChannels} variable, in this case 36. Each element of these arrays corresponds to a single physical scintillator tile within the detector, and identifies which chip it belongs to using \texttt{ChipID}. 
 
 [...]
 
-\subsubsection{Analysis modules}
-To begin with, two analysis modules were developed: 
-
-\begin{itemize}
-	\item \texttt{AHCALChannelSpectra} created a histogram for each channel present in the detector, and filled it with the ADC value for each readout cycle in the whole run, producing a per-channel spectrum of ADCs.
-	\item \texttt{AHCALHitmap} created a two dimensional histogram, with each bin representing a channel on the $x$ and $y$ axes, and filled each channel with the ADCs of that channel for the whole event, producing a hitmap. 
-\end{itemize}
+\subsection{Analysis modules}
+The first analysis module to be developed was the \texttt{AHCALRawModule}, which [...]
 
 [...]
 
-Creating the hitmap was nontrivial, as the information coming from the data acquisition and stored in SLCIO format did not have geometric information for each channel, instead only specifying the ``electronics number'' -- a combination of the board number and channel number. To determine the location of any given channel, a mapping was needed. This mapping was not simple -- each board contained sixteen channels, and each layer was formed of four boards tiled together. Further, the numbers of the boards and which order the layers were stacked could also change.
+This module was then split into two separate functionalities, called \texttt{AHCALRawModuleGlobal} and \texttt{AHCALRawModuleChannel}. [...]
 
-For every testbeam, there was a mapping file that described the position of each board and channel in $(i, j, k)$ co-ordinates. To implement the hitmap analysis module, the module used DQM4hep's libraries for XML parsing to build two functions inside the analysis module class --  \texttt{electronicsToIJK} and \texttt{IJKToElectronics} -- that converted either from electronics number to geometric co-ordinates, or vice versa.
+[...] created a histogram for each channel present in the detector, filling each with the ADC value for each readout cycle in the whole run. This produced a per-channel spectrum of ADCs for each channel, integrated over the whole run. % Repeating self here.
 
-Using this method ensured that, given the geometry file was provided, whatever changes in geometry or set-up of the experiment were always reflected in the hitmaps, and no alteration of hard-coded information or recompilation of the modules was required.
-
-[...]
-
-\subsubsection{Results}
-% Some graphs of the results, talking about how it went etc.
+\subsection{Results} % Some graphs of the results, talking about how it went etc.
 
 [...]
 
-\subsection{December 2016 at DESY II}
+\section{July 2016 DESY II}
+The next usage of DQM4hep was a testbeam also at DESY II during July 2016. The testbeam was to be one week long, with a one-week preparation period. The primary goal for DQM4hep in this testbeam was to establish hitmaps of the calorimeter. This would give a visual representation of the layers, allowing the beamspot to be easily spotted, allow dead or mis-calibrated channels identified visually, as well as to monitor [...]
+
+Creating a hitmap for the AHCAL was nontrivial, as the information coming from the data acquisition device and stored in LCIO format did not encode location. Each channel was instead identified by its ``electronics number'' -- a combination of the ChipID of the board the channel was located on, and the number of the channel on that board.
+
+Each layer was formed of four boards (each one with a ChipID), each of which contained sixteen layers. The orientation of the boards, which boards were in a layer, and the order of the layers in the stack were all changeable, so an additional requirement for the hitmap function was that it could take an external geometry file that could be changed or automatically generated. 
+
+DQM4hep has internal functions for parsing XML data into internal structures, so an XML file was chosen as the format to store the geometry data. By making this an XML file, it avoided hard-coding the geometry into the framework itself, allowing the geometry data to be changed at runtime. The AHCAL team also already had an internal format for the geometry file used for offline processing after testbeams, which could be converted into the XML format via a shell script.
+
+For analysis modules needing geometry, the XML file wasgiven as a required parameter for the steering file, which then built a C++ map of the correspondence between electronics number and $(i,j,k)$ co-ordinates of each channel in memory during initialisation. Then a function called \texttt{electronicsToIJK} was written that took the electronics number as the argument and returned the position of the channel in geometric co-ordinates. A further function was written, called \texttt{IJKToElectronics}, that performed the opposite operation, but this was not used. 
+
+Using these new functions, another analysismodule called \texttt{AHCALHitmap} was written that created a two dimensional histogram, with each bin representing a channel on the $x$ and $y$ axes for a single layer. This histogram was then filled with with the ADCs of that channel for the whole event, producing a hitmap.
+
+\subsection{Results}
 [...]
 
-\subsection{May 2017 at CERN SPS}
+\section{December 2016 at DESY II} % There was also one in October, which I can't remember if I went to or not.
+[...]
+
+\section{May 2017 at CERN SPS} % Wiki pages are here (http://flcwiki.desy.de/AHCALTestBeamCERN2017) but we ideally want an actual report for this.
 
 During May 2017, testbeam time at CERN's Super Proton Synchrotron (SPS) facility was used for further tests for the AHCAL.
 
@@ -88,8 +101,11 @@ During May 2017, testbeam time at CERN's Super Proton Synchrotron (SPS) facility
 
 [...]
 
-During this testbeam, the analysis modules were mature, and represented the majority of the needed online monitoring for the testbeam, especially because the data format of the detector had been fixed for some time. Because of this, after the initial set-up and verification stages, very little management or editing of the monitoring software was necessary. It was instead used as intended -- a tool for shifters to use to troubleshoot problems with the beam or detectors. It was successfully used to identify dead channels on several of the boards [confirm this].
+During this testbeam, the analysis modules had become mature, and represented the majority of the needed online monitoring for the testbeam, especially because the data format of the detector had been fixed for some time. Because of this, after the initial set-up and verification stages, very little management or editing of the monitoring software was necessary. It was instead used as intended -- a tool for shifters to use to troubleshoot problems with the beam or detectors. It was successfully used to identify dead channels on several of the boards [confirm this].
 
+[...]
+
+\subsection{Results}
 [...]
 
 \begin{center}
