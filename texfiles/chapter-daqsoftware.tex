@@ -3,13 +3,13 @@
 
 \epigraph{Before software can be reusable \\it first has to be usable.}{Ralph Johnson}
 
-Data acquisition is a critical component of all particle physics experiments across all stages of technological readiness, from the very beginning of hardware testing in tabletop experiments to full-scale international experiments like the Large Hadron Collider. 
+Data acquisition is a critical component of all modern particle physics experiments across all stages of technological readiness, from the very beginning of hardware testing in tabletop experiments to full-scale international experiments like the Large Hadron Collider. 
 
 In the modern era of particle physics, the interplay of hardware and software at minscule timescales drives everything, and almost all results are highly dependent upon the speed and efficiency of the electronics and computer systems that extract data from the detectors. A massive quantity of work goes into creating, testing and optimising the systems that will acquire, process, sort and transport data before it is ever seen by the physicist operating the experiment.
 
 Of particular interest in this thesis is the data acquisition software during the development phase, where individual detector subcomponents are undergoing prototyping and testing. These development and iteration cycles are tied closely to testbeam facillities such as the Super Proton Synchrotron (SPS) at CERN and the DESY II synchrotron at DESY. At this point in the development cycle, the detectors are beginning to take shape and this is where data acquisition (or DAQ) becomes an important consideration. 
 
-In addition to this, the data acquisition solutions used during the testbeam phase of detector development is likely to inform the final data acquisition solution, either directly by evolving into the final software, or indirectly by identifying and evaluating the particular features or challenges of the subdetector components that the software must take into account or accommodate.
+In addition to this, the data acquisition solutions used during the testbeam phase of detector development is likely to inform the final data acquisition solution; either by evolving directly into the final software, or by identifying and evaluating the particular features or challenges of the subdetector components that the software must take into account or accommodate.
 
 During this stage, each individual detector component -- such as a vertex tracker or hadronic calorimeter -- will be developed by small teams, and the natural tendency is for each of these groups to set their own standards and develop their own tools, prioritising the features that are important to their specific case. However, in the past this approach has generated a variety of \textit{ad hoc} solutions for testbeam software, many of which cannot be applied outside of their original scope. This results in different teams solving the same problems and implementing the same solutions for each subdetector.
 
@@ -27,7 +27,7 @@ In pursuit of all of the above aims, this chapter will discuss the Data Quality 
 \subsection*{The AIDA-2020 project}
 This work on DQM4hep takes place within the context of the AIDA-2020 project, an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by CERN.
 
-The overarching goal of AIDA-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests [cite AIDA-2020 here]. 
+The overarching goal of AIDA-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests % Cite AIDA-2020 here 
 
 The goal of this work package is to create a suite of tools that are designed with a variety of possible uses in mind, thereby reducing the work and development time necessary to implement data acquisition and monitoring setups, speeding up the planning and deployment of physics testbeams. 
 
@@ -147,7 +147,6 @@ A quality test (or `qtest') processes a series of monitor elements (ROOT TObject
 
 The quality tests that have been implemented in DQM4hep are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
 
-
 \subsection{Property within expected test}
 This is a quality test that takes either a TH1 or TGraph object, and finds some user-defined parameter. The parameter must be one of: mean, mean90, root mean square (RMS), root mean square 90 (RMS90), or median. It then checks whether either: that this parameter is within a user-specified range; or that it is above or below the user-specified threshold. If a range is being used, the result is the p-value of the property being within the specified range. If a threshold is being used, then the result is 1 if the property passes the threshold, 0 otherwise.
 
@@ -158,7 +157,7 @@ This is a quality test that takes any TObject, and compares it to a user-specifi
 This is a quality test that takes either a TH1, TGraph, or TGraph2D object and plots a user-defined function onto it, solving for one of the parameters of the function, then checks it against a user-defined range. The result is the p-value of the parameter being within the specified range.
 
 \subsection{Kolmogorov-Smirnov test}
-This is a quality test that takes either a TH1 or a TGraph object, and performs the Kolmogorov-Smirnov test between that object and a specified reference. The result is the p-value of the Kolmogorov-Smirnov test. The Kolmogorov-Smirnov test is intended for unbinned data, not histograms, but ROOT provides a function for performing the Kolmogorov-Smirnov test on histograms, so this is functionlity is also included for the sake of completeness.
+This is a quality test that takes either a TH1 or a TGraph object, and performs the Kolmogorov-Smirnov test between that object and a specified reference. The result is the p-value of the Kolmogorov-Smirnov test. The Kolmogorov-Smirnov test is intended for unbinned data, not histograms, but ROOT provides a function for performing the Kolmogorov-Smirnov test on histograms, so this is functionality is also included for the sake of completeness.
 
 \subsection{Pearson $\chi^2$ test} % We should probably cite the Pearson chi^2 test itself
 This is a quality test that takes a TH1 object and performs the Pearson $\chi^2$ test between that object and a specified reference. This test is analogous to the Kolmogorov-Smirnov test, but is designed specifically to work for binned histogram data. The result is the p-value output by the $\chi^2$ test. 
@@ -176,16 +175,237 @@ For each analysis module that is being run, an XML steering file is required to 
 
 Examples of using DQM4hep with testbeams both within the AIDA-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.
 
-\section{Documentation and user manual} % I should also expand this section a lot, including elements of the documentation and giving a general, broader overview of how to use the program as a whole, and examples of usage and in use.
+\section{Documentation and user manual} 
+One of the biggest hurdles for the promotion and uptake of a new framework is the lack of understanding or familiarity with it's use. Many research teams will continue to use existing software solutions, which may be suboptimal or difficult to use, according to the principle of ``better the devil you know than the devil you don't''. The first step to overcoming this is to produce clear, readable and complete documentation across the entire range of features the framework has.
 
-One of the biggest hurdles to promoting a new framework is the lack of understanding of installing, deplying, and using it. Many research teams will continue to use their existing software solutions, which may be suboptimal or difficult to use, according to the principle of ``better the devil you know than the devil you don't''. The first step to overcoming this is to produce clear, readable and complete documentation across the entire range of features the framework has.
+The DQM4hep framework has two sets of documentation with different intended readers and different aims, so these will be discussed separately.
 
-To this end, DQM4hep has two sets of documentation: a Doxygen webite and a user manual.
+\subsection{Doxygen documentation}
+Doxygen is a tool for automatically generating documentation resources for C++ code, relying on marked secctions of documentation written within the actual code itself. Doxygen is able to directly obtain the sturcture of code, objects, functions, etc. from the code, allowing it to automatically generate a complex and rich set of documentation that categorises and indexes objects based on their inheritance, namespace, etc.
 
-Many particle physics software frameworks provide documentation in the form of Doxygen, a documentation generator tool. Doxygen is extremely useful, as the documentation for functions and objects is written within the code itself, ensuring that documentation is written as the code is written. Doxygen also automatically compiles a documentation guide using HTML, automatically listing the relationships between objects, structures, functions, etc. that can be compiled and viewed locally, or hosted on the internet as a reference.
+Doxygen can also generate an HTML- or \LaTeX -based document that can be used as a local reference guide or hosted online. This makes Doxygen a powerful tool for documenting the technical aspects of code, demonstrating hierarchies of functions and objects, and an extremely useful reference guide for large programs or frameworks.
 
-One limitation with Doxygen documentation is that is not holistic. Doxygen relies upon the structures of the code, not the program as a whole. Doxygen is extremely useful for developers, as well as already-experienced users, but doesn't aid new users in learning to use a piece of software. Providing this more holistic documentation is very important, and would need to take the form of guides and walkthroughs for common procedures, intended for \emph{users} of the framework with little to no interest in the mechanics of it.
+While Doxygen documentation is extremely useful, it does have some limitations. Doxygen functions more as a technical reference for code, lacking any overviews or instructions due to it's automatic generation. This kind of documentation lacks a holistic element, and has no way for new users or those less familiar with the codebase to understand the overarching concepts. This can make it inaccessible for new users. The way this was addressed will be dicussed in the next section.
 
-To this end, DQM4hep also has a user manual, compiled using Read the Docs, which provides explanations and worked examples of individual components of the framework and running it as a whole. It also includes instructions and details on how to write plugins of all kinds, and how to run the framework both online and offline. 
+DQM4hep has a Doxygen website hosted on the internet, which is available here\cite{dqm4hep-doxygen}.
 
-The user manual can be found here\cite{dqm4hep-user-manual}, and the Doxygen can be found here\cite{dqm4hep-doxygen}.
+\subsection{User manual} % include elements of the documentation and overview of how to use program as a whole; examples of use.
+The existing documentation featured the common elements of the framework -- such as the plugin system, event interface, logger, and XML parser -- explained in detail, with clear examples and straightforward advice on their use.
+
+My contribution to this was to write in-depth explanations on the structure, usage, and creation of analysis modules and quality tests, the two parts that are most specific to end-users. The experience I acquired using the framework and deploying it on testbeams for the first time, as well as integrating it with different detectors, provided a strong knowledge base to write the user manual intended for a user approaching the framework for the first time. These testbeams are described in more detail in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}.
+
+The user manual can be found online here\cite{dqm4hep-user-manual}.
+
+\subsubsection*{Analysis module guide}
+There is an in-depth explanation of each of the component functions of an analysis module, discussing which actions or data processing should be done in each, and their intended purposes. There is also an explanation of the XML steering files that are necessary to run an analysis module, and instructions on how the executable is run, along with it's arguments.
+
+In addition to this there is a worked example of an analysis module from start to finish. A simplified particle physics detector and it's data format is defined, and then the reader is lead through the process of writing an analysis module step-by-step and function-by-function to obtain certain plots and results from the data. This is intended to give a more concrete demonstration of usage, as an easier to follow example. This section is also written in simple and plain English in order to be as accessible as possible.
+
+Along with this documentation there is the \texttt{dqm4hep-example} Github repository [cite], which contains all of the code used in the analysis module user manuals, as well as the required cmake and make files to begin compiling projects right away. The intention of this repository is for new users to make a copy, write their own modules, and have everything needed for compiling and running them ``out of the box'' straight away. The user manual references this repository, so that users can see the files from the worked example in their full form.
+
+\subsubsection*{Quality testing guide}
+There is extensive documentation of quality testing; each quality test is described in detail, including their purpose, output, required parameters, and optional parameters. In addition to this, there is a guide for how to run quality tests, including an explanation of running from the command line and an in-depth look at the structure of the XML steering files required.
+
+Finally there is a section explaining how to write new quality tests. This includes a detailed explanation of the purpose of each function within a quality test file, what the required outputs are and how to utilise them, error testing, and advice on maintaining a style consistent with the rest of the framework.
+
+%\textbf{Running a quality test}
+%
+%Quality tests can be run using the \texttt{dqm4hep-run-qtests} executable, found in \texttt{dqm4hep-core/bin/}. This executable handles the running of the actual binaries for each qtest, as well as obtaining monitor elements from the ROOT file and the setting of parameters. This executable has one required arguments and several optional ones, detailed below. 
+%
+%\textbf{Arguments}
+%
+%\begin{verbatim}
+%-h
+%--help
+%\end{verbatim}
+%
+%Displays usage information, then exits.
+%
+%\begin{verbatim}
+%-i <string>
+%--input-qtest-file <string>
+%\end{verbatim}
+%
+%(Required) Gives the path to the XML steering file that defines what quality tests to run, their parameters, and what monitor elements to run them on. See the section below for more information on these steering files.
+%
+%\begin{verbatim}
+%-c
+%--compress-json
+%\end{verbatim}
+%
+%Turns on compression for the JSON qtest report output file. Off by default.
+%
+%\begin{verbatim}
+%-w
+%--write-monitor-elements
+%\end{verbatim}
+%
+%Turns on writing of monitor elements in the qtest report. Off by default.
+%
+%\begin{verbatim}
+%-p <string>
+%--print-only <string>
+%\end{verbatim}
+%
+%%Prints only the quality reports of the given flag. Options are \texttt{undefined}, \texttt{invalid}, \texttt{insuf_stat}, \texttt{success}, \texttt{warning}, \texttt{error}.
+%
+%\begin{verbatim}
+%-e <string>
+%--exit-on <string>
+%\end{verbatim}
+%
+%Forces the program to exit if any qtest results in the given code. or greater. Options are \texttt{ignore}, \texttt{failure}, \texttt{warning}, \texttt{error}. This is \texttt{failure} by default.
+%
+%\begin{verbatim}
+%-v <string>
+%--verbosity <string>
+%\end{verbatim}
+%
+%The verbosity of the logger. Options are \texttt{trace}, \texttt{debug}, \texttt{info}, \texttt{warning}, \texttt{error}, \texttt{critical}, and \texttt{off}. This is \texttt{warning} by default.
+%
+%\begin{verbatim}
+%-q <string>
+%--qreport-file <string>
+%\end{verbatim}
+%
+%Gives the path of the qtest report output file (in JSON) format.
+%
+%\begin{verbatim}
+%-o <string>
+%--root-output <string>
+%\end{verbatim}
+%
+%Gives the path of a ROOT output file to save the processed mmonitor elements.
+%
+%\begin{verbatim}
+%--
+%--ignore_rest
+%\end{verbatim}
+%
+%Ignores any arguments following this flag.
+%
+%\begin{verbatim}
+%--version
+%\end{verbatim}
+%
+%Displays version information, then exits.
+%
+%\textbf{Steering files}
+%
+%Steering files use XML to store all teh information needed to execute a qtest. An example steering file can be found in \texttt{dqm4hep-core/tests/test\_samples.xml}.
+%
+%There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
+%
+%The \texttt{<qtests>} block defines the qtests to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the qtest being used – see the section for each qtest above.
+%
+%The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag, within which each monitor element is opened with \texttt{<fileElement>}. Inside this tag, all of the qtests to execute on this monitor element are given. In this example below, the qtests \texttt{ExampleTest1} and \texttt{ExampleTest2} are both performed on the monitor element \texttt{TestHistogram}:
+%
+%\begin{verbatim}
+%<monitorElements>
+%
+%  <file name="test_samples.root">
+%    <fileElement path="\TestDirectory" name="TestHistogram">
+%    <qtest name="ExampleTest1" />
+%    <qtest name="ExampleTest2" />
+%    </fileElement>
+%  </file>
+%
+%</monitorElements>
+%\end{verbatim}
+%
+%Some kinds of qtests require reference objects to compare against, which must be declared in the \texttt{<references>} block. References have a \texttt{name} parameter which gives the path to the file used as a reference, and an \texttt{id} which is a short tag for referring to them later in the XML file. For example:
+%
+%\begin{verbatim}
+%<references>
+%  <file id="mc-ref" name="montecarlo_reference_samples.root"/>
+%  <file id="ex-ref" name="experiment_reference_samples.root"/>
+%</references>
+%\end{verbatim}
+%
+%When a qtest that requires a reference is declared, the reference is given within the \texttt{<fileElement>} tag:
+%
+%\begin{verbatim}
+%<fileElement path="\TestDirectory" name="TestHistogram">
+%  <reference id="MyReference"/>
+%  <qtest name="ExampleTest1"/>
+%</fileElement>
+%\end{verbatim}
+%
+%This performs the qtest \texttt{ExampleTest1} on the monitor element \texttt{TestHistogram}, looking for another ROOT object of the same name within the file \texttt{MyReference} points to. It is also possible to use a specific object in a file as the reference:
+%
+%\begin{verbatim}
+%<fileElement path="\TestDirectory" name="TestHistogram">
+%  <reference id="MyReference" path="/path/to/the/reference/file" name="ReferenceHistogram"/>
+%  <qtest name="ExampleTest2"/>
+%</fileElement>
+%\end{verbatim}
+%
+%In this case, this performs \texttt{ExampleTest2} on the monitor element \texttt{TestHistogram}, using the object \texttt{ReferenceHistogram} as the reference. 
+%
+%\textbf{Writing quality tests}
+%
+%Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see here [NB] for more information on plugins, including how to write and compile them.
+%
+%The code for the built-in quality tests can be found in \texttt{dqm4hep-core/source/src/plugins/} and can be used as references or templates. Files for quality tests should be given a descriptive name in CamelCase, and end with \texttt{Test}, e.g. \texttt{ExactRefCompareTest.cc}.
+%
+%The code for a quality test requires only a single .cc file, which has four functions: the constructor, the destructor, readSettings, and userRun. Each is discussed in a separate subsection below. If required, further functions can be implemented as needed. This is left for the user to decide.
+%
+%Code should be written to catch common errors and throw appropriate exceptions, especially for errors that cause segmentation faults. This will help to avoid a qtest preventing other qtests from running should an error occur. Errors are reported using the \texttt{report.m\_message()} function, and the error message will appear in the summary of the qtest after it has run.
+%
+%\textbf{Constructor and destructor}
+%
+%For the constructor and destructor, it's enough to copy existing code, changing the name of the qtest and the variables to be initialised. The program that runs qtests handles everything else. Care should be taken to initialise variables properly and to give the qtest a good description:
+%
+%\begin{verbatim}
+%ExampleTest::ExampleTest(const std::string &qname)
+%    : QualityTest("ExampleTest", qname),
+%      m_someFloatParameter(0.f),
+%      m_someIntParameter(0)
+%{
+%  m_description = "A description of the test's functionality, as well as the meaning of the quality statistic it outputs.";
+%}
+%\end{verbatim}
+%
+%\textbf{readSettings}
+%
+%The \texttt{readSettings} function initialises the variables of the qtest from the XML steering file, which is loaded into memory via \texttt{xmlHandle}. This function should be used to read in information from the XML file and validate it to make sure the test can be run. Variables are read in using a combination of pre-processor macros and XmlHelper. For example:
+%
+%\begin{verbatim}
+%RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
+%\end{verbatim}
+%
+%Note that the above example will fail if the parameter is not present in the XML file, so should only be used for parameters that are required. If a parameter is optional, use the \texttt{RETURN\_RESULT\_IF\_AND\_IF} macro instead. This allows the parameter to be returned if it is found, or does nothing if it is not. For example:
+%
+%\begin{verbatim}
+%    RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
+%\end{verbatim}
+%
+%For more information on status codes, pre-processor macros, and XML parsing with XmlHelper, see the core tools section [NB here].
+%
+%Parameters should be checked to make sure that the qtest can be run and that the result is meaningful. While \texttt{XmlHelper::readParameter} and similar functions can take an optional fourth argument for a validator delta function, users should make code clear and readable by using \texttt{if-else} statements. This is especially important when checking against more complicated criteria.
+%
+%\textbf{userRun}
+%
+%The \texttt{userRun} function defines the process of the qtest itself, using the monitor element. The result \textit{must} be a float between 0.0 and 1.0 that represents the ``quality'' or ``goodness'' of the test. The meaning of this quality statistic depends on the test but is often a p-value. At absolute minimum, it should represent a pass-fail case, so that a passing qtest gives a quality of 1 and a failing qtest gives a quality of 0.
+%
+%The monitor element must first be cast to an appropriate class. This should be done using the \texttt{objectTo} function. For example, if the monitor element is a TH1:
+%
+%\begin{verbatim}
+%TH1* myHistogram = pMonitorElement->objectTo<TH1>();
+%\end{verbatim}
+%
+%After this, the object can be accessed using it's normal methods, and the qtest can be written using normal C++ code for ROOT objects.
+%
+%It is useful to include a check for whether the monitor element exists and is the correct type, to prevent segmentation faults, using a comparison to \texttt{nullptr} and throwing an appropriate status code if the check fails. For example:
+%
+%\begin{verbatim}
+%if (nullptr == pMonitorElement->objectTo<TH1>())
+%{
+%  report.m_message("Object does not exist or is of unrecognised type!");
+%  throw StatusCodeException(STATUS_CODE_INVALID_PTR);
+%}
+%\end{verbatim}
+%
+%The meaning of these status codes is documented under \textit{Status codes and useful preprocessor macros} in the core tools section [NB here too].
+%
+%Once the quality statistic of the test is known, it is output using \texttt{report.m\_quality}. Any other information can be output using \texttt{report.m\_message} – this is useful for including comments on the result.
