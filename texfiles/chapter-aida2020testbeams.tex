@@ -3,29 +3,27 @@
  
 \epigraph{I love fools' experiments. \\I am always making them.}{Charles Darwin}
 
-One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was originally developed during testbeams of the SiWECAL, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic nature. 
+One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was originally developed during testbeams of the \acrfull{siwecal}, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic nature. 
 
 In this chapter, deployment, testing and usage of DQM4hep on testbeams within the AIDA-2020 collaboration will be discussed in detail. For a testbeam where DQM4hep was deployed outside of the AIDA-2020 community, see Chapter \ref{chapter:ideatestbeam}. Three testbeams will be described in detail, as they represent the different stages of using DQM4hep as a data monitoring tool, from first implementation and deployment, to further developments, and finally as a mature tool.
 
 \section{Introduction}
-The CALICE testbeams were done within the \textit{Forschung mit Lepton Collidern}\footnote{``Research with lepton colliders'' in English} group (FLC) based at DESY in Hamburg, working on the Analogue Hadronic Calorimeter (AHCAL) prototype during its development. Regular testbeams were held at the DESY II synchrotron at DESY in Hamburg, Germany and at the Super Proton Synchrotron (SPS) at CERN in Geneva, Switzerland. The goals for these testbeams varied over time but common focuses for the hardware were power-pulsing tests, and commissioning and calibration of new detector boards to test variations and changes to the manufacturing process. The testbeams were often used as testbeds for data acquisition electronics and software, such as the EUDAQ data acquisition software, the beam interface (BIF) device, and DQM4hep.
+The CALICE testbeams were done within the \textit{Forschung mit Lepton Collidern}\footnote{``Research with lepton colliders'' in English} group (FLC) based at DESY in Hamburg, working on the \acrfull{ahcal} prototype during its development. Regular testbeams were held at the DESY II synchrotron at \acrshort{desy} in Hamburg, Germany and at the \acrfull{sps} at CERN in Geneva, Switzerland. The goals for these testbeams varied over time but common focuses for the hardware were power-pulsing tests, and commissioning and calibration of new detector boards to test variations and changes to the manufacturing process. The testbeams were often used as testbeds for data acquisition electronics and software, such as the \acrshort{eudaq} data acquisition software, the \acrshort{bif} device, and DQM4hep.
 
-DQM4hep was used as an online monitoring and data quality monitoring tool for AHCAl tesbeams beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
+DQM4hep was used as an online monitoring and data quality monitoring tool for \acrshort{ahcal} tesbeams beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
 
 \subsection*{The AHCAL prototype} % Full dossier on the AHCAL here: https://iopscience.iop.org/article/10.1088/1748-0221/5/05/P05004/pdf
-The Analogue Hadronic Calorimeter (AHCAL) is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (SiPMs) as active material. One of the important features of the AHCAL is that the prototypes were assembled using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, as well as the usage of pick-and-place machines for the assembly of layers and their electronics. It also uses power pulsing to reduce power consumption and heat production, rapidly cycling power to be active only when the beam is present, according to the known beam structure\cite{proceedings-ahcal-prototype}.
-
-[...]
+The \acrfull{ahcal} is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (\acrshort{sipm}s) as active material\cite{proceedings-ahcal-prototype}. One of the important features of the AHCAL is that the prototypes were designed to be made using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, and pick-and-place assembly of the layers and their electronics. It also uses power pulsing -- rapidly cycling power so that the electronics are active only when the beam is present, according to a known beam structure. This helps to reduce power consumption and head production, making cooling the layers easier.
 
 \section{May 2016 at DESY II}
-The first deployment of DQM4hep on an AHCAL testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test MIP calibration of a new AHCAL base unit (HBU), to test the power pulsing feature, and to perform TDC calibrations. In addition to these goals for the AHCAL, a device called a Beam Interface (BIF), another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. % Reference something for this - wiki pages are here (http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016) but ideally we want a report.
+The first deployment of DQM4hep on an AHCAL testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test \acrshort{mip} calibration of a new AHCAL base unit (HBU), to test the power pulsing feature, and to perform \acrshort{tdc} calibrations. In addition to these goals for the AHCAL, a device called a \acrfull{bif}, another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. % Reference something for this - wiki pages are here (http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016) but ideally we want a report.
 
 Before and during the testbeam, the majority of the development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. 
 
 File reader and streamer plugins for the LCIO data format were already available in the now-deprecated \texttt{dqm4ilc} package, which meant that the framework could open and access the data format already.
 
 \subsection{Data format}
-The data for the AHCAL is in an LCIO format, using an object type called LCGenericObject, which is a generic format for use when the existing data formats are not suitable. It comprises two parts: the block of data itself, held in 14-bit numbers; and a header containing user-defined parameters, in this case a timestamp, a typename for the object, and a description of the data contained in the object.
+The data for the AHCAL is in the \acrfull{lcio} format, using an object type called LCGenericObject, which is a generic format for use when the existing data formats are not suitable. It comprises two parts: the block of data itself, held in 14-bit numbers; and a header containing user-defined parameters, in this case a timestamp, a typename for the object, and a description of the data contained in the object.
 
 The structure of a single event in LCGenericObject format can be seen below, which is the result of using the \texttt{dumpevent} tool to dump the contents of an LCIO event to the command line:
 
@@ -57,20 +55,43 @@ The structure of a single event in LCGenericObject format can be seen below, whi
 
 In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, each holding a number of elements equal to the \texttt{NChannels} variable, in this case 36. Each element of these arrays corresponds to a single physical scintillator tile within the detector, and identifies which chip it belongs to using \texttt{ChipID}. 
 
-[...]
-
-\subsection{Analysis modules}
-The first analysis module to be developed was the \texttt{AHCALRawModule}, which [...]
+The \texttt{ADC14bit} and \texttt{TDC14bit} arrays contain binary data, which is represented above converted directly to decimal. However some bits represent data other than the actual ADC or TDC, such as validation bits, hit bits, etc. An explanation of the structure of these bits can be seen in [ref]. % Need to find the bit structure, maybe on a presentation Adrian gave?
 
 [...]
 
-This module was then split into two separate functionalities, called \texttt{AHCALRawModuleGlobal} and \texttt{AHCALRawModuleChannel}. [...]
+\subsection{Results}
+Over the course of the preparation week, the foundations were laid for the analysis module. This involved gaining a familiarity with the data structure, loading data from previous testbeams into DQM4hep offline, and attempting to read it in basic ways. The first module was not ready for the beginning of the testbeam proper, but a few days afterwards we were able to produce plots in DQM4hep from ``nearly-online'' testbeam data.
 
-[...] created a histogram for each channel present in the detector, filling each with the ADC value for each readout cycle in the whole run. This produced a per-channel spectrum of ADCs for each channel, integrated over the whole run. % Repeating self here.
+The first analysis module developed was the \texttt{AHCALRawModule}. The majority of the processing in this module was decoding of the data from the binary format and extracting the information from it. After this, validation bits and hit bits in the data were checked to classify data as `good' or `bad' hits. Then the actual ADCs and TDCs were filled into their respective histograms. 
 
-\subsection{Results} % Some graphs of the results, talking about how it went etc.
+The first module acted as a proof-of-concept, and once this was done further work started on creating more modules with a wider variety of features and plots to provide better coverage for online monitoring. We created and refined two separate modules during this testbeam -- \texttt{AHCALRawModuleChannel} and \texttt{AHCALRawModuleGlobal}. 
 
-[...]
+The channel module created a per-spectrum channel of all ADCs, integrated over the whole run. It was able to load a number of individual channels, though due to the memory requirement, it could not track all channels simultaneously. To work around this, we implemented a facility for the module to read which channels to monitor from the XML steering file, so that these could be defined at runtime. An example of some of the per-channel spectra created using this module can be seen in Fig. \ref{figure:aida/may2016/channelmodule}
+
+The global module produced a 2D histogram containing cells for each channel, coloured for the \acrshort{adc} in that channel. This didn't produce a hitmap as the geometry information was not available in this plot, but did allow easy identification of dead channels and channels that were in the beamspot. An example of this can be seen in Fig. \ref{figure:aida/may2016/globalmodule}.
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.85\textwidth]{../Pictures/GlobalModule-May2016.png} % Add axis labels: x is channel no., y is ChipID
+	\caption{Histogram produced by \texttt{AHCALRawModuleGlobal} showing all ADCs exceeding 300 over a single run. Dead or nonresponsive channels are seen as white squares. The horizontal gaps are due to the fact that some ChipIDs were not present.}
+	\label{figure:aida/may2016/globalmodule}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/ChannelModule-May2016.png} % Add an x-axis label to this too
+	\caption{Histogram produced by \texttt{AHCALRawModuleChannel} showing an ADC spectrum for a single run. The pedestal can be seen at ~300 and the MIP peak at ~650.}
+	\label{figure:aida/may2016/channelmodule}
+\end{figure}
+
+[...] % Text here talking about monitoring overall.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/PowerPulsingMipScans-May2016.png}
+	\caption{A full screencapture from the May 2016 testbeam showing the monitoring interface in use during power pulsing tests, displaying a MIP scan.}
+	\label{figure:aida/may2016/overview}
+\end{figure}
 
 \section{July 2016 DESY II}
 The next usage of DQM4hep was a testbeam also at DESY II during July 2016. The testbeam was to be one week long, with a one-week preparation period. The primary goal for DQM4hep in this testbeam was to establish hitmaps of the calorimeter. This would give a visual representation of the layers, allowing identification of the beamspot, allowing dead or mis-calibrated channels to be identified visually, as well as to monitor [...]

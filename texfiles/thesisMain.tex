@@ -10,6 +10,12 @@
 % Used to make the first paragraph of a section indented
 \usepackage{indentfirst}
 
+% Acronym glossary
+\usepackage[utf8]{inputenc}
+\usepackage[automake, acronym]{glossaries}
+\makeglossaries
+\input{acronyms.tex}
+
 % tikz settings
 \usepackage{tikz}
 \usetikzlibrary{quotes,angles,shapes,snakes,arrows,decorations.markings,decorations.pathmorphing,decorations.markings,decorations.text}
@@ -250,6 +256,14 @@ Tom Coates
 \phantomsection
 \addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{citations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACRONYM GLOSSARY
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Acronyms}
+\printglossaries
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
