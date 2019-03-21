@@ -5,11 +5,11 @@
 
 One of the primary goals of future lepton colliders like the ILC and CLIC is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the Standard Model to be probed with unprecedented accuracy and coverage.
 
-One of the uniquely accessible measurements for these colliders is a precision measurement of the top-Higgs Yukawa coupling. This serves as a further test for the Standard Model and [...] % Why is this number imporant?
+One of the uniquely accessible measurements for these colliders is a precision measurement of the top-Higgs Yukawa coupling. This serves as a further test for the \acrfull{SM} and [...] % Why is this number imporant?
 
-Another important avenue to pursue is CP-violation in the Higgs sector. Since Higgs physics is still an emerging field, it is not yet known whether CP-violation is present in the Higgs sector to the degree that the Standard Model predicts. It is also a fertile area for investigation of BSM physics, as many BSM models predict additional Higgs bosons, or Higgs bosons with characteristics that differ from the SM Higgs.
+Another important avenue to pursue is \acrshort{CP}-violation in the Higgs sector. Since Higgs physics is still an emerging field, it is not yet known whether CP-violation is present in the Higgs sector to the degree that the \acrlong{SM} predicts. It is also a fertile area for investigation of BSM physics, as many BSM models predict additional Higgs bosons, or Higgs bosons with characteristics that differ from the \acrshort{SM} Higgs.
 
-The $e^+ e^- \rightarrow t\overline{t}h$ event (see Fig. \ref{figure:physics/SM/feynman-tth}) is one process that is both accessible to CLIC's design energy and extremely useful for interrogating the Higgs sector for CP-violation and BSM physics. The production of Higgs bosons allows for several observables that would be sensitive to any Higgs bosons with an odd CP quantum number (or ``CP-odd'' Higgs bosons). Determining the detectors' sensitivity to the ratio of CP-odd and CP-even Higgs bosons (also called the CP mixing angle) will allow further understanding of the limits of the Standard Model, as well as the limits on the various BSM physics models, and regions of interest for possible new physics.
+The $e^+ e^- \rightarrow t\overline{t}h$ event (see Fig. \ref{figure:physics/SM/feynman-tth}) is one process that is both accessible to CLIC's design energy and extremely useful for interrogating the Higgs sector for CP-violation and \acrshort{BSM} physics. The production of Higgs bosons allows for several observables that would be sensitive to any Higgs bosons with an odd CP quantum number (or ``CP-odd'' Higgs bosons). Determining the detectors' sensitivity to the ratio of CP-odd and CP-even Higgs bosons (also called the CP mixing angle) will allow further understanding of the limits of the Standard Model, as well as the limits on the various BSM physics models, and regions of interest for possible new physics.
 
 [...]
 
@@ -193,47 +193,47 @@ Following this, the two beam jets are removed from the processing, and a further
 
 [...] [Tau finding]
 
-The final step is to use use PandoraPFAs to generate Particle Flow Objects (PFOs) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
+The final step is to use use PandoraPFAs to generate \acrlong{PFO}s (\acrshort{PFO}s) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
 
 \subsubsection{Analysis processing [?]}
 Once the sample has been processed, it must be analysed. The first step of this is a program used to extract various kinematic variables of both particles in the events ($m_0$, $p_t$) and the event itself ($\Psi$, $T$). This is the Treemaker program, and [...] [Chi-squared extraction of invariant masses] [Feeding into TMVA to generate BDTs]
 
 [...]
 
-A flow diagram of the analysis process, and the rejection points, is shown in Fig. \ref{figure:physics/SM/CLIC-analysis-algorithm}.
+%A flow diagram of the analysis process, and the rejection points, is shown in Fig. \ref{figure:physics/SM/CLIC-analysis-algorithm}.
 
 % The flow diagram below is of questionable usefulness. Maybe add an extra rejection stage at the reconstruction step (if the chi-squared of the Higgs invariant mass is bad, this indicates an event with no Higgs which should be discarded.
 
 % Consider also folding the diagram a bit; we can run horizontally from start to lepton decision, then downwards but dog-legging the boxes. This will make the diagram a little bit more compact, though maybe at the expense of immediate readability.
 
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}[node	distance = 3cm, auto, scale=0.6, every node/.style={scale=0.6}]
-		\node [block, minimum width=4em, minimum height=4em, text width=3em] (start) {Start};
-	   	\node [block, below of=start] (jetclus) {Jet clustering ($k_t$)};
-		\node [block, below of=jetclus] (lepton) {Isolated lepton finder};
-		\node [decision, below of=lepton] (leptondecision) {No. of leptons};		
-		\node [block, right of=leptondecision, fill=red!20, node distance = 5cm] (twoleptons) {Reject};
-		\node [left of=leptondecision, node distance = 6.5cm] (dummytwo) {};
-	   	\node [block, below of=leptondecision] (jetreclus) {Jet re-clustering (Durham)};
-		\node [block, below of=jetreclus] (flavtag) {Flavour tagging};
-		\node [block, below of=flavtag] (recon) {Reconstruction (PandoraPFAs)};
-		\node [block, below of=recon] (neuralnet) {Boosted Decision Trees (TMVA)};
-		\node [block, below of=neuralnet, minimum width=4em, minimum height=4em, text width=3em] (result) {Result};
-
-		\path [line] (start) -- (jetclus);
-		\path [line] (jetclus) -- (lepton);
-		\path [line] (lepton) -- (leptondecision);
-		\path [line] (leptondecision) -- node {0-1 \linebreak}(jetreclus);
-		\path [line] (leptondecision) -- node {2 \linebreak} (twoleptons);
-		\path [line] (jetreclus) -- (flavtag);
-		\path [line] (flavtag) -- (recon);
-		\path [line] (recon) -- (neuralnet);
-		\path [line] (neuralnet) -- (result);
-	\end{tikzpicture}
-	\caption{A flow diagram of the algorithm for analysis of ttH events, and rejection.}	
-	\label{figure:physics/SM/CLIC-analysis-algorithm}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\begin{tikzpicture}[node	distance = 3cm, auto, scale=0.6, every node/.style={scale=0.6}]
+%		\node [block, minimum width=4em, minimum height=4em, text width=3em] (start) {Start};
+%	   	\node [block, below of=start] (jetclus) {Jet clustering ($k_t$)};
+%		\node [block, below of=jetclus] (lepton) {Isolated lepton finder};
+%		\node [decision, below of=lepton] (leptondecision) {No. of leptons};		
+%		\node [block, right of=leptondecision, fill=red!20, node distance = 5cm] (twoleptons) {Reject};
+%		\node [left of=leptondecision, node distance = 6.5cm] (dummytwo) {};
+%	   	\node [block, below of=leptondecision] (jetreclus) {Jet re-clustering (Durham)};
+%		\node [block, below of=jetreclus] (flavtag) {Flavour tagging};
+%		\node [block, below of=flavtag] (recon) {Reconstruction (PandoraPFAs)};
+%		\node [block, below of=recon] (neuralnet) {Boosted Decision Trees (TMVA)};
+%		\node [block, below of=neuralnet, minimum width=4em, minimum height=4em, text width=3em] (result) {Result};
+%
+%		\path [line] (start) -- (jetclus);
+%		\path [line] (jetclus) -- (lepton);
+%		\path [line] (lepton) -- (leptondecision);
+%		\path [line] (leptondecision) -- node {0-1 \linebreak}(jetreclus);
+%		\path [line] (leptondecision) -- node {2 \linebreak} (twoleptons);
+%		\path [line] (jetreclus) -- (flavtag);
+%		\path [line] (flavtag) -- (recon);
+%		\path [line] (recon) -- (neuralnet);
+%		\path [line] (neuralnet) -- (result);
+%	\end{tikzpicture}
+%	\caption{A flow diagram of the algorithm for analysis of ttH events, and rejection.}	
+%	\label{figure:physics/SM/CLIC-analysis-algorithm}
+%\end{figure}
 
 [...]
 
@@ -298,7 +298,7 @@ Previous analyses that have utilised the up-down asymmetry as an observable have
 
 However, techniques developed in recent years, intended primarily for observations in ATLAS at the LHC, have refined methods for this, and using the work of [reference], it is now possible to obtain the total net charge of the jet -- that is, the charge of the initial quark that creates the jet. 
 
-This technique is strongly-dependent upon the accuracy and efficiency of both particle reconstruction and jet clustering, but these techniques are constantly improving, and Pandora Particle Flow Algorithms (PFAs) and new jet clustering methods are becoming increasingly sophisticated. Combined with the cleaner final states in a lepton collider, these techniques allow the charge of a jet to be determined with useful confidence.
+This technique is strongly-dependent upon the accuracy and efficiency of both particle reconstruction and jet clustering, but these techniques are constantly improving, and \acrfull{PandoraPFA} and new jet clustering methods are becoming increasingly sophisticated. Combined with the cleaner final states in a lepton collider, these techniques allow the charge of a jet to be determined with useful confidence.
 
 The charge of a jet can be determined by summing the charges of all particles in the jet, weighted by $p_T$ and normalised by the $p_T$ of the entire jet:
 		
