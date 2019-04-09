@@ -1,20 +1,22 @@
 \chapter{IDEA testbeams}
 \label{chapter:ideatestbeam}
 
-\epigraph{New quote split \\ over two lines}{Author McWriter}
+\epigraph{[new quote split \\ over two lines]}{[author]}
 
-While DQM4hep was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In order to test whether DQM4hep was truly generic -- and able to adapt to \textit{any} type of detector, it needed to be tested outside of the AIDA-2020 groups and facilities. An ideal opportunity for this arose with the IDEA testbeam, formed of a collaboration of Italian universities working on a number of particle detectors, hoping to run a single combined testbeam at the CERN \acrshort{SPS}. 
+While DQM4hep was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the CALICE collaboration. To be sure that DQM4hep was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and CALICE collaborations.
 
-[...]
+An ideal opportunity arose for this in the form of the IDEA testbeam. This testbeam was run by a collaboration of Italian and US universities working on four different particle physics detectors of different types, intending to run a single combined testbeam of all four instruments at the CERN \acrshort{SPS} in September 2018. DQM4hep was offered as a possible unified monitoring solution that could integrate information from all four detectors into the same tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test DQM4hep out of its established operating range.
 
 \section{Introduction}
-The combined testbeam took place between 5th-12th September 2018 at the CERN SPS beamline facility. [...]
+The combined testbeam took place between in September 2018 at the CERN SPS beamline facility. The testbeam itself lasted a week, from the 5th-12th September, with a preparation period of one week before this for installation, calibration, etc. [...]
 
-\subsection*{Detectors present at the combined testbeam}
+\subsection*{Detectors at the combined testbeam}
 The combined testbeam comprised four separate dectors: a calorimeter, a muon detector and preshower, a drift chamber, and a silicon photomultiplier. One of the biggest challenges involved in the testbeam was operating these four different detectors [...]
 
-\subsubsection{RD52 calorimeter}
-The calorimeter was formed of two layers of 36 tiles each, totaling 72 tiles, stacked behind each other. One layer used Cherenkov detectors, the other used scintillator tiles. In addition, there was a group of leakage detectors that detected whether individual events were contained within the calorimeter or not. [DWC - Delayed Wire Chamber?]
+\subsubsection{RD52 calorimeter} % Another reference: https://arxiv.org/pdf/1703.09120.pdf
+The \acrfull{DREAM} calorimeter, also called the RD52 calorimeter, is a dual-readout calorimeter built, developed and tested by the RD52 collaboration by researchers based in universities at Gagliari, Cosenza, Pavia, Pisa, Rome, Iowa State and Texas Tech. 
+
+The aim of the calorimeter is to use both the \v{C}erenkov and scintillator techniques simultaneously (hence ``dual-readout'') to improve calorimetry, especially using calorimeters to measure four-vectors of jets and single hadrons, which suffer a reduced precision compared to electrons and photons. By comparing signals from \v{C}erenkov light and scintillator light, the electromagnetic shower fraction can be measured on an event-by-event basis, eliminating the effects of fluctuations. %Reference here: https://iopscience.iop.org/article/10.1088/1742-6596/404/1/012068/pdf
 
 \subsubsection{Muon chamber and preshower}
 [...]
@@ -25,37 +27,40 @@ The calorimeter was formed of two layers of 36 tiles each, totaling 72 tiles, st
 \subsubsection{Drift chamber}
 [...]
 
-\section{Progression of the testbeam} % Little awkward title
+\section{Monitoring}
 [...]
 
-Existing monitoring within the DREAM collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [other things]. This facility was reproduced in DQM4hep quickly using for-loops in both the C++ code and XML steering files, allowing this to be done with comparatively little code.
+Existing monitoring within the DREAM collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in DQM4hep quickly using for-loops in both the C++ code and XML steering files, allowing this to be done with comparatively little code.
 
 \subsection{File readers}
-[...]
+Writing file readers for the different detectors meant first understanding the structure of their data and file types. Once data has arrived from the data acquisition device, each of the detectors wrote to a different `raw' format. However, the RD52 calorimeter, drift chamber, and muon and preshower all produced ROOT ntuple files as part of their data acquisition process, in addition to different file formats. It was decided to use these ROOT ntuples as the file format to read into DQM4hep, as due to support for ROOT within the framework, reading data from ROOT ntuples is simpler.
 
-The RD52 calorimeter, drift chamber, and muon and preshower were all read using ROOT ntuple files, generated by the DAQ one step after reading and saving the data in a raw binary format. This made the file reader code simpler, faster and more readable, as it only needed to walk through ROOT trees and extract data from leaves event-by-event, rather than reading from raw binary or hex data.
+For each of these three instruments a file reader was developed that walked through the ROOT trees, extracting data from the leaves event-by-event, then converted it to DQM4hep's inbuilt \texttt{GenericEvent} format. Choosing to make them into GenericEvents meant that there was no need to implement an additional event type, simplifying the connection between the file readers and analysis modules. The GenericEvent type was also easily suited to the type of data, as the majority of the data were series of numbers, which were easily converted into C++ vectors to store in the GenericEvent.
 
-For the silicon photomultiplier GEM data, the ``raw'' data format was a text file, containing an \acrshort{XML} header followed by a large amount of data in \acrfull{CSV}. This file could be loaded directly into DQM4hep, the XML header separated and parsed with DQM4hep's internal XML parsing libraries, and the remaining data parsed. The comma-separated values could be easily parsed using the \texttt{dqm4hep::core::tokenize} function, which takes a string, a delimiter, and a vector, and parses the string into values separated by the delimiter, loading them into the vector. This made extracting the GEM data extremely simple, even in this format.
+An additional motivation for using the ROOT ntuple as the data source was that some of the file type, notably the drift chamber, had not finalised their data structure at the beginning of the testbeam. Using the higher-level structure provided by a ROOT file would be easier to change in the future than reading in data in a binary, hex, text or CSV format.
+
+For the silicon photomultiplier GEM data, the ``raw'' data format was a text file, containing an \acrshort{XML} header followed by a large amount of data in \acrfull{CSV}. This file could be loaded directly into DQM4hep, the XML header separated and parsed with DQM4hep's internal XML parsing libraries, and the remaining data parsed. The comma-separated values could be easily parsed using the \texttt{dqm4hep::core::tokenize} function, which takes a string, a delimiter, and a vector, and parses the string into values separated by the delimiter, loading them into the vector. This made extracting the GEM data extremely simple, even in this format. It also allowed the parameters in the XML header, which included run numbers and physical information of the detector, to be passed into DQM4hep and the analysis module, using the \texttt{core::Run} object type.
 
 \subsection{Analysis modules}
-[...]
+During the course of the testbeam, four analysis modules were developed, one for each detector. To begin with, these were `dummy' modules -- analysis modules that receive events then do nothing. Dummy modules like this are required to run file readers offline, but are simple to create as they can be produced from a template with minimal changes.
+
+Once the file reader for the RD52 calorimeter was complete, the dummy analysis module for this detector was then changed into a functional module, \texttt{RD52MainModule}, to produce plots from the data. The RD52 was chosen as it was the most data-rich of the detectors in the testbeam, and also contained the ancillary detectors, which allow particle selection efficiencies to be studied.
+
+During the course of the testbeam, the \texttt{RD52MainModule} was developed to read in and arrange data from the ROOT ntuples and arrange them into distinct vectors for the ADCs, TDCs, pedestals, and ancillaries. Following this, pedestal subtraction of all ADC and TDC channels was completed. Then the malfunctioning tiles and electronics that meant data had to be re-routed through other available channels was integrated so that the ADC information in the analysis module represented the full state of the detector was completed. 
+
+There was insufficient time at the testbeam to develop the monitoring more complex than this, but further development continued offline with saved data from the testbeam to continue the proof-of-concept. This will be discussed in more detail in the following section.
 
 \section{Results}
-[...]
+Monitoring within DQM4hep was able to replicate all the existing monitoring solutions, combining the monitoring tools for all four detector systems into one framework. [...] However due to time constraints, more complex monitoring such as online processing was not implemented during the testbeam. [...] 
 
-\subsection{ADC to energy calibration}
-[...]
+Following the testbeam, it was decided that DQM4hep could be used to perform some offline analysis functions in addition to the work at the testbeam, as a further proof of its ability to do this at testbeams. [...]
 
-This required several runs whose characteristics were similar or identical, except for the energy of the beam. The runs chosen where run numbers [...], summarised in Table [ref].
-
-A plot was made of the average \acrshort{ADC} per event summed over all channels, against the beam energy for that run. See Fig. [ref]. Then using a linear least squares fit, the equation that describes the transformation from ADC to energy was found.
-
-[...]
+Several analysis goals were outlined to attempt to implement in DQM4hep. These were performing the tower ADC calibration, the ADC to energy calibration, and particle selection efficiencies. 
 
 \subsection{Tower ADC calibration}
 [...]
 
-Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter ADCs were not calibrated to each other [?]. In order to fix this, 
+Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter ADCs were not calibrated to each other [?]. In order to fix this, [...]
 
 Two sets of calibration runs were performed. The first set covered Towers 1-29 using an 80 GeV secondary beam ($\pi$ and $e^{-}$), with the beam pointed at each tower in sequence for 29 runs. The second set used a 20 GeV electon beam, covering Towers 30-36 plus Tower 15. Tower 15 recieved runs in both sets in order to calibrate the two sets to each other. 
 
@@ -177,14 +182,13 @@ Since Tower 15 was present in both runs, this was chosen as the reference, and a
 	\label{figure:testbeam/results/calibrationafter}
 \end{figure}
 
+\subsection{ADC to energy calibration}
+[...] It was known from prior testbeams that the response of the calorimeter was linear with ADC, therefore the energy calibration could be extrapolated from a single datapoint. [...]
+
 \subsection{Particle selection efficiencies}
-[...]
+An important result for the calorimeter was determining the efficiency with which it could determine the beam composition and select for certain types of particles based on kinematic properties. The calorimeter was designed with a set of ancillary detectors to help discriminate between particle of different types. These provide a first selection of different particles, allowing us to use kinematic properties from the calorimeter itself to perform a second particle selection, and then compare the two.
 
-\subsubsection{Using the ancillary detectors}
-
-The RD52 calorimeter was designed with a set of ancillary detectors to help discriminate between particle of different types. These provide a first selection of different particles, allowing us to use kinematic properties from within the calorimeter itself to perform a second particle selection, and then compare the two. [...]
-
-The two ancillary detectors used for particle selection are the [] muon trigger. [...]
+The two ancillary detectors used for particle selection are the muon trigger and ...]
 
 [...]
 
