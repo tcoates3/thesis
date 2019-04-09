@@ -5,18 +5,18 @@
 
 One of the most important aspects of testing and developing DQM4hep was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. DQM4hep was originally developed during testbeams of the \acrfull{SiWECAL}, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for AIDA-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic nature. 
 
-In this chapter, deployment, testing and usage of DQM4hep on testbeams within the AIDA-2020 collaboration will be discussed in detail. For a testbeam where DQM4hep was deployed outside of the AIDA-2020 community, see Chapter \ref{chapter:ideatestbeam}. Three testbeams will be described in detail, as they represent the different stages of using DQM4hep as a data monitoring tool, from first implementation and deployment, to further developments, and finally as a mature tool.
+In this chapter, deployment, testing and usage of DQM4hep on testbeams within the AIDA-2020 collaboration will be discussed in detail. For a testbeam where DQM4hep was deployed outside of the AIDA-2020 community, see Chapter \ref{chapter:ideatestbeam}. Three testbeams will be described in detail, as they represent the different stages of using DQM4hep as a data monitoring tool, from first implementation and deployment, to further developments, and finally as a mature tool integrated into the workflow of a testbeam.
 
-\section{Introduction}
-The \acrshort{CALICE} testbeams were done within the \acrfull{FLC}\footnote{EN: Research with Lepton Colliders} group based at DESY in Hamburg, working on the \acrfull{AHCAL} prototype during its development. Regular testbeams were held at the DESY II synchrotron at \acrshort{DESY} in Hamburg, Germany and at the \acrfull{SPS} at CERN in Geneva, Switzerland. The goals for these testbeams varied over time but common focuses for the hardware were power-pulsing tests, and commissioning and calibration of new detector boards to test variations and changes to the manufacturing process. The testbeams were often used as testbeds for data acquisition electronics and software, such as the \acrshort{EUDAQ} data acquisition software, the \acrshort{BIF} device, and DQM4hep.
+\subsection*{CALICE testbeams}
+The \acrshort{CALICE} testbeams were done with the \acrfull{FLC}\footnote{EN: Research with Lepton Colliders} group based at DESY in Hamburg, working on the \acrfull{AHCAL} prototype during its development. Regular testbeams were held at the DESY II synchrotron at \acrshort{DESY} in Hamburg, Germany and at the \acrfull{SPS} at CERN in Geneva, Switzerland. The goals for these testbeams varied over time but common focuses for the hardware were power-pulsing tests, and commissioning and calibration of new detector boards to test variations and changes to the manufacturing process. The testbeams were often used as testbeds for data acquisition electronics and software, such as the \acrshort{EUDAQ} data acquisition software, the \acrshort{BIF} device, and DQM4hep.
 
 DQM4hep was used as an online monitoring and data quality monitoring tool for \acrshort{AHCAL} tesbeams beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the CERN SPS in May 2017 and June 2018.
 
 \subsection*{The AHCAL prototype} % Full dossier on the AHCAL here: https://iopscience.iop.org/article/10.1088/1748-0221/5/05/P05004/pdf
 The \acrfull{AHCAL} is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (\acrshort{SiPM}s) as active material\cite{proceedings-ahcal-prototype}. One of the important features of the \acrshort{AHCAL} is that the prototypes were designed to be made using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, and pick-and-place assembly of the layers and their electronics. It also uses power pulsing -- rapidly cycling power so that the electronics are active only when the beam is present, according to a known beam structure. This helps to reduce power consumption and head production, making cooling the layers easier.
 
-\section{May 2016 at DESY II}
-The first deployment of DQM4hep on an AHCAL testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test \acrshort{MIP} calibration of a new AHCAL base unit (HBU), to test the power pulsing feature, and to perform \acrshort{TDC} calibrations. In addition to these goals for the AHCAL, a device called a \acrfull{BIF}, another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. % Reference something for this - wiki pages are here (http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016) but ideally we want a report.
+\section{May 2016 at DESY II} % Wiki for this testbeam: http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016
+The first deployment of DQM4hep on an AHCAL testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test \acrshort{MIP} calibration of a new AHCAL base unit (HBU), to test the power pulsing feature, and to perform \acrshort{TDC} calibrations. In addition to these goals for the AHCAL, a device called a \acrfull{BIF}, another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. 
 
 Before and during the testbeam, the majority of the development for AHCAL-specific analysis modules was undertaken. Prior to this, DQM4hep had only been used on SiWECAL beams, and was untested for other detectors. 
 
@@ -124,7 +124,7 @@ An example of the monitoring interface in use can be seen in Fig. \ref{figure:ai
 \end{figure}
 
 \section{July 2016 DESY II}
-The next usage of DQM4hep was a testbeam during July  2016, also at the DESY II facility. The testbeam was to be one week long, with a one-week preparation period. The primary goal for DQM4hep in this testbeam was to establish hitmaps of the calorimeter. This would give a visual representation of the layers, allowing identification of the beamspot, allowing dead or mis-calibrated channels to be identified visually, as well as to monitor [...]
+The next usage of DQM4hep was a testbeam during July  2016, also at the DESY II facility. The testbeam was to be one week long, with a one-week preparation period. The primary goal for DQM4hep in this testbeam was to establish hitmaps of the calorimeter. This would give a visual representation of the layers, allowing identification of the beamspot, allowing dead or mis-calibrated channels to be identified visually.
 
 Creating a hitmap for the AHCAL was nontrivial, as the information coming from the data acquisition device and stored in LCIO format did not encode location. Each channel was instead identified by its ``electronics number'' -- a combination of the ChipID of the board the channel was located on, and the number of the channel on that board.
 
@@ -136,40 +136,40 @@ For analysis modules needing geometry, the XML file was given as a required para
 
 Using these new functions, another analysis module called \texttt{AHCALHitmap} was written that created a two dimensional histogram, with each bin representing a channel on the $x$ and $y$ axes for a single layer. This histogram was then filled with with the ADCs of that channel for the whole event, producing a hitmap.
 
-\subsection{Results}
-[...]
+The analysis modules for creating hitmaps were prepared ahead of the testbeam, and used extensively. They were used to identify channels that were dead or nonresponsive, as well as to confirm already-known nonresponsive channels.
 
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/AHCALHitmapSingle.png}
-	\caption{[Caption for single hitmap]}
+	\caption{A hitmap for a single layer during the July 2016 testbeam, showing all channels with ADCs higher than 300. The beamspot is clearly visible in the centre.}
 	\label{figure:aida/july2016/single-hitmap}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/AHCALHitmapFour.png}
-	\caption{[Caption for four hitmaps]}
+	\caption{A collection of hitmaps for four layers in the stack during the July 2016 testbeam. The beamspot is visible, as are several dead or unresponsive channels in the top-left and top-right hitmaps.}
 	\label{figure:aida/july2016/four-hitmap}
 \end{figure}
 
-\section{May 2017 at CERN SPS} % Wiki pages are here (http://flcwiki.desy.de/AHCALTestBeamCERN2017) but we ideally want an actual report for this.
 
-During May 2017, testbeam time at CERN's Super Proton Synchrotron (SPS) facility was used for further tests for the AHCAL.
+\section{May 2017 at CERN SPS} % Wiki pages are here (http://flcwiki.desy.de/AHCALTestBeamCERN2017) but we ideally want an actual report for this.
+During May 2017, testbeam time at CERN's Super Proton Synchrotron (SPS) facility was used for further tests for the AHCAL. One of the goals for this testbeam was to evaluate the performance of the power pulsing feature in magnetic fields up to 1.5T. The process of manufacturing the detector layers and boards was being automated, and a larger number of layers were available for this testbeam, so it also presented a way to test using a larger number of channels than before. 
+
+Part of the programme for the testbeam was to use the electron and muon beams available at the SPS for calibrating the newly-produced layers, as well as doing an energy scan with a pion beam.
+
+The monitoring with DQM4hep in this testbeam included analysis modules that monitored the individual channels of all 40 large layers, as well as producing hitmaps of several types, such as unweghted, ADC-weighted, and near-pedestal. Standalone modules monitoring the temperature of the detector hardware was also used. 
+
+At this point in the testbeam process, the online monitoring system with DQM4hep had matured, partially due to the data format of the detector having been fixed for some time. Experience with running, using, and modifying the analysis modules had been disseminated throughout the team, and team members wrote their own analysis modules for producing plots.
+
+Because of this, during the testbeam DQM4hep was used as intended -- as a tool for shifters to use to diagnose and troubleshoot problems with the beams or detectors. A specific expert on DQM4hep was not necessary, as enough people operating the testbeam understood DQM4hep to be able to modify analysis modules on the fly according to their needs.
+
+% In previous testbeams, analysis modules that produced correlation plots were developed by other team members,
 
 \begin{center}
-	[Figure: we have plenty of pictures of the testbeam area and the installation.]
+	[Photographs from the installation and testbeam area go here]
 \end{center}
 
-[...]
-
-During this testbeam, the analysis modules had become mature, and represented the majority of the needed online monitoring for the testbeam, especially because the data format of the detector had been fixed for some time. Because of this, after the initial set-up and verification stages, very little management or editing of the monitoring software was necessary. It was instead used as intended -- a tool for shifters to use to troubleshoot problems with the beam or detectors. It was successfully used to identify dead channels on several of the boards [confirm this].
-
-[...]
-
-\subsection{Results}
-[...]
-
 \begin{center}
-	[Plots from the AHCAL CERN testbeam]
+	[Plots from the testbeam]
 \end{center}
