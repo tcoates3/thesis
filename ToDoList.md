@@ -15,4 +15,4 @@
    - Start writing some code to try to do the jet charge determination, both at MC-level and reconstruction-level
    - Test out the Valencia algorithm on some of the tth stuff (if possible with this large sample size?)
 4. **Thesis Writing**
-   - [...]
+   - Finish chapters 2 and 6 by the end of April (?)
