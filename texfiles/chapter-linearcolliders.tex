@@ -90,41 +90,86 @@ On 7th March 2019, the Japanese government expressed that it would not make a pr
 
 %-Beam polarisation allows a high rate of higgstrahlung processes, and thus a high number of Higgs events to examine
 
-\subsection{ILC detectors}
-[...]
+%One of the unique features of the ILC is the ``push-pull'' detector system. This is a moving platform in the chamber housing the interaction point, upon which two detectors can be mounted. The platform can be moved to change which detector is in the interaction point, allowing a linear collider to function with multiple detectors. This allows the two detectors to specialise for different physics studies and goals, much like the various experiments at the Large Hadron Collider at CERN, which would normally not be possible with a linear collider.
 
-One of the unique features of the ILC is the ``push-pull'' detector system. This is a moving platform in the chamber housing the interaction point, upon which two detectors can be mounted. The platform can be moved to change which detector is in the interaction point, allowing a linear collider to function with multiple detectors. This allows the two detectors to specialise for different physics studies and goals, much like the various experiments at the Large Hadron Collider at CERN, which would normally not be possible with a linear collider.
+\subsection{ILC detectors}
+Detector design for the \acrshort{ILC} is driven by the requirements of the physics goals of the \acrshort{ILC} -- many of the physics goals and targeted processes are highly dependent upon hadronic states, so precise jet reconstruction and high jet energy resolution is critical to meeting the expectations placed upon the \acrshort{ILC}. 
+
+The only technique thought to be capable of delivering the necessary level of accuracy is \textit{particle flow}. Particle flow is an integrated approach which uses algorithms to examine the flow of energy through all parts of the detector to correlate different signals together. The requirements for the use of particle flow is a very good separation of charged and neutral particles, translating into a need for high-efficiency trackers and calorimeters capable of high-efficiency reconstruction of neutral particles. The design of the detectors for the \acrshort{ILC} has proceeded from these requirements.
+
+The application of particle flow algorithms needs large separation between charged and neutral particles. This means having a magnetic field containing the vertex detector, tracker, and calorimeter systems, so that charged particles' path is curved by the field. In general, this separation depends on the physical size of the detector and the strength of the magnetic field. Thus there are essentially two basic approaches to detector design: a large detector with a lower magnetic field, using the size of the detector to separate charged particles from neutral particles; or a more compact detector utilising a much stronger magnetic field to create the needed separation.
+
+This is characterised by the the two detector concepts for the \acrshort{ILC}: the large \acrlong{ILD} using a 3.5T magnetic field, and the compact \acrlong{SiD} using a much stronger magnetic field. These two detectors will be discussed in detail below.
 
 \subsubsection{The International Large Detector (ILD)}
 % https://indico.cern.ch/event/765096/contributions/3295752/attachments/1785276/2906298/ILD_European_Strategy_Document.pdf
 % Paper on Particle Flow: https://arxiv.org/pdf/0907.3577.pdf
 
-The \acrfull{ILD} is a detector concept proposal produced for the \acrlong{ILC}. The design of the ILD is driven by the requirements of the physics goals of the ILC -- many of the physics goals and targeted processes are fully hadronic states, so precise jet reconstruction and high jet energy resolution is critical to meeting the expectations placed upon the ILC. 
+The \acrfull{ILD} is a detector concept proposal produced for the \acrlong{ILC}. In general, the \acrshort{ILD} is intended as a multi-purpose detector, with a strong focus on optimising the performance of particle flow algorithms as much as possible. In general
 
-The only technique thought to be capable of delivering the necessary level of accuracy is particle flow, an integrated approach which uses algorithms to examine the flow of energy through all parts of the detector to correlate different signals together. The requirements for the use of particle flow is very good separation of charged and neutral particles, translating into a need for a high-efficiency tracker, and a calorimeter capable of high-efficiency reconstruction of neutral particles. The design of the ILD has proceeded from the requirements of the particle flow approach, to maximise its potential.
+[...]
 
-For vertex tracking, the \acrshort{ILD} uses three double-layers of pixel detectors using \acrfull{MAPS} technology, with a spatial resolution of 4 \mu m and a timing resolution of 2-4 \mu s. For tracking, the \acrshort{ILD} uses a hybrid system, combining a gaseous time projection chamber (\acrshort{TPC}) with silicon detector layers placed both inside and outside the \acrshort{TPC} volume. This combination allows a high tracking efficiency with a low material usage.
+For vertex tracking, the \acrshort{ILD} uses three double-layers of pixel detectors using \acrfull{MAPS} technology, with a spatial resolution of 4 $\mu$ m and a timing resolution of 2-4 $\mu$ s. For tracking, the \acrshort{ILD} uses a hybrid system, combining a gaseous time projection chamber (\acrshort{TPC}) with silicon detector layers placed both inside and outside the \acrshort{TPC} volume. This combination allows a high tracking efficiency with a low material usage.
 
-The calorimeter system must be highly granular in order to best utilise particle flow. The calorimeters are split into the \acrfull{ECAL} and \acrfull{HCAL}. The \acrshort{ECAL} utilises a silicon diode sampling calorimeter with diode pads of 5 \times 5 mm\textsuperscript{2}. An option for an ECAL using thin scintillator strips is also being investigated. The \acrshort{HCAL} has two possible options available. The \acrfull{AHCAL} uses \acrfull{SiPM} on tiles of plastic scintillator with a resolution of 3\times 3 cm\textsuperscript{2} using a fully analogue readout. The \acrfull{SDHCAL} uses \acrfull{RPC} with a higher granularity of 1\times 1 cm\textsuperscript{2}, but does not use a fully analogue output, meaning that amplitude information is more limited. 
+The calorimeter system must be highly granular in order to best utilise particle flow. The calorimeters are split into the \acrfull{ECAL} and \acrfull{HCAL}. The \acrshort{ECAL} utilises a silicon diode sampling calorimeter with diode pads of 5 $\times$ 5 mm\textsuperscript{2}. An option for an ECAL using thin scintillator strips is also being investigated. The \acrshort{HCAL} has two possible options available. The \acrfull{AHCAL} uses \acrfull{SiPM} on tiles of plastic scintillator with a resolution of 3 $\times$ 3 cm\textsuperscript{2} using a fully analogue readout. The \acrfull{SDHCAL} uses \acrfull{RPC} with a higher granularity of 1 $\times$ 1 cm\textsuperscript{2}, but does not use a fully analogue output, meaning that amplitude information is more limited. 
 
-These detectors are placed within a solenoid capable of generating a 3.5T magnetic field, and then within an iron flux return yoke which is instrumented as a muon identification and tail catcher, as well as providing structural support for the detector. The finished ILD is expected to weigh 14,000 metric tonnes.
+These detectors are placed within a solenoid capable of generating a 3.5T magnetic field, and then within an iron flux return yoke which is instrumented for muon identification and tail catching, as well as providing structural support for the detector. The finished ILD is expected to weigh 14,000 metric tonnes.
+
+%% Image found here: http://cds.cern.ch/record/2637370/plots
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.75\textwidth]{../Pictures/ILDQuadrantView.png}
+%	\caption{Quadrant view of the \acrshort{ILD} components.}
+%	\label{figure:colliders/ILD/ILD-quadrant}
+%\end{figure}
+%
+%% Image found here: https://flc.desy.de
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.75\textwidth]{../Pictures/ILDCutaway.jpg}
+%	\caption{Rendering of the finished \acrshort{ILD}, cutaway to show the interal features, with human for scale.}
+%	\label{figure:colliders/ILD/ILD-cutaway}
+%\end{figure}
+
+\begin{figure}[h]%
+	\centering
+    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/ILDCutaway.jpg} }}%
+    \qquad
+	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/ILDQuadrantView.png} }}%
+    \caption{Rendering of the finished \acrshort{ILD} cutaway to show the interal features (left); and a quadrant view of the \acrshort{ILD} components (right).}%
+    \label{figure:colliders/ILD/double}%
+\end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.75\textwidth]{../Pictures/SimulatedEvent1.png}
-	\caption{Visualisation of a simulated $e^+ e^- \rightarrow t \overline{t} h$ event in the ILD. Charged particles can be easily identified by the curved or spiral paths they take within the magnetic field, and the jets are visible as the light pink and purple areas near the beampipes on either side.}
+	\caption{Visualisation of a simulated $e^+ e^- \rightarrow t \overline{t} h$ event in the \acrshort{ILD}. Charged particles can be easily identified by the curved or spiral paths they take within the magnetic field, and the jets are visible as the light pink and purple areas near the beampipes on either side.}
 	\label{figure:colliders/ILD/tth-simulation}
 \end{figure}
 
-% Should have a quadrant view of the ILD detector
-
-% And that CGI image at the top of the ILD paper
-% A computer rendering of the finished ILD, cutaway to show the internal features. 
-
 \subsubsection{The Silicon Detector (SiD)}
-[...]
+The \acrfull{SiD} is a detector concept proposed for the \acrshort{ILC} that uses primarily silicon-based detectors, with the aim to reduce cost while still maintaining high performance and attaining the \acrshort{ILC}'s physics goals. The \acrshort{SiD} is also more compact than the \acrshort{ILD}, utilising a higher strength magnetic field to compensate. 
+
+The vertex and tracker systems are both composed of silicon sensors, using a cylindrical configuration. The vertex uses silicon pixel sensors while the tracker uses silicon strip sensors, both designed to be used with power pulsing -- the electronics are only powered and active when it is known that bunches will be colliding. This reduced power and cooling requirements. 
+
+The high-granularity calorimeters are both nested within the barrel, inside the magnetic field. The \acrshort{ECAL} uses thirty alternating layers of tungsten absorber and silicon active layers, in 3.5 $\times$ 3.5 mm\textsuperscript{2} hexagonal pixels. The \acrshort{HCAL} uses alternating layers of steel absorber and a glass resistive plate chamber, with cells of 10 $\times$ 10 mm\textsuperscript{2}
+
+Outside of the calorimeter, the superconducting solenoid generates a 5T magnetic field, which enables the more compact detector design -- a higher magnetic field increases the spatial separation between charged and neutral particles, which is necessary for usage of particle flow algorithms.
+
+Outside of the magnetic field is an iron flux return yoke, which similarly to the \acrshort{ILD} concept also acts as a strucutural support and is instrumented for muon identification and tail catching. 
+
+\begin{figure}[h]%
+	\centering
+    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Placeholder.png} }}%
+    \qquad
+	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Placeholder.png} }}%
+    \caption{Isometric view of the finished \acrshort{SiD} cutaway to show the interal features (left); and a quadrant view of the \acrshort{SiD} components (right).}%
+    \label{figure:colliders/ILD/double}%
+\end{figure}
 
 \section{The Compact Linear Collider}
+The \acrfull{CLIC} is a proposed linear electron-positron collider that [...]
+
 [...]
 
 The CLIC project foresees a programme spanning 22 years, over which multiple upgrades to the centre-of-mass energy would take place. Initial construction would be at 380 GeV, focusing on precision measurements of top-quark and Higgs physics. Further upgrades would increase the centre-of-mass energy to 1.5 TeV, then finally 3 GeV. Physics goals in these later stages would involve searches for new physics processes, as well as precision measurements of rare Higgs processes, and of new states discovered at the LHC or earlier stages of CLIC. 
@@ -137,6 +182,8 @@ The CLIC project foresees a programme spanning 22 years, over which multiple upg
 As of writing, the CLIC project has been submitted as input for the European Particle Physics Strategy Update, which will decide which projects the CERN collaboration chooses to pursue from 2020  onwards. [...]
 
 CLIC's initial centre-of-mass energy will be 380 GeV, with successive upgrades increasing this to 1.5 TeV and finally 3 TeV. 
+
+The detecters envisoned for CLIC are similar in design to those for the ILC, and are usually referred to as CLIC\textunderscore ILD and CLIC\textunderscore ILC. [...] % Are the differences worth explaining?
 
 \section{The Future Circular Collider}
 The \acrfull{FCC} is a series of concepts for a future collider that would be located in the Geneva area near the existing LHC ring. The FCC project as a whole has three different accelerator concepts -- the FCC-hh for proton/proton and ion/ion collisions, the FCC-ee for electron/positron collisions, and the FCC-he for electron/proton collisions.
