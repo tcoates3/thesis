@@ -3,12 +3,12 @@
 
 \epigraph{[new quote split \\ over two lines]}{[author]}
 
-While DQM4hep was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the CALICE collaboration. To be sure that DQM4hep was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and CALICE collaborations.
+While \acrshort{DQM4hep} was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the \acrshort{CALICE} collaboration. To be sure that \acrshort{DQM4hep} was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and \acrshort{CALICE} collaborations.
 
-An ideal opportunity arose for this in the form of the IDEA testbeam. This testbeam was run by a collaboration of Italian and US universities working on four different particle physics detectors of different types, intending to run a single combined testbeam of all four instruments at the CERN \acrshort{SPS} in September 2018. DQM4hep was offered as a possible unified monitoring solution that could integrate information from all four detectors into the same tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test DQM4hep out of its established operating range.
+An ideal opportunity arose for this in the form of the \acrshort{IDEA} testbeam. This testbeam was run by a collaboration of Italian and American universities working on four different particle physics detectors of different types, intending to run a single combined testbeam of all four instruments at the \acrshort{CERN} \acrshort{SPS} in September 2018. \acrshort{DQM4hep} was offered as a possible unified monitoring solution that could integrate information from all four detectors into the same tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test \acrshort{DQM4hep} out of its established operating range.
 
 \section{Introduction}
-The combined testbeam took place between in September 2018 at the CERN SPS beamline facility. The testbeam itself lasted a week, from the 5th-12th September, with a preparation period of one week before this for installation, calibration, etc. [...]
+The combined testbeam took place between in September 2018 at the \acrshort{CERN} \acrshort{SPS} beamline facility. The testbeam itself lasted a week, from the 5th-12th September, with a preparation period of one week before this for installation, calibration, etc. [...]
 
 \subsection*{Detectors at the combined testbeam}
 The combined testbeam comprised four separate dectors: a calorimeter, a muon detector and preshower, a drift chamber, and a silicon photomultiplier. One of the biggest challenges involved in the testbeam was operating these four different detectors [...]
@@ -54,37 +54,37 @@ The aim of the calorimeter is to use both the \v{C}erenkov and scintillator tech
 \section{Monitoring}
 [...]
 
-Existing monitoring within the DREAM collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in DQM4hep quickly using for-loops in both the C++ code and XML steering files, allowing this to be done with comparatively little code.
+Existing monitoring within the \acrshort{DREAM} collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in \acrshort{DQM4hep} quickly using for-loops in both the C++ code and \acrshort{XML} steering files, allowing this to be done with comparatively little code.
 
 \subsection{File readers}
-Writing file readers for the different detectors meant first understanding the structure of their data and file types. Once data has arrived from the data acquisition device, each of the detectors wrote to a different `raw' format. However, the RD52 calorimeter, drift chamber, and muon and preshower all produced ROOT ntuple files as part of their data acquisition process, in addition to different file formats. It was decided to use these ROOT ntuples as the file format to read into DQM4hep, as due to support for ROOT within the framework, reading data from ROOT ntuples is simpler.
+Writing file readers for the different detectors meant first understanding the structure of their data and file types. Once data has arrived from the data acquisition device, each of the detectors wrote to a different `raw' format. However, the RD52 calorimeter, drift chamber, and muon and preshower all produced ROOT ntuple files as part of their data acquisition process, in addition to different file formats. It was decided to use these ROOT ntuples as the file format to read into \acrshort{DQM4hep}, as due to support for ROOT within the framework, reading data from ROOT ntuples is simpler.
 
-For each of these three instruments a file reader was developed that walked through the ROOT trees, extracting data from the leaves event-by-event, then converted it to DQM4hep's inbuilt \texttt{GenericEvent} format. Choosing to make them into GenericEvents meant that there was no need to implement an additional event type, simplifying the connection between the file readers and analysis modules. The GenericEvent type was also easily suited to the type of data, as the majority of the data were series of numbers, which were easily converted into C++ vectors to store in the GenericEvent.
+For each of these three instruments a file reader was developed that walked through the ROOT trees, extracting data from the leaves event-by-event, then converted it to \acrshort{DQM4hep}'s inbuilt \texttt{GenericEvent} format. Choosing to make them into GenericEvents meant that there was no need to implement an additional event type, simplifying the connection between the file readers and analysis modules. The GenericEvent type was also easily suited to the type of data, as the majority of the data were series of numbers, which were easily converted into C++ vectors to store in the GenericEvent.
 
-An additional motivation for using the ROOT ntuple as the data source was that some of the file type, notably the drift chamber, had not finalised their data structure at the beginning of the testbeam. Using the higher-level structure provided by a ROOT file would be easier to change in the future than reading in data in a binary, hex, text or CSV format.
+An additional motivation for using the ROOT ntuple as the data source was that some of the file type, notably the drift chamber, had not finalised their data structure at the beginning of the testbeam. Using the higher-level structure provided by a ROOT file would be easier to change in the future than reading in data in a binary, hex, text or \acrshort{CSV} format.
 
-For the silicon photomultiplier GEM data, the ``raw'' data format was a text file, containing an \acrshort{XML} header followed by a large amount of data in \acrfull{CSV}. This file could be loaded directly into DQM4hep, the XML header separated and parsed with DQM4hep's internal XML parsing libraries, and the remaining data parsed. The comma-separated values could be easily parsed using the \texttt{dqm4hep::core::tokenize} function, which takes a string, a delimiter, and a vector, and parses the string into values separated by the delimiter, loading them into the vector. This made extracting the GEM data extremely simple, even in this format. It also allowed the parameters in the XML header, which included run numbers and physical information of the detector, to be passed into DQM4hep and the analysis module, using the \texttt{core::Run} object type.
+For the silicon photomultiplier \acrshort{GEM} data, the ``raw'' data format was a text file, containing an \acrshort{XML} header followed by a large amount of data in \acrfull{CSV}. This file could be loaded directly into \acrshort{DQM4hep}, the \acrshort{XML} header separated and parsed with \acrshort{DQM4hep}'s internal \acrshort{XML} parsing libraries, and the remaining data parsed. The comma-separated values could be easily parsed using the \texttt{dqm4hep::core::tokenize} function, which takes a string, a delimiter, and a vector, and parses the string into values separated by the delimiter, loading them into the vector. This made extracting the \acrshort{GEM} data extremely simple, even in this format. It also allowed the parameters in the \acrshort{XML} header, which included run numbers and physical information of the detector, to be passed into DQM4hep and the analysis module, using the \texttt{core::Run} object type.
 
 \subsection{Analysis modules}
 During the course of the testbeam, four analysis modules were developed, one for each detector. To begin with, these were `dummy' modules -- analysis modules that receive events then do nothing. Dummy modules like this are required to run file readers offline, but are simple to create as they can be produced from a template with minimal changes.
 
 Once the file reader for the RD52 calorimeter was complete, the dummy analysis module for this detector was then changed into a functional module, \texttt{RD52MainModule}, to produce plots from the data. The RD52 was chosen as it was the most data-rich of the detectors in the testbeam, and also contained the ancillary detectors, which allow particle selection efficiencies to be studied.
 
-During the course of the testbeam, the \texttt{RD52MainModule} was developed to read in and arrange data from the ROOT ntuples and arrange them into distinct vectors for the ADCs, TDCs, pedestals, and ancillaries. Following this, pedestal subtraction of all ADC and TDC channels was completed. Then the malfunctioning tiles and electronics that meant data had to be re-routed through other available channels was integrated so that the ADC information in the analysis module represented the full state of the detector was completed. 
+During the course of the testbeam, the \texttt{RD52MainModule} was developed to read in and arrange data from the ROOT ntuples and arrange them into distinct vectors for the \acrshort{ADC}s, \acrshort{TDC}s, pedestals, and ancillaries. Following this, pedestal subtraction of all \acrshort{ADC} and \acrshort{TDC} channels was completed. Then the malfunctioning tiles and electronics that meant data had to be re-routed through other available channels was integrated so that the \acrshort{ADC} information in the analysis module represented the full state of the detector was completed. 
 
 There was insufficient time at the testbeam to develop the monitoring more complex than this, but further development continued offline with saved data from the testbeam to continue the proof-of-concept. This will be discussed in more detail in the following section.
 
 \section{Results}
-Monitoring within DQM4hep was able to replicate all the existing monitoring solutions, combining the monitoring tools for all four detector systems into one framework. [...] However due to time constraints, more complex monitoring such as online processing was not implemented during the testbeam. [...] 
+Monitoring within \acrshort{DQM4hep} was able to replicate all the existing monitoring solutions, combining the monitoring tools for all four detector systems into one framework. [...] However due to time constraints, more complex monitoring such as online processing was not implemented during the testbeam. [...] 
 
-Following the testbeam, it was decided that DQM4hep could be used to perform some offline analysis functions in addition to the work at the testbeam, as a further proof of its ability to do this at testbeams. [...]
+Following the testbeam, it was decided that \acrshort{DQM4hep} could be used to perform some offline analysis functions in addition to the work at the testbeam, as a further proof of its ability to do this at testbeams. [...]
 
-Several analysis goals were outlined to attempt to implement in DQM4hep. These were performing the tower ADC calibration, the ADC to energy calibration, and particle selection efficiencies. 
+Several analysis goals were outlined to attempt to implement in \acrshort{DQM4hep}. These were performing the tower \acrshort{ADC} calibration, the \acrshort{ADC} to energy calibration, and particle selection efficiencies. 
 
 \subsection{Tower ADC calibration}
 [...]
 
-Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter ADCs were not calibrated to each other [?]. In order to fix this, [...]
+Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter \acrshort{ADC}s were not calibrated to each other [?]. In order to fix this, [...]
 
 Two sets of calibration runs were performed. The first set covered Towers 1-29 using an 80 GeV secondary beam ($\pi$ and $e^{-}$), with the beam pointed at each tower in sequence for 29 runs. The second set used a 20 GeV electon beam, covering Towers 30-36 plus Tower 15. Tower 15 recieved runs in both sets in order to calibrate the two sets to each other. 
 
@@ -163,9 +163,9 @@ Two sets of calibration runs were performed. The first set covered Towers 1-29 u
 %	\label{table:idea/calibrationruns}
 %\end{table}
 
-The process for calibrating the towers was to make a histogram of the ADCs registered in a tower, only in the run where the beam was centered on them, in order to find the mean and standard deviation. These histograms were then combined to show the overall responses of the entire set of calibration runs, which visualises the differences between the Towers. These can be seen in Fig. \ref{figure:testbeam/results/calibrationbefore}. 
+The process for calibrating the towers was to make a histogram of the \acrshort{ADC}s registered in a tower, only in the run where the beam was centered on them, in order to find the mean and standard deviation. These histograms were then combined to show the overall responses of the entire set of calibration runs, which visualises the differences between the Towers. These can be seen in Fig. \ref{figure:testbeam/results/calibrationbefore}. 
 
-Since Tower 15 was present in both runs, this was chosen as the reference, and all the other towers were given a coefficient that leveled their mean ADC to the same value as Tower 15, in both sets of calibration runs. The ADC values for each tower are then multiplied by their calibration coefficient. [...] [Difference between scintillator and Cherenkov] [...] The calibration coefficients are shown on Table \ref{table:idea/calibrationcoeffs}.
+Since Tower 15 was present in both runs, this was chosen as the reference, and all the other towers were given a coefficient that leveled their mean \acrshort{ADC} to the same value as Tower 15, in both sets of calibration runs. The \acrshort{ADC} values for each tower are then multiplied by their calibration coefficient. [...] [Difference between scintillator and Cherenkov] [...] The calibration coefficients are shown on Table \ref{table:idea/calibrationcoeffs}.
 
 \begin{table}[h]
 \centering
@@ -195,14 +195,14 @@ Since Tower 15 was present in both runs, this was chosen as the reference, and a
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.65\textwidth]{../Pictures/Placeholder.png}
-	\caption{The plot of ADCs for each tower before calibration.}
+	\caption{The plot of \acrshort{ADC}s for each tower before calibration.}
 	\label{figure:testbeam/results/calibrationbefore}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.65\textwidth]{../Pictures/Placeholder.png}
-	\caption{Comparison of the calibration plots for the ADCs before and after calibration.}
+	\caption{Comparison of the calibration plots for the \acrshort{ADC}s before and after calibration.}
 	\label{figure:testbeam/results/calibrationafter}
 \end{figure}
 
