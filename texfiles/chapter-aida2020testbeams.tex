@@ -13,7 +13,16 @@ The \acrshort{CALICE} testbeams were done with the \acrfull{FLC}\footnote{EN: Re
 \acrshort{DQM4hep} was used as an online monitoring and data quality monitoring tool for \acrshort{AHCAL} tesbeams beginning in May 2016, and in further testbeams between 2016 and 2018. The majority of these testbeams occurred at the DESY II facility, but two took place at the \acrshort{CERN} \acrshort{SPS} in May 2017 and June 2018.
 
 \subsection*{The AHCAL prototype} % Full dossier on the AHCAL here: https://iopscience.iop.org/article/10.1088/1748-0221/5/05/P05004/pdf
-The \acrfull{AHCAL} is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (\acrshort{SiPM}s) as active material\cite{proceedings-ahcal-prototype}. One of the important features of the \acrshort{AHCAL} is that the prototypes were designed to be made using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, and pick-and-place assembly of the layers and their electronics. It also uses power pulsing -- rapidly cycling power so that the electronics are active only when the beam is present, according to a known beam structure. This helps to reduce power consumption and heat production, making cooling the layers easier.
+The \acrfull{AHCAL} is a sampling calorimeter formed of steel absorber plates and plastic scintillator tiles, read out by silicon photomultipliers (\acrshort{SiPM}s) as active material\cite{proceedings-ahcal-prototype}. One of the important features of the \acrshort{AHCAL} is that the prototypes were designed to be made using techniques suitible for mass production, such as injection-moulding and automated foil-wrapping of the scintillator tiles, and pick-and-place assembly of the layers and their electronics. It also uses power pulsing -- rapidly cycling power so that the electronics are active only when the beam is present, according to a known beam structure. This helps to reduce power consumption and heat production, making cooling the layers easier. Some assembled layers of the AHCAL prototype can be seen in Fig. \ref{figure:aida/may2016/layers}.
+
+\begin{figure}[h]%
+	\centering
+    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-1.jpg} }}%
+    \qquad
+	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-2.jpg} }}%
+    \caption{Two varieties of \acrshort{AHCAL} layers.}%
+    \label{figure:aida/may2016/layers}%
+\end{figure}
 
 \section{May 2016 at DESY II} % Wiki for this testbeam: http://flcwiki.desy.de/AHCALandBIF_TestBeamDESYMay2016
 The first deployment of \acrshort{DQM4hep} on an \acrshort{AHCAL} testbeam was at DESY II during May 2016. The testbeam was to be two weeks in duration, following a one-week setup and preparation period. Besides testing the deployment and usage of DQM4hep, the goals of this testbeam where to test \acrshort{MIP} calibration of a new \acrshort{AHCAL} base unit (HBU), to test the power pulsing feature, and to perform \acrshort{TDC} calibrations. In addition to these goals for the \acrshort{AHCAL}, a device called a \acrfull{BIF}, another part of the ongoing work of AIDA-2020 Work Package 5, was being tested. 
@@ -84,26 +93,17 @@ In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, ea
 
 %\acrshort{CALICE}-\acrshort{AHCAL}
 
-\begin{figure}[p]%
-	\centering
-    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-1.jpg} }}%
-    \qquad
-	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-2.jpg} }}%
-    \caption{Two varieties of \acrshort{AHCAL} layers.}%
-    \label{figure:aida/may2016/layers}%
-\end{figure}
-
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-DESY-2016-Beam.jpg}
+	\includegraphics[width=0.9\textwidth]{../Pictures/AHCAL-DESY-2016-Beam.jpg}
 	\caption{The T22 beam area at the DESY II synchroton, looking towards the beam aperture.}
 	\label{figure:aida/may2016/beamarea}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[p]
 	\centering
-	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-DESY-2016-Assembled-2.jpg}
-	\caption{Close-up of the layers and electronics assembled in the support structure in the beam area. During operation, the assembly is covered with black fabric to block ambient light.}
+	\includegraphics[width=0.6\textwidth]{../Pictures/AHCAL-DESY-2016-Assembled-2.jpg}
+	\caption{Close-up of the layers and electronics assembled in the support structure in the beam area. During operation, the detectors were covered with black fabric to block ambient light from impinging upon the \acrshort{SiPM}s.}
 	\label{figure:aida/may2016/assembled}
 \end{figure}
 
@@ -186,19 +186,12 @@ At this point in the testbeam process, the online monitoring system with \acrsho
 Because of this, during the testbeam \acrshort{DQM4hep} was used as intended -- as a tool for shifters to use to diagnose and troubleshoot problems with the beams or detectors. A specific expert on \acrshort{DQM4hep} was not necessary, as enough people operating the testbeam understood \acrshort{DQM4hep} to be able to modify analysis modules on the fly according to their needs.
 
 % In previous testbeams, analysis modules that produced correlation plots were developed by other team members,
-
-%\begin{center}
-%	[Photographs from the installation and testbeam area go here]
-%\end{center}
-%
-%\begin{center}
-%	[Plots from the testbeam]
-%\end{center}
+For example, [correlation plots].
 
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-CERN-2017-Installation-1.jpg}
-	\caption{The \acrshort{CALICE}-\acrshort{AHCAL} being hoisted into the testbeam area during installation, with the layers visible.}
+	\caption{The \acrshort{CALICE}-\acrshort{AHCAL} being unloaded during installation at the \acrshort{CERN} \acrshort{SPS} during the May 2017 testbeam.}
 	\label{figure:aida/may2017/installation-1}
 \end{figure}
 
@@ -212,7 +205,7 @@ Because of this, during the testbeam \acrshort{DQM4hep} was used as intended -- 
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-CERN-2017-Area-1.jpg}
-	\caption{An overview of the testbeam area, with the solenoid the \acrshort{CALICE}-\acrshort{AHCAL} was placed within visible.}
+	\caption{An overview of the beam hall at the \acrshort{CERN} \acrshort{SPS}, with the solenoid the \acrshort{CALICE}-\acrshort{AHCAL} was placed within visible in the centre-right of frame.}
 	\label{figure:aida/may2017/area-1}
 \end{figure}
 
