@@ -80,11 +80,32 @@ The structure of a single event in LCGenericObject format can be seen below, whi
 % --------------------------------------------------------
 %\end{verbatim}
 
-In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, each holding a number of elements equal to the \texttt{NChannels} variable, in this case 36. Each element of these arrays corresponds to a single physical scintillator tile within the detector, and identifies which chip it belongs to using \texttt{ChipID}. 
+In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, each holding a number of elements equal to the \texttt{NChannels} variable, in this case 36. Each element of these arrays corresponds to a single physical scintillator tile within the detector, and identifies which chip it belongs to using \texttt{ChipID}. The \texttt{ADC14bit} and \texttt{TDC14bit} arrays contain binary data, which is represented above converted directly to decimal. An additional conversion from this format to specific information such as validation bits, hit bits, etc. was also needed.
 
-The \texttt{ADC14bit} and \texttt{TDC14bit} arrays contain binary data, which is represented above converted directly to decimal. However some bits represent data other than the actual \acrshort{ADC} or \acrshort{TDC}, such as validation bits, hit bits, etc. An explanation of the structure of these bits can be seen in [ref].
+%\acrshort{CALICE}-\acrshort{AHCAL}
 
-[...] % Need to find the bit structure, maybe on a presentation Adrian gave?
+\begin{figure}[p]%
+	\centering
+    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-1.jpg} }}%
+    \qquad
+	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AHCAL-DESY-2016-Layer-2.jpg} }}%
+    \caption{Two varieties of \acrshort{AHCAL} layers.}%
+    \label{figure:aida/may2016/layers}%
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-DESY-2016-Beam.jpg}
+	\caption{The T22 beam area at the DESY II synchroton, looking towards the beam aperture.}
+	\label{figure:aida/may2016/beamarea}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-DESY-2016-Assembled-2.jpg}
+	\caption{Close-up of the layers and electronics assembled in the support structure in the beam area. During operation, the assembly is covered with black fabric to block ambient light.}
+	\label{figure:aida/may2016/assembled}
+\end{figure}
 
 \subsection{Results}
 Over the course of the preparation week, the foundations were laid for the analysis module. This involved gaining a familiarity with the data structure, loading data from previous testbeams into \acrshort{DQM4hep} offline, and attempting to read it in basic ways. The first module was not ready for the beginning of the testbeam proper, but a few days afterwards we were able to produce plots in \acrshort{DQM4hep} from ``nearly-online'' testbeam data.
