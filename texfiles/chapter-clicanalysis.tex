@@ -13,7 +13,7 @@ e^+ e^- \rightarrow t\overline{t}h
 $$
 
 % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
-The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons may decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or W bosons may decay \textit{leptonically} into a lepton of the same charge as the W boson and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote the quark-antiquark pair as $q\overline{q}$, and the lepton-neutrino pair as $\ell \nu$.
+The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
 Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states:
 $$
@@ -28,7 +28,7 @@ $$
 
 The upshot of this is that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance, as the majority of the decays will be via the hadronic channel. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
 
-This chapter describes an analysis performed to attain a precision on the measurement of the top-Higgs Yukawa coupling at the \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s} = 1.4TeV$, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling.
+This chapter describes an analysis performed to attain a precision on the measurement of the top-Higgs Yukawa coupling at the \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s} = 1.4TeV$, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling. \\
 
 \begin{figure}[h]
 	\centering
@@ -51,7 +51,7 @@ This chapter describes an analysis performed to attain a precision on the measur
 \end{figure}
 
 \section{Physics generation and samples}
-The samples used for the study had been generated previously using ILCDIRAC. The physics generation was done predominantly in WHIZARD 1.95, using PYTHIA 6.422 for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgsboson is set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
+The samples used for the study had been generated previously using ILCDIRAC. The physics generation was done predominantly in WHIZARD 1.95, using PYTHIA 6.422 for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
 
 All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. 
 
@@ -88,7 +88,7 @@ Following the generation of the underlying physics events, the interactions of t
 At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
 
 \subsection{Detector model}
-The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}. This is the version of the \acrfull{SiD} as described in the \acrfull{CDR} for the \acrlong{CLIC}. 
+The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR}.
 
 The CLIC\textunderscore SiD uses an all-silicon construction, with a design optimised for the needs of particle flow. It uses high-resolution vertex detectors and trackers, both based on silicon pixels and strips. The \acrshort{ECAL} and \acrshort{HCAL} use predominantly tungsten as the absorbing material, with steel used instead in the endcaps. These detectors are placed within a 5T solenoidal magnetic field, with an iron flux return yoke that is instrumented to act as a muon detector and tail catcher.
 
