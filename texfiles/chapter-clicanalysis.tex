@@ -12,22 +12,10 @@ $$
 e^+ e^- \rightarrow t\overline{t}h
 $$
 
-The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. However, the decay channels of this process vary -- each top quark can decay in one of two ways. It can decay \textit{hadronically} into a quark-antiquark pair, where one quark is up-type and the other is down-type; or it can decay \textit{leptonically} into a lepton of the same charge as the W and a neutrino of the same flavour, with one being an antiparticle (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. The decay processes of the W are: % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
+% Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
+The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons may decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or W bosons may decay \textit{leptonically} into a lepton of the same charge as the W boson and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote the quark-antiquark pair as $q\overline{q}$, and the lepton-neutrino pair as $\ell \nu$.
 
-$$
-W^+ \rightarrow q\overline{q}
-$$
-$$
-W^+ \rightarrow \ell^+ \nu
-$$
-$$
-W^- \rightarrow q\overline{q}
-$$
-$$
-W^- \rightarrow  \ell^- \nu
-$$
-
-where $q\overline{q}$ denotes the quark-antiquark pair and $\ell \nu$ denotes the lepton-neutrino pair. Thus there are three possible final states:
+Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states:
 $$
 e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}
 $$
@@ -62,6 +50,50 @@ This chapter describes an analysis performed to attain a precision on the measur
 	\label{figure:physics/SM/feynman-tth}
 \end{figure}
 
+\section{Physics generation and samples}
+The samples used for the study had been generated previously using ILCDIRAC. The physics generation was done predominantly in WHIZARD 1.95, using PYTHIA 6.422 for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgsboson is set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
+
+All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. 
+
+\begin{table}[htp]
+\centering
+	\begin{tabular}{ c l c r r }
+	\hline \hline
+	ProdID & Process & Cross-section (fb) & Sample weight & Events in 1.5 ab\textsuperscript{-1} \\ \hline \hline
+	2435 & $t\overline{t}h$, 6 jets, $h \rightarrow b\overline{b}$ & 0.431 & 0.03 & 647 \\
+	2441 & $t\overline{t}h$, 4 jets, $h \rightarrow b\overline{b}$ & 0.415 & 0.03 & 623 \\ \hline
+	2429 & $t\overline{t}h$, 2 jets, $h \rightarrow b\overline{b}$ & 0.100 & 0.006 & 150 \\
+
+	2438 & $t\overline{t}h$, 6 jets, $h \not\rightarrow b\overline{b}$ & 0.315 & 0.02 & 473	 \\
+	2444 & $t\overline{t}h$, 4 jets, $h \not\rightarrow b\overline{b}$ & 0.303 & 0.02 & 455 \\
+	2432 & $t\overline{t}h$, 2 jets, $h \not\rightarrow b\overline{b}$ & 0.073 & 0.004 & 110 \\
+
+	2450 & $t\overline{t}Z$, 6 jets & 1.895 & 0.1 & 2843 \\
+	2453 & $t\overline{t}Z$, 4 jets & 1.825 & 0.1 & 2738 \\
+	2447 & $t\overline{t}Z$, 2 jets & 0.439 & 0.03 & 659 \\
+	
+	2423 & $t\overline{t}b\overline{b}$, 6 jets & 0.549 & 0.03 & 824 \\
+	2426 & $t\overline{t}b\overline{b}$, 4 jets & 0.529 & 0.03 & 794 \\
+	2420 & $t\overline{t}b\overline{b}$, 2 jets & 0.127 & 0.008 & 191 \\
+
+	2417 & $t\overline{t}$ & 125.8 & 1.5 & 203700 \\ \hline
+
+	\end{tabular}
+	\caption{Table of all signal and background samples used for this analysis. The first two rows are the signal samples, the others are backgrounds.}
+	\label{table:physics/SM/generatedsamples}
+\end{table}
+
+Following the generation of the underlying physics events, the interactions of the particles on the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
+
+At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
+
+\subsection{Detector model}
+The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}. This is the version of the \acrfull{SiD} as described in the \acrfull{CDR} for the \acrlong{CLIC}. 
+
+The CLIC\textunderscore SiD uses an all-silicon construction, with a design optimised for the needs of particle flow. It uses high-resolution vertex detectors and trackers, both based on silicon pixels and strips. The \acrshort{ECAL} and \acrshort{HCAL} use predominantly tungsten as the absorbing material, with steel used instead in the endcaps. These detectors are placed within a 5T solenoidal magnetic field, with an iron flux return yoke that is instrumented to act as a muon detector and tail catcher.
+
+A more in-depth description of the \acrshort{SiD} detector concept can be found in Chapter \ref{chapter:colliders}.
+
 \section{Analysis strategy}
 %Papers for top-Higgs Yukawa coupling, tth, and the analysis process: 
 %https://arxiv.org/pdf/1807.02441.pdf
@@ -73,12 +105,12 @@ The $tth$ event has three possible final states, defined by the decay channel of
 
 \begin{table}[h]
 \centering
-	\begin{tabular}{ l c r }
+	\begin{tabular}{ l c c r }
 	\hline \hline
-	Decay Channel & Final State & Branching Ratio \\ \hline \hline
-	Fully hadronic & $q\overline{q}q\overline{q}b\overline{b}$ & 46\% \\ \hline
-	Semi-leptonic &  $\ell \nu q\overline{q}b\overline{b}$ & 45\% \\ \hline
-	Fully leptonic & $\ell \nu \ell \nu b\overline{b}$ & 9\% \\ \hline 
+	Decay Channel & Final State & No. of leptons & Branching Ratio \\ \hline \hline
+	Fully hadronic & $q\overline{q}q\overline{q}b\overline{b}$ & 0 & 46\% \\ \hline
+	Semi-leptonic &  $\ell \nu q\overline{q}b\overline{b}$ & 1 & 45\% \\ \hline
+	Fully leptonic & $\ell \nu \ell \nu b\overline{b}$ & 2 & 9\% \\ \hline 
 	\end{tabular}
 	\caption{ }
 	\label{table:physics/final-states}
@@ -86,13 +118,7 @@ The $tth$ event has three possible final states, defined by the decay channel of
 
 Given the low branching ratio compared to the other channels, the fully leptonic state is not used in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
 
-The initial step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
-
-In the fully hadronic decay channel, there are eight jets in the final state, so any 
-
-[...]
-
-There is another contribution to the tth final state in the higgstrahlung process. This process is actually a $e^+e^- \rightarrow t\overline{t} $ event with the intermediate $Z/\gamma *$ radiating a Higgs boson before decaying into the $t\overline{t}$ pair. However, the final state is $tth$, but without any direct interaction between the top quark and Higgs (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process.
+There is also another contribution to the tth final state -- higgstrahlung. This process is actually a $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson before producing the $t\overline{t}$ pair. The final state is $tth$, but without any direct interaction between the top quark and Higgs (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling.
 
 \begin{figure}[h]
 	\centering
@@ -113,8 +139,6 @@ There is another contribution to the tth final state in the higgstrahlung proces
 	\caption{Feynman diagram of the higgstrahlung process.}
 	\label{figure:physics/SM/higgstrahlung}
 \end{figure}
-
-[...]
 
 \begin{figure}
 	\centering
@@ -200,43 +224,22 @@ There is another contribution to the tth final state in the higgstrahlung proces
 	\label{figure:physics/SM/feynman-tth-semileptonic}
 \end{figure}
 
-\section{Physics generation and samples}
-The Monte Carlo samples were generated predominantly using Whizard 1.95, though for the Higgs events, Physsim was used due to technical constraints of Whizard [ref?]. All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1} and a light \acrlong{SM} Higgs boson with mass of 125 GeV. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. The first two rows are the tth signal channels, all other rows are backgrounds. The number of jets refers to the number of jets in the final state that have come from the decay of the top quark pair. The number of events in 1.5 ab\textsuperscript{-1} has been calculated from the integrated luminosity and sample weight.
+\subsection{Isolated lepton finding}
+The first step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
 
-\begin{table}[htp]
-\centering
-	\begin{tabular}{ c l c r r }
-	\hline \hline
-	ProdID & Process & Cross-section (fb) & Sample weight & Events in 1.5 ab\textsuperscript{-1} \\ \hline \hline
-	2435 & $t\overline{t}h$, 6 jets, $h \rightarrow b\overline{b}$ & 0.431 & 0.03 & 647 \\
-	2441 & $t\overline{t}h$, 4 jets, $h \rightarrow b\overline{b}$ & 0.415 & 0.03 & 623 \\ \hline
-	2429 & $t\overline{t}h$, 2 jets, $h \rightarrow b\overline{b}$ & 0.100 & 0.006 & 150 \\
+%-Isolated lepton (e and mu) finding
+%	-High energy (~50-350GeV)
+%	-In low-occupancy parts of the detector
+%	-Low impact parameter (IP)
+%	-Energy depostion (and ECAL vs HCAL deposition)
 
-	2438 & $t\overline{t}h$, 6 jets, $h \not\rightarrow b\overline{b}$ & 0.315 & 0.02 & 473	 \\
-	2444 & $t\overline{t}h$, 4 jets, $h \not\rightarrow b\overline{b}$ & 0.303 & 0.02 & 455 \\
-	2432 & $t\overline{t}h$, 2 jets, $h \not\rightarrow b\overline{b}$ & 0.073 & 0.004 & 110 \\
+\subsection{Tau identification}
+%-Tau finder
 
-	2450 & $t\overline{t}Z$, 6 jets & 1.895 & 0.1 & 2843 \\
-	2453 & $t\overline{t}Z$, 4 jets & 1.825 & 0.1 & 2738 \\
-	2447 & $t\overline{t}Z$, 2 jets & 0.439 & 0.03 & 659 \\
-	
-	2423 & $t\overline{t}b\overline{b}$, 6 jets & 0.549 & 0.03 & 824 \\
-	2426 & $t\overline{t}b\overline{b}$, 4 jets & 0.529 & 0.03 & 794 \\
-	2420 & $t\overline{t}b\overline{b}$, 2 jets & 0.127 & 0.008 & 191 \\
+\subsection{Kinematic variables}
+%-chi-square reconstruction of W, H and top mass
+%	-Uses minimised chi-square
 
-	2417 & $t\overline{t}$ & 125.8 & 1.5 & 203700 \\ \hline
-
-	\end{tabular}
-	\caption{Table of all signal and background samples used for this analysis.}
-	\label{table:physics/SM/generatedsamples}
-\end{table}
-
-\section{Detector models}
-[...]
-
-[...] henceforth referred to as CLIC\textunderscore SiD.
-
-\section{Analysis method}
 The first and most important step off the analysis is to determine which jets originate from the Higgs boson, [...] The invariant mass of the Higgs boson can be determined by summing the invariant masses of pairs of bottom quarks and computing the $\chi^2$ for each possible combination; the combination with the lowest $\chi^2$ shows the pair that has decayed from the Higgs boson. [...]
 
 \begin{equation}
@@ -247,71 +250,42 @@ The first and most important step off the analysis is to determine which jets or
 
 A similar equation is used for the semi-leptonic channel, removing one of the terms for the top quark mass.
 
-\subsection{Sample processing}
-The first step of processing the samples is the initial jet clustering. This is done using the $k_t$ algorithm with parameters [?], using an exclusive clustering mode to form 8 jets -- 6 jets from the produced quarks and 2 beam jets. The $k_t$ algorithm is used over choices like anti-$k_t$ and Valencia, because the important features are the \emph{relative} shapes of the jets, rather than absolute properties, so there is no need to use more computationally-intensive [is this true?] algorithms.
+\subsection{Jet clustering and reclustering}
+%-Jet clustering
+%	-Remove leptons
+%	-Cluster with k_t, forced into the correct number of jets (+ beam jets)
+%	-Reclustered with Durham
 
-Once initial jet clustering is finished, a Marlin processor that finds isolated leptons is used. It searches for either 0, 1, or 2 isolated leptons, and this information can be used to make decisions about whether to process the event already:
+\subsection{Flavour tagging}
+%-Flavour tagging
 
-\begin{table}[htp]
-\centering
-	\begin{tabular}{ | c | l | l | }
-	\hline
-	Leptons & Channel & Action \\ \hline
-	0 & Fully hadronic & Use for fully hadronic analysis \\ \hline
-	1 & Semi-leptonic & Use for semi-leptonic analysis \\ \hline
-	2 & Fully leptonic & Discard \\ \hline
-	\end{tabular}
-\end{table}
+\subsection{Signal discrimination [?]}
+%-Boosted Decision Trees
+%	-Use TMVA to generate BDTs
+%	-Perform cuts based on kinematic variables
+%	-Use these to distinguish signal from background
 
-Following this, the two beam jets are removed from the processing, and a further step of jet re-clustering is performed, using the Durham algorithm, to [...] [Why is this done? Why Durham?]
 
-[...] [Flavour tagging]
 
-[...] [Tau finding]
 
-The final step is to use use PandoraPFAs to generate \acrlong{PFO}s (\acrshort{PFO}s) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
 
-\subsection{Analysis processing}
-Once the sample has been processed, it must be analysed. The first step of this is a program used to extract various kinematic variables of both particles in the events ($m_0$, $p_t$) and the event itself ($\Psi$, $T$). This is the Treemaker program, and [...] [Chi-squared extraction of invariant masses] [Feeding into \acrshort{TMVA} to generate \acrshort{BDT}s]
 
-[...]
+
+%		%		%		%		%		%		%		%		%		%		%		%		%		%		%
+%\subsection{Sample processing}
+%The first step of processing the samples is the initial jet clustering. This is done using the $k_t$ algorithm with parameters [?], using an exclusive clustering mode to form 8 jets -- 6 jets from the produced quarks and 2 beam jets. The $k_t$ algorithm is used over choices like anti-$k_t$ and Valencia, because the important features are the \emph{relative} shapes of the jets, rather than absolute properties, so there is no need to use more computationally-intensive [is this true?] algorithms.
+%
+%The final step is to use use PandoraPFAs to generate \acrlong{PFO}s (\acrshort{PFO}s) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
+%
+%\subsection{Analysis processing}
+%Once the sample has been processed, it must be analysed. The first step of this is a program used to extract various kinematic variables of both particles in the events ($m_0$, $p_t$) and the event itself ($\Psi$, $T$). This is the Treemaker program, and [...] [Chi-squared extraction of invariant masses] [Feeding into \acrshort{TMVA} to generate \acrshort{BDT}s]
 
 %A flow diagram of the analysis process, and the rejection points, is shown in Fig. \ref{figure:physics/SM/CLIC-analysis-algorithm}.
 
 % The flow diagram below is of questionable usefulness. Maybe add an extra rejection stage at the reconstruction step (if the chi-squared of the Higgs invariant mass is bad, this indicates an event with no Higgs which should be discarded.
 
 % Consider also folding the diagram a bit; we can run horizontally from start to lepton decision, then downwards but dog-legging the boxes. This will make the diagram a little bit more compact, though maybe at the expense of immediate readability.
-
-%\begin{figure}[h]
-%	\centering
-%	\begin{tikzpicture}[node	distance = 3cm, auto, scale=0.6, every node/.style={scale=0.6}]
-%		\node [block, minimum width=4em, minimum height=4em, text width=3em] (start) {Start};
-%	   	\node [block, below of=start] (jetclus) {Jet clustering ($k_t$)};
-%		\node [block, below of=jetclus] (lepton) {Isolated lepton finder};
-%		\node [decision, below of=lepton] (leptondecision) {No. of leptons};		
-%		\node [block, right of=leptondecision, fill=red!20, node distance = 5cm] (twoleptons) {Reject};
-%		\node [left of=leptondecision, node distance = 6.5cm] (dummytwo) {};
-%	   	\node [block, below of=leptondecision] (jetreclus) {Jet re-clustering (Durham)};
-%		\node [block, below of=jetreclus] (flavtag) {Flavour tagging};
-%		\node [block, below of=flavtag] (recon) {Reconstruction (PandoraPFAs)};
-%		\node [block, below of=recon] (neuralnet) {Boosted Decision Trees (TMVA)};
-%		\node [block, below of=neuralnet, minimum width=4em, minimum height=4em, text width=3em] (result) {Result};
-%
-%		\path [line] (start) -- (jetclus);
-%		\path [line] (jetclus) -- (lepton);
-%		\path [line] (lepton) -- (leptondecision);
-%		\path [line] (leptondecision) -- node {0-1 \linebreak}(jetreclus);
-%		\path [line] (leptondecision) -- node {2 \linebreak} (twoleptons);
-%		\path [line] (jetreclus) -- (flavtag);
-%		\path [line] (flavtag) -- (recon);
-%		\path [line] (recon) -- (neuralnet);
-%		\path [line] (neuralnet) -- (result);
-%	\end{tikzpicture}
-%	\caption{A flow diagram of the algorithm for analysis of ttH events, and rejection.}	
-%	\label{figure:physics/SM/CLIC-analysis-algorithm}
-%\end{figure}
-
-[...]
+%		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 
 \section{Results}
 [...] 
@@ -332,9 +306,8 @@ These results were contributed to a paper that summarised the top physics potent
 
 
 
-%		%		%		%		%
 
-
+%		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 %\section{Determination of sensitivity to CP-violation}
 %[...]
 
