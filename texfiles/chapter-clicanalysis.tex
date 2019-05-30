@@ -5,9 +5,9 @@
 
 One of the primary goals of future lepton colliders is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the \acrlong{SM} to be probed with unprecedented accuracy and coverage.
 
-One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles -- the top-Higgs Yukawa coupling -- is the strongest Higgs coupling of all, making it one of the easiest ways to examine the properties of the Higgs and its couplings. 
+One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$.
 
-An important process used to study the coupling between the Higgs and the top is the so-called $tth$ process:
+An important process used to study the coupling between the Higgs and the top is the $tth$ process:
 $$
 e^+ e^- \rightarrow t\overline{t}h
 $$
@@ -55,42 +55,45 @@ This chapter describes an analysis performed to attain a precision on the measur
 		\node at (-0.3, -1) {$e^+$};
 		\node at (3.8, 1) {$t$};
 		\node at (3.8, -1) {$\overline{t}$};
-		\node at (3.8, 0) {$H^0$};
+		\node at (3.8, 0) {$H$};
+		\node at (1.75, 0.3) {$Z/\gamma *$};
 	\end{tikzpicture} 
-	\caption{A Feynman diagram of the $tth$ event.}
+	\caption{Feynman diagram of the $tth$ event.}
 	\label{figure:physics/SM/feynman-tth}
 \end{figure}
 
-\section{Anatomy of the $tth$ event}
+\section{Analysis strategy}
 %Papers for top-Higgs Yukawa coupling, tth, and the analysis process: 
 %https://arxiv.org/pdf/1807.02441.pdf
 %http://cds.cern.ch/record/1690648/files/LCD_tth_note.pdf?version=1
 %http://cds.cern.ch/record/1982243/files/CLICdp-Note-2015-001.pdf?version=1
 %https://arxiv.org/pdf/1608.07538.pdf
 
-The $tth$ event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. Since \textit{which} W produces certain decay products does not matter, there are three possible combinations that can be seen in Table \ref{table:physics/final-states}.
+The $tth$ event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. There are thus three possible combinations that can be seen in Table \ref{table:physics/final-states}. \\
 
 \begin{table}[h]
 \centering
-	\begin{tabular}{ c c c }
+	\begin{tabular}{ l c r }
 	\hline \hline
 	Decay Channel & Final State & Branching Ratio \\ \hline \hline
 	Fully hadronic & $q\overline{q}q\overline{q}b\overline{b}$ & 46\% \\ \hline
-	Semi-hadronic &  $\ell \nu q\overline{q}b\overline{b}$ & 45\% \\ \hline
+	Semi-leptonic &  $\ell \nu q\overline{q}b\overline{b}$ & 45\% \\ \hline
 	Fully leptonic & $\ell \nu \ell \nu b\overline{b}$ & 9\% \\ \hline 
 	\end{tabular}
-	\caption{Blah blah}
+	\caption{ }
 	\label{table:physics/final-states}
 \end{table}
 
-Given it's extremely low branching ratio relative to the other channels, the fully leptonic state is not considered in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
+Given the low branching ratio compared to the other channels, the fully leptonic state is not used in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
+
+The initial step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
+
+In the fully hadronic decay channel, there are eight jets in the final state, so any 
 
 [...]
 
-There is another contribution to the tth final state in the higgstrahlung process. In this case, the electron and positron form a Z or $\gamma *$ as an intermediate before producing a $t \overline{t}$ pair. A Higgs boson is radiated off the $Z/\gamma *$, resulting in the same final tth state but without a direct interaction between the Higgs and top quark (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and this must be taken into account when calculating the total cross-section of the tth process.
+There is another contribution to the tth final state in the higgstrahlung process. This process is actually a $e^+e^- \rightarrow t\overline{t} $ event with the intermediate $Z/\gamma *$ radiating a Higgs boson before decaying into the $t\overline{t}$ pair. However, the final state is $tth$, but without any direct interaction between the top quark and Higgs (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process.
 
-In order to correct for this, [...]
-	
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}[line width=1.3 pt,scale=2]
@@ -99,16 +102,19 @@ In order to correct for this, [...]
 		\draw[vector]  (1,0) -- (2.5,0) ;
 		\draw[fermion]  (2.5,0) -- (3.5,1) ;
 		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
-		\draw[scalar]  (2.75,0.25) -- (3.5,0.) ;
+		\draw[scalar]  (1.75,0) -- (2.5,-1.) ;
 		\node at (-0.3, 1) {$e^-$};
 		\node at (-0.3, -1) {$e^+$};
 		\node at (3.8, 1) {$t$};
 		\node at (3.8, -1) {$\overline{t}$};
-		\node at (3.8, 0) {$H^0$};
+		\node at (2.8, -1) {$H$};
+		\node at (1.75, 0.3) {$Z/\gamma *$};
 	\end{tikzpicture} 
-	\caption{A Feynman diagram of the higgstrahlung process.}
+	\caption{Feynman diagram of the higgstrahlung process.}
 	\label{figure:physics/SM/higgstrahlung}
 \end{figure}
+
+[...]
 
 \begin{figure}
 	\centering
@@ -150,7 +156,7 @@ In order to correct for this, [...]
 		\node at (5.8,-1) {$q$};
 		\node at (5.8,-2) {$\overline{q}$};
 	\end{tikzpicture} 
-	\caption{An extended Feynman diagram of the tth event, showing the fully-hadronic decay channel with the final state $q\overline{q}q\overline{q}b\overline{b}$, where $q$ and $\overline{q}$ indicate a quark-antiquark pair. \newline}
+	\caption{Extended Feynman diagram of the tth event, showing the fully-hadronic decay channel with the final state $q\overline{q}q\overline{q}b\overline{b}$, where $q$ and $\overline{q}$ indicate a quark-antiquark pair. \newline}
 	\label{figure:physics/SM/feynman-tth-hadronic}
 	\begin{tikzpicture}[line width=1.3 pt,scale=2.25]
 		% Initial electrons
@@ -190,7 +196,7 @@ In order to correct for this, [...]
 		\node at (5.8,-1) {$q$};
 		\node at (5.8,-2) {$\overline{q}$};
 	\end{tikzpicture} 
-	\caption{An extended Feynman diagram of the tth event, showing the semi-hadronic decay channel  with the final state $\ell\nu q\overline{q}b\overline{b}$, where $\ell$ and $\nu$ indicate a lepton-neutrino pair.}
+	\caption{Extended Feynman diagram of the tth event, showing the semi-leptonic decay channel  with the final state $\ell\nu q\overline{q}b\overline{b}$, where $\ell$ and $\nu$ indicate a lepton-neutrino pair.}
 	\label{figure:physics/SM/feynman-tth-semileptonic}
 \end{figure}
 
