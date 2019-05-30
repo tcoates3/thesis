@@ -55,6 +55,10 @@ The samples used for the study had been generated previously using ILCDIRAC. The
 
 All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. 
 
+Following the generation of the underlying physics events, the interactions of the particles on the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
+
+At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
+
 \begin{table}[htp]
 \centering
 	\begin{tabular}{ c l c r r }
@@ -83,10 +87,6 @@ All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assum
 	\label{table:physics/SM/generatedsamples}
 \end{table}
 
-Following the generation of the underlying physics events, the interactions of the particles on the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
-
-At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
-
 \subsection{Detector model}
 The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR}.
 
@@ -101,7 +101,7 @@ A more in-depth description of the \acrshort{SiD} detector concept can be found 
 %http://cds.cern.ch/record/1982243/files/CLICdp-Note-2015-001.pdf?version=1
 %https://arxiv.org/pdf/1608.07538.pdf
 
-The $tth$ event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. There are thus three possible combinations that can be seen in Table \ref{table:physics/final-states}. \\
+The tth event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. There are thus three possible combinations that can be seen in Table \ref{table:physics/final-states}. \\
 
 \begin{table}[h]
 \centering
@@ -224,17 +224,49 @@ There is also another contribution to the tth final state -- higgstrahlung. This
 	\label{figure:physics/SM/feynman-tth-semileptonic}
 \end{figure}
 
-\subsection{Isolated lepton finding}
+\subsection{Lepton identification}
 The first step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
 
-%-Isolated lepton (e and mu) finding
-%	-High energy (~50-350GeV)
-%	-In low-occupancy parts of the detector
-%	-Low impact parameter (IP)
-%	-Energy depostion (and ECAL vs HCAL deposition)
+Finding the leptons that have been produced by the decay of the W boson is relatively simple, as leptons produced in this decay have a much higher energy than leptons produced in jets. In general, these leptons have energies in the 50-350 GeV range, which can be found from the reconstructed track energy.
+
+There are additional properties of these leptons that can be used to improve their selection.
+
+Leptons produced within jets will detected within the same region as the other particles from the same jet, in a high-occupancy region of the detector. Therefore, an isolated lepton detected in a low-occupancy region of the detector is more likely to have originated from the decay of a W boson. 
+
+The impact parameter (IP) is the distance between the primary vertex that produced a particle, and the closest approach of the particle's track. Electrons and muons produced from W boson decays have much lower IPs than other particles or tau decay products. The impact parameter can be considered in either the longitudinal ($Z_0$) or radial ($d_0$) components, which can be combined for a 3D IP:
+
+\begin{equation}
+	\centering
+	R_0 = \sqrt{Z_0^2 + d_0^2}
+\label{eq:impact-parameter}
+\end{equation}
+
+[Energy deposition (and ECAL vs HCAL deposition)]
+
+\subsubsection{\texttt{IsolatedLeptonFinder}}
+To perform the selections to find isolated leptons, a Marlin processor called \texttt{IsolatedLeptonFinder} was used. 
+
+The lepton finder processor uses criteria based on all of the above properties of given particles:
+
+\begin{itemize}
+	\item Track energy > 15 GeV
+	\item $d_0$, $Z_0$, $R_0$ < 0.05mm
+	\item $R_CAL$ > 0.5, or 0.05 > $R_CAL$ > 0.3	
+	\item [cone energy?]
+\end{itemize}
 
 \subsection{Tau identification}
 %-Tau finder
+
+\subsection{Jet clustering and reclustering}
+Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with [parameters]. The jet clustering algorithm is run in exclusive mode, forcing the even into a specific number of jets -- 8 jets if the event is hadronic, or 6 if the event is semi-leptonic. 
+
+Once this stage is complete, the jet particles are then reclustered using the Durham algorithm with [parameters].
+
+%-Jet clustering
+%	-Remove leptons
+%	-Cluster with k_t, forced into the correct number of jets (+ beam jets)
+%	-Reclustered with Durham
 
 \subsection{Kinematic variables}
 %-chi-square reconstruction of W, H and top mass
@@ -249,12 +281,6 @@ The first and most important step off the analysis is to determine which jets or
 \end{equation}
 
 A similar equation is used for the semi-leptonic channel, removing one of the terms for the top quark mass.
-
-\subsection{Jet clustering and reclustering}
-%-Jet clustering
-%	-Remove leptons
-%	-Cluster with k_t, forced into the correct number of jets (+ beam jets)
-%	-Reclustered with Durham
 
 \subsection{Flavour tagging}
 %-Flavour tagging
@@ -288,6 +314,8 @@ A similar equation is used for the semi-leptonic channel, removing one of the te
 %		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 
 \section{Results}
+In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. 
+
 [...] 
 
 The combined uncertainty for the cross-section of both decay channels is:
