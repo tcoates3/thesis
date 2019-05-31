@@ -241,59 +241,66 @@ The impact parameter (IP) is the distance between the primary vertex that produc
 \label{eq:impact-parameter}
 \end{equation}
 
-[Energy deposition (and ECAL vs HCAL deposition)]
+Another property useful for distinguishing electrons and muons decaying from W bosons is the profile of their energy deposition in the calorimeters. We can define a ratio of the energy deposited in the electromagnetic calorimeter to the total energy deposited in the calorimeters:
+
+\begin{equation}
+	R_{CAL} = \frac{E_{CAL}}{E_{ECAL} + E_{HCAL}}
+\label{eq:calorimeter-ratio}
+\end{equation}
+
+Since electrons are contained within the \acrshort{ECAL}, their value of $R_{CAL}$ will peak at 1. Muons deposit their energy throughout both calorimeters, so will peak at approximately 0.2. Taus cannot be identified this way, as their decay products do not deposit predictable amounts of energy in the calorimeters.
 
 \subsubsection{\texttt{IsolatedLeptonFinder}}
-To perform the selections to find isolated leptons, a Marlin processor called \texttt{IsolatedLeptonFinder} was used. 
 
-The lepton finder processor uses criteria based on all of the above properties of given particles:
+To perform the selections to find isolated leptons, the \texttt{IsolatedLeptonFinder} processor within \textsc{Marlin} was used. This lepton finder processor uses criteria based on the properties described above to identify isolated leptons:
 
 \begin{itemize}
-	\item Track energy > 15 GeV
-	\item $d_0$, $Z_0$, $R_0$ < 0.05mm
-	\item $R_CAL$ > 0.5, or 0.05 > $R_CAL$ > 0.3	
-	\item [cone energy?]
+	\item Track energy greater than 15 GeV
+	\item Each of $d_0$, $Z_0$ and $R_0$ greater than 0.05 mm
+	\item $R_{CAL}$ greater than 0.5, or in the range 0.05-0.3	
 \end{itemize}
 
+The first cut on track energy already retains 96.5\% of the reconstructed electrons and muons, while accepting only 9.6\% of other particles. With the additional criteria, this becomes 87.3\% isolated leptons and 0.4\% other particles.
+
 \subsection{Tau identification}
-%-Tau finder
+Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis by [...]
 
-\subsection{Jet clustering and reclustering}
-Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with [parameters]. The jet clustering algorithm is run in exclusive mode, forcing the even into a specific number of jets -- 8 jets if the event is hadronic, or 6 if the event is semi-leptonic. 
+\subsection{Reconstruction of Higgs, top and W boson candidates}
+Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with $R = 1.0$. The jet clustering algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets Once this is complete, the jet particles are then reclustered using the Durham algorithm .
 
-Once this stage is complete, the jet particles are then reclustered using the Durham algorithm with [parameters].
-
-%-Jet clustering
-%	-Remove leptons
-%	-Cluster with k_t, forced into the correct number of jets (+ beam jets)
-%	-Reclustered with Durham
-
-\subsection{Kinematic variables}
-%-chi-square reconstruction of W, H and top mass
-%	-Uses minimised chi-square
-
-The first and most important step off the analysis is to determine which jets originate from the Higgs boson, [...] The invariant mass of the Higgs boson can be determined by summing the invariant masses of pairs of bottom quarks and computing the $\chi^2$ for each possible combination; the combination with the lowest $\chi^2$ shows the pair that has decayed from the Higgs boson. [...]
+Following this, the properties of the jets are used to reconstruct candidates for the Higgs boson, top quarks, and W bosons. This is done by doing a calculation of the invariant masses of the tops, W bosons, and Higgs, resulting in a $\chi^2$ value. By computing this $\chi^2$ value for all possible combinations of jets and finding the combination that results in the minimum, the jets can be matched to which particles produced them. 
 
 \begin{equation}
   \centering
-	\chi^2 = \frac{(m_{ij} - m_W)^2}{\sigma^2_W} + \frac{(m_{ijk} - m_t)^2}{\sigma^2_{t_1}} + \frac{(m_{ijk} - m_t)^2}{\sigma^2_{t_2}} + \frac{(m_{lm} - m_H)^2}{\sigma^2_H}
+	\chi^2 = \frac{(m_{12} - m_W)^2}{\sigma^2_W} + \frac{(m_{123} - m_t)^2}{\sigma^2_{t}} + \frac{(m_{45} - m_W)^2}{\sigma^2_W} + \frac{(m_{456} - m_t)^2}{\sigma^2_{t}} + \frac{(m_{78} - m_H)^2}{\sigma^2_H}
 \label{eq:chi-square}
 \end{equation}
 
-A similar equation is used for the semi-leptonic channel, removing one of the terms for the top quark mass.
+Where the numbered subscripts indicate the indices of the jets added to form the invariant mass $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The value of the $\chi^2$ are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
 
 \subsection{Flavour tagging}
-%-Flavour tagging
+[...]
 
-\subsection{Signal discrimination [?]}
-%-Boosted Decision Trees
-%	-Use TMVA to generate BDTs
-%	-Perform cuts based on kinematic variables
-%	-Use these to distinguish signal from background
+\subsection{Event selection}
+The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA} program. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis.
 
+For the hadronic channel, the following variables are used:
 
+\begin{itemize}
+	\item Reconstructed Higgs mass
+	\item Number of reconstructed particles in the event
+	\item Visible jet energy
+	\item Missing transverse momentum ($p_T$)
+	\item $\chi^2$ of the jet grouping
+	\item Event shape variables -- thrust, sphericity, aplanarity
+	\item Four highest b-tag values, corresponding c-tags
+	\item The cosine of the decay angle of the $h \rightarrow b\overline{b}$, and the cosine of the angles between the Higgs and each top quark
+	\item Durham distance value [?]
+	\item The energy of the four lowest-energy jets
+	\item The cosine of the angle of the two jets closest to the beam-axis
+\end{itemize}
 
-
+The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
 
 
 
@@ -314,24 +321,19 @@ A similar equation is used for the semi-leptonic channel, removing one of the te
 %		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 
 \section{Results}
-In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. 
+In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. Using  the output of the \acrshort{BDT}s, the precision on the cross-section of the tth process using just the hadronic channel is 9.6\%. A similar analysis by Yixuan Zhang found the precision for the semi-leptonic channel to be 11.1\%. Thus the combined uncertainty for the cross-section of both decay channels is:
 
-[...] 
+$$\Delta\sigma = 7.30\% $$
 
-The combined uncertainty for the cross-section of both decay channels is:
+When extracting the top-Higgs Yukawa coupling $y_t$ from the total cross-section, the contribution of the higgstrahlung diagram (Fig. \ref{figure:physics/SM/higgstrahlung}) must be taken into account, as this is a tth final state that has no vertex between the top and the Higgs and thus is not sensitive to the coupling.
 
-Cross-section: $$\Delta\sigma = 7.30\% $$
+In order to get the uncertainty on the coupling, the uncertainty on the cross-section has to be multiplied by a factor that was calculated using next-to-leading order (NLO) corrections to \acrshort{QCD}, the initial state radiation, and beamstrahlung\refthis . This factor is found to be 0.503, slightly higher than the 0.5 that would be expected if the higgstrahlung diagram were not included.
 
-Then using this and a linear approximation from \acrshort{QCD} [ref], the value of the uncertainty on the top-Higgs Yukawa coupling can be computed:
+Thus the uncertainty on the top-Higgs Yukawa coupling is:
 
 $$\frac{\Delta g_{tth}}{g_{tth}} = 0.503 \frac{\Delta\sigma(t\overline{t}H)}{\sigma(t\overline{t}H)} = 3.86\% $$
 
-These results were contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, published in [journal][ref] and will be submitted to CERN's European Strategy Update in 2019 [ref].
-
-
-
-
-
+These results were contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, which was submitted to \acrshort{CERN}'s European Strategy Update in 2019. See \refthis.
 
 
 
