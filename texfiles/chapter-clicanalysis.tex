@@ -7,20 +7,15 @@ One of the primary goals of future lepton colliders is to become ``Higgs factori
 
 One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$.
 
-An important process used to study the coupling between the Higgs and the top is the $tth$ process:
-$$
-e^+ e^- \rightarrow t\overline{t}h
-$$
+An important process used to study the coupling between the Higgs and the top is the tth process:
+$$e^+ e^- \rightarrow t\overline{t}h$$
 
 % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
 The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
 Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states: %Redid these, double check once rendered
-
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}$$
-
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu q \overline{q} b \overline{b}$$
-
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu \ell \nu b \overline{b}$$
 
 Due to the branching ratios, the hadronic and semi-leptonic final states are the most common, and the leptonic final state occurs less than ten percent of the time. This means that the most common final states all heavily rely upon jets, meaning that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
@@ -115,7 +110,7 @@ The tth event has three possible final states, defined by the decay channel of t
 
 Given the low branching ratio compared to the other channels, the fully leptonic state is not used in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
 
-There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair. This means the final state is $tth$ but no direct interaction between the top quark and Higgs has occurred (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling.
+There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair. This means the final state is tth but no direct interaction between the top quark and Higgs has occurred (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling. \\
 
 \begin{figure}[h]
 	\centering
@@ -228,7 +223,7 @@ Finding the leptons that have been produced by the decay of the W boson is relat
 
 Leptons produced within jets will detected within the same region as the other particles from the same jet, in a high-occupancy region of the detector. Therefore, an isolated lepton detected in a low-occupancy region of the detector is more likely to have originated from the decay of a W boson, rather than from a jet.
 
-The impact parameter (IP) is the distance between the primary vertex that produced a particle, and the closest approach of the particle's track. Electrons and muons produced from W boson decays have much lower IPs than other particles or tau decay products. The impact parameter can be considered in either the longitudinal ($Z_0$) or radial ($d_0$) components, which can be combined for a 3D IP:
+The impact parameter (\acrshort{IP-analysis}) is the distance between the primary vertex that produced a particle, and the closest approach of the particle's track. Electrons and muons produced from W boson decays have much lower \acrshort{IP-analysis}s than other particles or tau decay products. The impact parameter can be considered in either the longitudinal ($Z_0$) or radial ($d_0$) components, which can be combined for a 3D \acrshort{IP-analysis}:
 
 \begin{equation}
 	\centering
@@ -245,7 +240,7 @@ Another property useful for distinguishing electrons and muons decaying from W b
 
 Since electrons are contained within the \acrshort{ECAL}, their value of $R_{CAL}$ will peak at 1. Muons deposit their energy throughout both calorimeters, so will peak at approximately 0.2. Taus cannot be identified this way, as their decay products do not deposit predictable amounts of energy in the calorimeters.
 
-\subsubsection{\texttt{IsolatedLeptonFinder}}
+\subsubsection{IsolatedLeptonFinder}
 
 To perform the selections to find isolated leptons, the \texttt{IsolatedLeptonFinder} processor within \textsc{Marlin} was used. This lepton finder processor uses criteria based on the properties described above to identify isolated leptons:
 
@@ -258,7 +253,7 @@ To perform the selections to find isolated leptons, the \texttt{IsolatedLeptonFi
 The first cut on track energy already retains 96.5\% of the reconstructed electrons and muons, while accepting only 9.6\% of other particles. With the additional criteria, this becomes 87.3\% isolated leptons and 0.4\% other particles.
 
 \subsection{Tau identification}
-Taus cannot be identified directly due their extremely short lifetime ($2.9 \times 10^{-13}s$), and must instead be identified from their decay products, which can vary significantly. Taus most commonly decay hadronically into a number of charged or neutral pions, or leptonically into a lepton-neutrino pair, always producing an undetectable tau neutrino. 
+Taus cannot be identified directly due their extremely short lifetime ($2.9 \times 10^{-13}$s), and must instead be identified from their decay products, which can vary significantly. Taus most commonly decay hadronically into a number of charged or neutral pions, or leptonically into a lepton-neutrino pair; in each case always also producing an undetectable tau neutrino. 
 
 Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis. The criteria were determined using truth-matching the simulation data to find the best strategy to identify taus.
 
@@ -294,19 +289,12 @@ The final event selection is done using \acrfull{BDT}, implemented in the \acrfu
 	\item Event shape variables -- thrust, sphericity, aplanarity
 	\item Four highest b-tag values and their corresponding c-tags
 	\item The cosine of the decay angle of the $h \rightarrow b\overline{b}$, and the cosine of the angles between the Higgs and each top quark
-	\item Durham distance value [?]
+	\item The distance between the two closest jets, as defined by the Durham jet clustering algorithm
 	\item The energy of the four lowest-energy jets
 	\item The cosine of the angle of the two jets closest to the beam-axis
 \end{itemize}
 
 The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
-
-
-
-%		%		%		%		%		%		%		%		%		%		%		%		%		%		%
-
-%The final step is to use use PandoraPFAs to generate \acrlong{PFO}s (\acrshort{PFO}s) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
-%
 
 \section{Results}
 In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. Using  the output of the \acrshort{BDT}s, the precision on the cross-section of the tth process using just the hadronic channel is 9.6\%. A similar analysis by Yixuan Zhang found the precision for the semi-leptonic channel to be 11.1\%. Thus the combined uncertainty for the cross-section of both decay channels is:
