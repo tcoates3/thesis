@@ -23,8 +23,7 @@ $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu q \overline{q} b \over
 
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu \ell \nu b \overline{b}$$
 
-The upshot of this is that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance, as the majority of the decays will be via the hadronic channel. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
-% Not supported - show the hadronic decay is more common first.
+Due to the branching ratios, the hadronic and semi-leptonic final states are the most common, and the leptonic final state occurs less than ten percent of the time. This means that the most common final states all heavily rely upon jets, meaning that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
 
 This chapter describes an analysis performed to attain the uncertainty on the measurement of the top-Higgs Yukawa coupling at the proposed \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling. \\
 
@@ -259,7 +258,11 @@ To perform the selections to find isolated leptons, the \texttt{IsolatedLeptonFi
 The first cut on track energy already retains 96.5\% of the reconstructed electrons and muons, while accepting only 9.6\% of other particles. With the additional criteria, this becomes 87.3\% isolated leptons and 0.4\% other particles.
 
 \subsection{Tau identification}
-Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis by [...]
+Taus cannot be identified directly due their extremely short lifetime ($2.9 \times 10^{-13}s$), and must instead be identified from their decay products, which can vary significantly. Taus most commonly decay hadronically into a number of charged or neutral pions, or leptonically into a lepton-neutrino pair, always producing an undetectable tau neutrino. 
+
+Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis. The criteria were determined using truth-matching the simulation data to find the best strategy to identify taus.
+
+The processor looks at particles that may have decayed from taus, and forms a tau candidate based on their properties. First it creates a seed track with a $p_T$ greater than 10 GeV, adding all particles within a 0.04 rad cone of the seed track to the tau candidate if every particle has $p_T >$ 2 GeV and $R_0$ within the range 0.01-0.05mm. The reconstructed tau candidate must then be formed of an odd number of charged tracks, with an invariant mass of less than 1.5 GeV. This mass is slightly lower than the true tau invariant mass to account for missing energy in the form of the tau neutrinos. Then an isolation ring is defined in the region 0.04-0.24 rad around the tau candidate seed track. In order to be considered a tau, there must be fewer than five particles in the isolation ring, with a total energy of less than 5 GeV.
 
 \subsection{Reconstruction of Higgs, top and W boson candidates}
 Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with $R = 1.0$. The jet clustering algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets. Once this is complete, the jet particles are then reclustered using the Durham algorithm .
@@ -272,15 +275,15 @@ Following this, the properties of the jets are used to reconstruct candidates fo
 \label{eq:chi-square}
 \end{equation}
 
-Where the numbered subscripts indicate the indices of the jets added to form the invariant mass $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
+where the numbered subscripts indicate the indices of the jets used to form the invariant masses $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
 
 \subsection{Flavour tagging}
-[...]
+The majority of the backgrounds for this analysis do not have four b-jets in the final state. Therefore reliable b-tagging is an important source of discriminating power.
+
+For this analysis, b-tagging is done in the LCFIPlus package, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
 
 \subsection{Event selection}
-The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA} program. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis.
-
-For the hadronic channel, the following variables are used:
+The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA}. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis. For the hadronic channel, the following variables are used:
 
 \begin{itemize}
 	\item Reconstructed Higgs mass
@@ -289,7 +292,7 @@ For the hadronic channel, the following variables are used:
 	\item Missing transverse momentum ($p_T$)
 	\item $\chi^2$ of the jet grouping
 	\item Event shape variables -- thrust, sphericity, aplanarity
-	\item Four highest b-tag values, corresponding c-tags
+	\item Four highest b-tag values and their corresponding c-tags
 	\item The cosine of the decay angle of the $h \rightarrow b\overline{b}$, and the cosine of the angles between the Higgs and each top quark
 	\item Durham distance value [?]
 	\item The energy of the four lowest-energy jets
@@ -301,20 +304,9 @@ The \acrshort{BDT}s use the sample split into two randomly. The first half is us
 
 
 %		%		%		%		%		%		%		%		%		%		%		%		%		%		%
-%\subsection{Sample processing}
-%The first step of processing the samples is the initial jet clustering. This is done using the $k_t$ algorithm with parameters [?], using an exclusive clustering mode to form 8 jets -- 6 jets from the produced quarks and 2 beam jets. The $k_t$ algorithm is used over choices like anti-$k_t$ and Valencia, because the important features are the \emph{relative} shapes of the jets, rather than absolute properties, so there is no need to use more computationally-intensive [is this true?] algorithms.
-%
+
 %The final step is to use use PandoraPFAs to generate \acrlong{PFO}s (\acrshort{PFO}s) of the undetectable particles, especially the top quarks, $W^\pm$, and Higgs. [...]
 %
-%\subsection{Analysis processing}
-%Once the sample has been processed, it must be analysed. The first step of this is a program used to extract various kinematic variables of both particles in the events ($m_0$, $p_t$) and the event itself ($\Psi$, $T$). This is the Treemaker program, and [...] [Chi-squared extraction of invariant masses] [Feeding into \acrshort{TMVA} to generate \acrshort{BDT}s]
-
-%A flow diagram of the analysis process, and the rejection points, is shown in Fig. \ref{figure:physics/SM/CLIC-analysis-algorithm}.
-
-% The flow diagram below is of questionable usefulness. Maybe add an extra rejection stage at the reconstruction step (if the chi-squared of the Higgs invariant mass is bad, this indicates an event with no Higgs which should be discarded.
-
-% Consider also folding the diagram a bit; we can run horizontally from start to lepton decision, then downwards but dog-legging the boxes. This will make the diagram a little bit more compact, though maybe at the expense of immediate readability.
-%		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 
 \section{Results}
 In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. Using  the output of the \acrshort{BDT}s, the precision on the cross-section of the tth process using just the hadronic channel is 9.6\%. A similar analysis by Yixuan Zhang found the precision for the semi-leptonic channel to be 11.1\%. Thus the combined uncertainty for the cross-section of both decay channels is:
@@ -401,6 +393,3 @@ These results were contributed to a paper that summarised the top physics potent
 %Since this method relies upon jets it is strongly dependent upon jet reconstruction, and thus on the choice of jet clustering algorithm and parameters. Previous analyses of tth events have used a two-step reclustering approach, using the $k_t$ algorithm for the initial clustering and the Durham algorithm for reclustering. These algorithms were chosen as the relative difference between the jet shapes is more important than their absolute shapes, so other algorithms do not provide any benefits.
 %
 %The Valencia algorithm, however, gives improved performance in the cleaner final states of a lepton collider, for which it was especially designed, and many analyses are now transitioning to using the Valencia algorithm.
-%
-%\subsection{Results}
-%[...]
