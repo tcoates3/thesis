@@ -15,20 +15,18 @@ $$
 % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
 The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
-Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states:
-$$
-e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}
-$$
-$$
-e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu \ell \nu b \overline{b}
-$$
-$$
-e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu q \overline{q} b \overline{b}
-$$
+Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states: %Redid these, double check once rendered
+
+$$e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}$$
+
+$$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu q \overline{q} b \overline{b}$$
+
+$$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu \ell \nu b \overline{b}$$
 
 The upshot of this is that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance, as the majority of the decays will be via the hadronic channel. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
+% Not supported - show the hadronic decay is more common first.
 
-This chapter describes an analysis performed to attain a precision on the measurement of the top-Higgs Yukawa coupling at the \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s} = 1.4TeV$, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling. \\
+This chapter describes an analysis performed to attain the uncertainty on the measurement of the top-Higgs Yukawa coupling at the proposed \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling. \\
 
 \begin{figure}[h]
 	\centering
@@ -53,9 +51,9 @@ This chapter describes an analysis performed to attain a precision on the measur
 \section{Physics generation and samples}
 The samples used for the study had been generated previously using ILCDIRAC. The physics generation was done predominantly in WHIZARD 1.95, using PYTHIA 6.422 for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
 
-All samples were simulated at $\sqrt{s} = 1.4TeV$ using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the used samples. 
+All samples were simulated at $\sqrt{s}$ = 1.4 TeV using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the samples used. 
 
-Following the generation of the underlying physics events, the interactions of the particles on the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
+Following the generation of the underlying physics events, the interactions of the particles with the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
 
 At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
 
@@ -118,7 +116,7 @@ The tth event has three possible final states, defined by the decay channel of t
 
 Given the low branching ratio compared to the other channels, the fully leptonic state is not used in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
 
-There is also another contribution to the tth final state -- higgstrahlung. This process is actually a $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson before producing the $t\overline{t}$ pair. The final state is $tth$, but without any direct interaction between the top quark and Higgs (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling.
+There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair. This means the final state is $tth$ but no direct interaction between the top quark and Higgs has occurred (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling.
 
 \begin{figure}[h]
 	\centering
@@ -227,11 +225,9 @@ There is also another contribution to the tth final state -- higgstrahlung. This
 \subsection{Lepton identification}
 The first step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
 
-Finding the leptons that have been produced by the decay of the W boson is relatively simple, as leptons produced in this decay have a much higher energy than leptons produced in jets. In general, these leptons have energies in the 50-350 GeV range, which can be found from the reconstructed track energy.
+Finding the leptons that have been produced by the decay of the W boson is relatively simple, as leptons produced in this decay have a much higher energy than leptons produced in jets. In general, these leptons have energies in the 50-350 GeV range, which can be found from the reconstructed track energy. However there are additional properties of these leptons that can be used to improve their selection.
 
-There are additional properties of these leptons that can be used to improve their selection.
-
-Leptons produced within jets will detected within the same region as the other particles from the same jet, in a high-occupancy region of the detector. Therefore, an isolated lepton detected in a low-occupancy region of the detector is more likely to have originated from the decay of a W boson. 
+Leptons produced within jets will detected within the same region as the other particles from the same jet, in a high-occupancy region of the detector. Therefore, an isolated lepton detected in a low-occupancy region of the detector is more likely to have originated from the decay of a W boson, rather than from a jet.
 
 The impact parameter (IP) is the distance between the primary vertex that produced a particle, and the closest approach of the particle's track. Electrons and muons produced from W boson decays have much lower IPs than other particles or tau decay products. The impact parameter can be considered in either the longitudinal ($Z_0$) or radial ($d_0$) components, which can be combined for a 3D IP:
 
@@ -266,7 +262,7 @@ The first cut on track energy already retains 96.5\% of the reconstructed electr
 Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis by [...]
 
 \subsection{Reconstruction of Higgs, top and W boson candidates}
-Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with $R = 1.0$. The jet clustering algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets Once this is complete, the jet particles are then reclustered using the Durham algorithm .
+Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with $R = 1.0$. The jet clustering algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets. Once this is complete, the jet particles are then reclustered using the Durham algorithm .
 
 Following this, the properties of the jets are used to reconstruct candidates for the Higgs boson, top quarks, and W bosons. This is done by doing a calculation of the invariant masses of the tops, W bosons, and Higgs, resulting in a $\chi^2$ value. By computing this $\chi^2$ value for all possible combinations of jets and finding the combination that results in the minimum, the jets can be matched to which particles produced them. 
 
@@ -276,7 +272,7 @@ Following this, the properties of the jets are used to reconstruct candidates fo
 \label{eq:chi-square}
 \end{equation}
 
-Where the numbered subscripts indicate the indices of the jets added to form the invariant mass $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The value of the $\chi^2$ are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
+Where the numbered subscripts indicate the indices of the jets added to form the invariant mass $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
 
 \subsection{Flavour tagging}
 [...]
