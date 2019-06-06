@@ -10,12 +10,11 @@
    - Summary table of the "vital statistics" of the different colliders
 
 1. **Chapter 2**
-   - In-depth explanation of how analysis modules work (copied from documentation)
-   - Plots/examples of qtests (if they exist)
-   - In-depth explanation of how qtests work (copied from documentation)
+   - Finish off polishing analysis module section and qtest section
 
 1. **Chapter 3**
    - Explanation of Fig 3.6 (DQM4hep monitoring interface)
+   - Add correlation plots section, and results from May 2017 CERN testbeam
 
 1. **Chapter 5**
    - Explanation of top-Higgs Yukawa coupling (or in Chapter 1)
