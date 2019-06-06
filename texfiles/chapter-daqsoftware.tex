@@ -200,34 +200,55 @@ An \acrshort{XML} steering file is used to pass parameters to the analysis modul
 
 Steering files are broadly made of four sections: the application settings, the archiver settings, the analysis module, and the monitor elements.
 
-The application settings specify how to run the application itself, including which other file readers or streamers to connect to, which run control is being used, etc. This is also where the 
+The application settings specify how to run the application itself, including which other file readers or streamers to connect to, which run control is being used, etc. 
 
-(archiver)
+The archiver setting specify whether the results of running the analysis module are written to an archive, which is a ROOT file containing the monitor elements that the analysis module created.
 
 The analysis module section sets the type of analysis module to run, and gives it a unique name to distinguish it from other instances of the same module. Both of these parameters can be set at the command line (see above).
 
-(monitor elements)
+The monitor element section specifies the monitor elements used in the file. Monitor elements is a general name for any kind of ROOT object, which may be a histogram, graph, plot, drawing, etc. The name, directory, and properties of monitor elements are set here, depending on what type of object the monitor element is.
 
 \subsection{Creating analysis modules}
 The \acrshort{DQM4hep} pages on Github have a repository to accompany this documentation – the \texttt{dqm4hep-example} package is available here\refthis. This package contains all of the tools necessary to immediately begin writing and compiling analysis modules for an existing installation of \acrshort{DQM4hep}. 
 
 It is recommended to fork this repository before starting, so git and Github's version control features can be used to back up code.
 
-In addition to writing the analysis module code, a compiled analysis module needs to be declared as a plugin for \acrshort{DQM4hep} to be able to use it. The absolute path to the library file for new analysis modules needs to be appended to the \texttt{DQM4hep \textunderscore PLUGIN \textunderscore DLL} environment variable. 
+In addition to writing the analysis module code, a compiled analysis module needs to be declared as a plugin for \acrshort{DQM4hep} to be able to use it. The absolute path to the library file for new analysis modules needs to be appended to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable. 
 
 \subsubsection{Writing analysis modules}
 Analysis modules must be written specifically for the type of data they recieve and for a certain analysis or set of analyses to perform. This means that the ideal person to write an analysis module is someone familiar with both the experiment's event structure and the goals of the monitoring.
 
 Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} defines an analysis module called \textit{ExampleModule} that can be found in the \texttt{dqm4hep-example/source/src/plugins} directory.
 
-[...]
+The .cc file then has several sections that must be written, described in separate sections below.
+
+\subsubsection{Variable declaration}
+In this section of the file, the variables that must be persistent over the entire running of the module are declared. These variables will not go out of scope, so are usually reserved for the monitor elements themselves, or counters that must persist over the entire module. Monitor elements must be declared as the \texttt{online::OnlineElementPtr} type. None of the declared variables are initialised here; initialision is done in later functions.
+
+\subsubsection{readsettings}
+This function reads the settings from the XML steering file, meaning that anything that needs to be initialised from the steering file is done here. This notably includes all monitor elements. Typically the \texttt{core::OnlineElementPtr} will have been declared during the (preamble), then is assigned here based on the steering file using the \texttt{online::ModuleApi::getMonitorElement()} function. 
+
+\subsubsection{initModule}
+This process is run once, when the analysis module is initialised. Anything that needs to be done only once at the beginning should be done here. The use of this function is limited, as most tasks that need to be reset are reset at the beginning of a run using \texttt{startOfRun()} below.
+
+\subsubsection{startOfRun}
+The \texttt{startOfRun} function handles code that should be executed only once per run, at the beginning. This is commonly used for counters that must persist over the entire run, for instance if a detector can give an error signal, a counter to store the number of error signals is initialised here so that it is persistent over the entire run, and the number of error signals can be totalled at the end of the run.
+
+%\subsubsection{startOfCycle}
+
+%\subsubsection{endOfCycle}
+
+\subsubsection{endOfRun}
+This is the end-of-run counterpart to \texttt{startOfRun()}. In general, this function will encapsulate logic that must deal with counters or procedures that were intialised or begun in \texttt{startOfRun()}.
+
+\subsubsection{endModule}
+This function is called when the module ends, and is usually used for deleting or cleaning up any objects created during the \texttt{initModule()} function. Most normal use cases will not need this function, as cleanup of objects such as variables or monitor elements is handled by the framework.
+
+\subsubsection{process}
+This is the function where the analysis module performs the main processing of data. In this function, events are loaded into memory from the event stream or file reader, and made available for use. Data can then be processed using normal C++ methods, then filled into monitor elements to be sent to the monitor element collectors so they can be presented in the user interface, or stored by the archiver.
 
 \subsubsection{Plugin declaration}
-(About changing names)
-
-If using one of the example files provided, all instances of the original module name should be replaced with the name of your module.
-
-In addition, at the end of an analysis module the module needs to be declared as a DQM4hep plugin, using this syntax:
+Analysis modules are \acrshort{DQM4hep} plugins, so must be declared as a plugin using \acrshort{DQM4hep}'s facility for this so that the main executables can access them. At the end of the module, the following code must be included to declare the analysis module as a plugin:
 
 \begin{lstlisting}
 DQM_PLUGIN_DECL(ModuleName, "ModuleName");
@@ -235,19 +256,13 @@ DQM_PLUGIN_DECL(ModuleName, "ModuleName");
 
 This should take place at the very end of the file but within the \texttt{dqm4hep} and \texttt{example} namespaces.
 
-(Need a section here about how to get DQM4hep to open the plugin!)
+When an analysis module is declared as a plugin, the main \acrshort{DQM4hep} executable must be given the directory of the library to load the plugin at runtime. This is done by appending the director of the library to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable:
 
-\begin{itemize}
-	\item Variable declaration -- [...] (the private stuff)
-	\item readsettings() -- This function reads the settings from the XML steering file, meaning that anything that needs to be initialised from the steering file is done here. This notably includes all monitor elements. Typically the \texttt{core::OnlineElementPtr} will have been declared during the (preamble), then is assigned here based on the steering file using the \texttt{online::ModuleApi::getMonitorElement()} function. 
-	\item initModule() -- This process is run once, when the analysis module is initialised. Anything that needs to be done only once at the beginning should be done here. [...]
-	\item startOfRun() -- The \texttt{startOfRun} function handles code that should be executed only once per run, at the beginning. An example [things that only happen once, at the beginning of a run]
-	\item startOfCycle() -- (what is the cycle?)
-	\item endOfCycle() -- (what is the cycle?)
-	\item endOfRun() -- (things that only happen once, at the end of a run)
-	\item endModule() -- things that are needed when the module ends, such as deleting anything created in initModule. normal stuff like monitor elements don't need to be deleted or anything, the framework handles it.
-	\item process() -- actual meat; only important thing is to make sure histograms are filled, using the correct objectTo<>() function
-\end{itemize}
+\begin{lstlisting}
+export DQM4hep_PLUGIN_DLL=$DQM4hep_PLUGIN_DLL:/path/to/module/lib/libDQMExample.so
+\end{lstlisting}
+
+Once this is added, \acrshort{DQM4hep} can access the libraries and run the analysis module.
 
 \subsection{SimpleModule – a worked example} 
 To explain the process of creating and writing analysis modules in more detail, a worked example is presented. For this we imagine a simplified particle physics detector, and write an analysis module called \texttt{SimpleModule.cc} to monitor data from it. We also write a steering file called \texttt{simple-test.xml} to run the analysis module. Each function of the analysis module will be described in depth, explaining in detail what the code is doing. 
@@ -264,7 +279,7 @@ The data acquisition device sends us an event made of four integer values:
 \begin{itemize}
 	\item xPos -- the position of a hit on the x-axis of the detector, from 0 to 5
 	\item yPos -- the position of a hit on the y-axis of the detector, from 0 to 5
-	\item ADC -- the ADC of the hit, in arbitrary units, between 0 and 1500
+	\item ADC -- the \acrshort{ADC} of the hit, in arbitrary units, between 0 and 1500
 	\item timeHit -- the time the hit occured, in arbitrary units
 \end{itemize}
 
@@ -272,13 +287,13 @@ The data acquisition device sends us an event made of four integer values:
 Before writing the module, the variables and properties to monitor must be determined. For this detector and its analysis module, there are three goals:
 
 \begin{itemize}
-	\item Spectrum histogram -- a single histogram containing the ADC of each hit for the entire run, producing an energy spectrum.
+	\item Spectrum histogram -- a single histogram containing the \acrshort{ADC} of each hit for the entire run, producing an energy spectrum.
 	\item Hitmap -- a hitmap showing the distribution of hits across the detector.
-	\item Radiation damage -- if we imagine that ADCs higher than 1000 are likely to cause radiation damage to the detector, then monitoring the number of hits in the entire run exceeding this threshold allows an estimation of how damaged the detector may be.
+	\item Radiation damage -- if we imagine that \acrshort{ADC}s higher than 1000 are likely to cause radiation damage to the detector, then monitoring the number of hits in the entire run exceeding this threshold allows an estimation of how damaged the detector may be.
 \end{itemize}
 
 \subsubsection{Preamble}
-Here the pointers for all monitor elements are initialised. One is required for the ADC spectrum, and one for the hitmap. They don't need to have their type declared here -- this is done later. The standard style for \acrshort{DQM4hep} is to prefix all monitor element pointers with \texttt{m\textunderscore p} to distinguish them, as they are an important type.
+Here the pointers for all monitor elements are initialised. One is required for the \acrshort{ADC} spectrum, and one for the hitmap. They don't need to have their type declared here -- this is done later. The standard style for \acrshort{DQM4hep} is to prefix all monitor element pointers with \texttt{m\textunderscore p} to distinguish them, as they are an important type.
 
 Variables for handling the information about radiation damage are also created here, as they need to persist between events. These are declared here and will be initialised later.
 
@@ -374,13 +389,13 @@ First the ADC is added to the \texttt{ADC\textunderscore Spectrum} plot. To do t
   m_pSpectrum->objectTo<TH1I>()->Fill(ADC);
 \end{lstlisting}
 
-Then the same must be done for the hitmap. This time it needs to be cast to a TH2I object and filled with the x- and y-positions as well as the ADC:
+Then the same must be done for the hitmap. This time it needs to be cast to a TH2I object and filled with the x- and y-positions as well as the \acrshort{ADC}:
 
 \begin{lstlisting}
   m_pHitmap->objectTo<TH2I>()->Fill(xPos, yPos, ADC);
 \end{lstlisting}
 
-And lastly, a check is performed for whether the ADC was high enough to cause radiation damage, and if so increment the counter:
+And lastly, a check is performed for whether the \acrshort{ADC} was high enough to cause radiation damage, and if so increment the counter:
 
 \begin{lstlisting}
   if (ADC >= radiationDamageADCThreshold) {
@@ -462,7 +477,7 @@ This section is where the monitor elements to use and the parameters of the ROOT
 </storage>
 \end{lstlisting}
 
-To create a ROOT object, the \texttt{<bookElement>} environment is used to declare it's type, path, name, title, and any other parameters the ROOT object requires. For example, to create a histogram for the ADC spectrum, a TH1I is needed as the ADCs are integers. The range of the ADCs is from 0 to 1500, so the range can be set accordingly.
+To create a ROOT object, the \texttt{<bookElement>} environment is used to declare it's type, path, name, title, and any other parameters the ROOT object requires. For example, to create a histogram for the \acrshort{ADC} spectrum, a TH1I is needed as the \acrshort{ADC}s are integers. The range of the \acrshort{ADC}s is from 0 to 1500, so the range can be set accordingly.
 
 \begin{lstlisting}
 <bookElement type="TH1I" path="/" name="ADC_Spectrum" title="Spectrum of all ADCs" nBinsX="150" minX="0" maxX="1500">
@@ -477,7 +492,7 @@ Similarly, the monitor element for the hitmap is defined:
 \end{lstlisting}
 
 \subsubsection{XML loops}
-In this example, loops aren't necessary, but defining monitor elements using a for-loop in XML is a useful feature, so it is discussed here. For example, if one of the goals were to create a histogram for each of the 36 tiles in the detector, a for-loop would allow thtis to be created with a smaller amount of code
+In this example, loops aren't necessary, but defining monitor elements using a for-loop in \acrshort{XML} is a useful feature, so it is discussed here. For example, if one of the goals were to create a histogram for each of the 36 tiles in the detector, a for-loop would allow thtis to be created with a smaller amount of code
 
 To do this, the \texttt{<for>} environment is used, using \texttt{tileNumber} as the id. Then a template monitor element defintion is written out using \texttt{\$ FOR{tileNumber}} whenever the tile number should be inserted:
 
@@ -500,7 +515,7 @@ make install
 
 Running cmake is only needed for the first compilation after creating a new module – it isn't necessary when recompiling a module that has been compiled before.
 
-Once the analysis module has compiled successfully, DQM4hep must be given the path to its libraries so that the main installation of DQM4hep can see it. This is done by appending the path to the libraries to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable:
+Once the analysis module has compiled successfully, \acrshort{DQM4hep} must be given the path to its libraries so that the main installation of \acrshort{DQM4hep} can utilise it. This is done by appending the path to the libraries to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable:
 
 \begin{lstlisting}
 export DQM4hep_PLUGIN_DLL=$DQM4hep_PLUGIN_DLL:/path/to/dqm4hep-example/lib/libDQMExample.so
@@ -524,16 +539,18 @@ The analysis module will then run. Once it has finished, the archiver will creat
 \section{Data quality monitoring}
 Data quality monitoring (\acrshort{DQM}) is a type of data monitoring where the data is tested using some form of statistical or mathematical process to produce a value corresponding to the ``quality'' of the dataset. This can take many forms, such as comparing an experimental dataset to reference data acquired from previous experiments, or requiring that the $\chi^2$ or p-value of a dataset may need to pass a certain threshold to be considered valid.
 
-The definition of the ``quality'' statistic will differ according to a variety of factors such as the type of data, the aim of an experiment, etc. Common examples are p-values, or binary tests where data that passes had a quality of 1, and 0 otherwise.
+The definition of the ``quality'' statistic will differ according to a variety of factors such as the type of data, the aim of an experiment, etc. Common examples are p-values, or binary pass-fail tests where data that passes has a quality of 1, and 0 otherwise.
 
 One of the benefits of data quality monitoring is that it provides a more reproducible and robust set of checks on data-taking, allowing quantitative analysis of the performance of a detector prototype. It can also be used as a way for shifters without detailed knowledge of the hardware, software, or physics to determine whether the detector is performing as intended during a testbeam when experts are not available, by using the quality statistics as a guide.
 
 Previous versions of \acrshort{DQM4hep} did not have infrastructure to support data quality monitoring, but this was added during refactoring in preparation for the next release version. Once this was in place, this permitted an array of quality tests to be developed, implemented, and tested. 
 
-A quality test (or `qtest') processes a series of monitor elements (ROOT TObjects) according to a set of criteria defined in the test's code. This test produces a numerical result between 0 and 1, referred to as the ``quality''. Within the framework, quality tests are self-contained C++ code files, which hook into the framework's system for execution. Quality tests are run by using the executable \texttt{dqm4hep-run-qtests} and a steering file to define parameters, such as which files to load, which quality tests to execute, and what the passing and failing boundaries are for each quality test. 
+A quality test (or \acrshort{qtest}) processes a series of monitor elements (ROOT TObjects) according to a set of criteria defined in the test's code. This test produces a numerical result between 0 and 1, referred to as the ``quality''. Within the framework, quality tests are self-contained C++ code files, which hook into the framework's system for execution. Quality tests are run by using the executable \texttt{dqm4hep-run-qtests} and a steering file to define parameters, such as which files to load, which quality tests to execute, and what the passing and failing boundaries are for each quality test. 
 
 \subsection{Quality tests}
 The quality tests that have been implemented in \acrshort{DQM4hep} are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
+
+A summary of the quality tests can be found in Table \ref{table:dqm4hep/qtests}.
 
 \subsubsection{Property within expected test}
 This is a quality test that takes either a TH1 or TGraph object, and finds some user-defined parameter. The parameter must be one of: mean, mean90, root mean square (RMS), root mean square 90 (RMS90), or median. It then checks whether either: that this parameter is within a user-specified range; or that it is above or below the user-specified threshold. If a range is being used, the result is the p-value of the property being within the specified range. If a threshold is being used, then the result is 1 if the property passes the threshold, 0 otherwise.
@@ -582,8 +599,7 @@ This is a quality test that takes a TH1 object and performs the Pearson $\chi^2$
 \end{table}
 
 \subsection{Running quality tests}
-
-Quality tests can be run using the \texttt{dqm4hep-run-qtests} executable, found in \texttt{dqm4hep-core/bin/}. This executable handles the running of the actual binaries for each qtest, as well as obtaining monitor elements from the ROOT file and the setting of parameters. This executable has one required arguments and several optional ones, detailed below. 
+Quality tests can be run using the \texttt{dqm4hep-run-qtests} executable, found in \texttt{dqm4hep-core/bin/}. This executable handles the running of the actual binaries for each \acrshort{qtest}, as well as obtaining monitor elements from the ROOT file and the setting of parameters. This executable has one required arguments and several optional ones, detailed below. 
 
 \subsubsection{Arguments}
 
@@ -599,21 +615,21 @@ Displays usage information, then exits.
 --input-qtest-file <string>
 \end{lstlisting}
 
-(Required) Gives the path to the XML steering file that defines what quality tests to run, their parameters, and what monitor elements to run them on. See the section below for more information on these steering files.
+(Required) Gives the path to the \acrshort{XML} steering file that defines what quality tests to run, their parameters, and what monitor elements to run them on. See the section below for more information on these steering files.
 
 \begin{lstlisting}
 -c
 --compress-json
 \end{lstlisting}
 
-Turns on compression for the JSON qtest report output file. Off by default.
+Turns on compression for the \acrshort{JSON} \acrshort{qtest} report output file. Off by default.
 
 \begin{lstlisting}
 -w
 --write-monitor-elements
 \end{lstlisting}
 
-Turns on writing of monitor elements in the qtest report. Off by default.
+Turns on writing of monitor elements in the \acrshort{qtest} report. Off by default.
 
 \begin{lstlisting}
 -p <string>
@@ -627,7 +643,7 @@ Prints only the quality reports of the given flag. Options are \texttt{undefined
 --exit-on <string>
 \end{lstlisting}
 
-Forces the program to exit if any qtest results in the given code. or greater. Options are \texttt{ignore}, \texttt{failure}, \texttt{warning}, \texttt{error}. This is \texttt{failure} by default.
+Forces the program to exit if any \acrshort{qtest} results in the given code. or greater. Options are \texttt{ignore}, \texttt{failure}, \texttt{warning}, \texttt{error}. This is \texttt{failure} by default.
 
 \begin{lstlisting}
 -v <string>
@@ -641,7 +657,7 @@ The verbosity of the logger. Options are \texttt{trace}, \texttt{debug}, \texttt
 --qreport-file <string>
 \end{lstlisting}
 
-Gives the path of the qtest report output file (in JSON) format.
+Gives the path of the \acrshort{qtest} report output file (in \acrshort{JSON}) format.
 
 \begin{lstlisting}
 -o <string>
@@ -664,13 +680,13 @@ Ignores any arguments following this flag.
 Displays version information, then exits.
 
 \subsubsection{Steering file}
-Steering files use XML to store all teh information needed to execute a qtest. An example steering file can be found in \texttt{dqm4hep-core/tests/test \textunderscore samples.xml}.
+Steering files use \acrshort{XML} to store all teh information needed to execute a \acrshort{qtest}. An example steering file can be found in \texttt{dqm4hep-core/tests/test \textunderscore samples.xml}.
 
 There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
 
-The \texttt{<qtests>} block defines the qtests to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the qtest being used – see the section for each qtest above.
+The \texttt{<qtests>} block defines the \acrshort{qtest}s to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the \acrshort{qtest} being used – see the section for each \acrshort{qtest} above.
 
-The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag, within which each monitor element is opened with \texttt{<fileElement>}. Inside this tag, all of the qtests to execute on this monitor element are given. In this example below, the qtests \texttt{ExampleTest1} and \texttt{ExampleTest2} are both performed on the monitor element \texttt{TestHistogram}:
+The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag, within which each monitor element is opened with \texttt{<fileElement>}. Inside this tag, all of the \acrshort{qtest}s to execute on this monitor element are given. In this example below, the \acrshort{qtest}s \texttt{ExampleTest1} and \texttt{ExampleTest2} are both performed on the monitor element \texttt{TestHistogram}:
 
 \begin{lstlisting}[language=XML]
 <monitorElements>
@@ -685,7 +701,7 @@ The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag,
 </monitorElements>
 \end{lstlisting}
 
-Some kinds of qtests require reference objects to compare against, which must be declared in the \texttt{<references>} block. References have a \texttt{name} parameter which gives the path to the file used as a reference, and an \texttt{id} which is a short tag for referring to them later in the XML file. For example:
+Some kinds of \acrshort{qtest}s require reference objects to compare against, which must be declared in the \texttt{<references>} block. References have a \texttt{name} parameter which gives the path to the file used as a reference, and an \texttt{id} which is a short tag for referring to them later in the XML file. For example:
 
 \begin{lstlisting}[language=XML]
 <references>
@@ -694,7 +710,7 @@ Some kinds of qtests require reference objects to compare against, which must be
 </references>
 \end{lstlisting}
 
-When a qtest that requires a reference is declared, the reference is given within the \texttt{<fileElement>} tag:
+When a \acrshort{qtest} that requires a reference is declared, the reference is given within the \texttt{<fileElement>} tag:
 
 \begin{lstlisting}[language=XML]
 <fileElement path="\TestDirectory" name="TestHistogram">
@@ -703,7 +719,7 @@ When a qtest that requires a reference is declared, the reference is given withi
 </fileElement>
 \end{lstlisting}
 
-This performs the qtest \texttt{ExampleTest1} on the monitor element \texttt{TestHistogram}, looking for another ROOT object of the same name within the file \texttt{MyReference} points to. It is also possible to use a specific object in a file as the reference:
+This performs the \acrshort{qtest} \texttt{ExampleTest1} on the monitor element \texttt{TestHistogram}, looking for another ROOT object of the same name within the file \texttt{MyReference} points to. It is also possible to use a specific object in a file as the reference:
 
 \begin{lstlisting}[language=XML]
 <fileElement path="\TestDirectory" name="TestHistogram">
@@ -715,16 +731,16 @@ This performs the qtest \texttt{ExampleTest1} on the monitor element \texttt{Tes
 In this case, this performs \texttt{ExampleTest2} on the monitor element \texttt{TestHistogram}, using the object \texttt{ReferenceHistogram} as the reference. 
 
 \subsection{Writing quality tests}
-Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see here [NB] for more information on plugins, including how to write and compile them.
+Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see the \textit{plugin system} section of the \acrshort{DQM4hep} documentation \refthis for more information on plugins, including how to write and compile them.
 
 The code for the built-in quality tests can be found in \texttt{dqm4hep-core/source/src/plugins/} and can be used as references or templates. Files for quality tests should be given a descriptive name in CamelCase, and end with \texttt{Test}, e.g. \texttt{ExactRefCompareTest.cc}.
 
 The code for a quality test requires only a single .cc file, which has four functions: the constructor, the destructor, readSettings, and userRun. Each is discussed in a separate subsection below. If required, further functions can be implemented as needed. This is left for the user to decide.
 
-Code should be written to catch common errors and throw appropriate exceptions, especially for errors that cause segmentation faults. This will help to avoid a qtest preventing other qtests from running should an error occur. Errors are reported using the \texttt{report.m\_message()} function, and the error message will appear in the summary of the qtest after it has run.
+Code should be written to catch common errors and throw appropriate exceptions, especially for errors that cause segmentation faults. This will help to avoid a \acrshort{qtest} preventing other \acrshort{qtest}s from running should an error occur. Errors are reported using the \texttt{report.m\_message()} function, and the error message will appear in the summary of the \acrshort{qtest} after it has run.
 
 \subsubsection{Constructor and destructor}
-For the constructor and destructor, it's enough to copy existing code, changing the name of the qtest and the variables to be initialised. The program that runs qtests handles everything else. Care should be taken to initialise variables properly and to give the qtest a good description:
+For the constructor and destructor, it's enough to copy existing code, changing the name of the \acrshort{qtest} and the variables to be initialised. The program that runs \acrshort{qtest}s handles everything else. Care should be taken to initialise variables properly and to give the \acrshort{qtest} a good description:
 
 \begin{lstlisting}[language=C++]
 ExampleTest::ExampleTest(const std::string &qname)
@@ -737,7 +753,7 @@ ExampleTest::ExampleTest(const std::string &qname)
 \end{lstlisting}
 
 \subsubsection{readSettings}
-The \texttt{readSettings} function initialises the variables of the qtest from the XML steering file, which is loaded into memory via \texttt{xmlHandle}. This function should be used to read in information from the XML file and validate it to make sure the test can be run. Variables are read in using a combination of pre-processor macros and XmlHelper. For example:
+The \texttt{readSettings} function initialises the variables of the \acrshort{qtest} from the \acrshort{XML} steering file, which is loaded into memory via \texttt{xmlHandle}. This function should be used to read in information from the \acrshort{XML} file and validate it to make sure the test can be run. Variables are read in using a combination of pre-processor macros and XmlHelper. For example:
 
 \begin{lstlisting}[language=C++]
 RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
@@ -749,13 +765,12 @@ Note that the above example will fail if the parameter is not present in the XML
     RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
 \end{lstlisting}
 
-For more information on status codes, pre-processor macros, and XML parsing with XmlHelper, see the core tools section [NB here].
+For more information on status codes, pre-processor macros, and \acrshort{XML} parsing with XmlHelper, see the core tools section of the documentation.
 
-Parameters should be checked to make sure that the qtest can be run and that the result is meaningful. While \texttt{XmlHelper::readParameter} and similar functions can take an optional fourth argument for a validator delta function, users should make code clear and readable by using \texttt{if-else} statements. This is especially important when checking against more complicated criteria.
+Parameters should be checked to make sure that the \acrshort{qtest} can be run and that the result is meaningful. While \texttt{XmlHelper::readParameter} and similar functions can take an optional fourth argument for a validator delta function, users should make code clear and readable by using \texttt{if-else} statements. This is especially important when checking against more complicated criteria.
 
 \subsubsection{userRun}
-
-The \texttt{userRun} function defines the process of the qtest itself, using the monitor element. The result \textit{must} be a float between 0.0 and 1.0 that represents the ``quality'' or ``goodness'' of the test. The meaning of this quality statistic depends on the test but is often a p-value. At absolute minimum, it should represent a pass-fail case, so that a passing qtest gives a quality of 1 and a failing qtest gives a quality of 0.
+The \texttt{userRun} function defines the process of the \acrshort{qtest} itself, using the monitor element. The result \textit{must} be a float between 0.0 and 1.0 that represents the ``quality'' or ``goodness'' of the test. The meaning of this quality statistic depends on the test but is often a p-value. At absolute minimum, it should represent a pass-fail case, so that a passing \acrshort{qtest} gives a quality of 1 and a failing \acrshort{qtest} gives a quality of 0.
 
 The monitor element must first be cast to an appropriate class. This should be done using the \texttt{objectTo} function. For example, if the monitor element is a TH1:
 
@@ -763,7 +778,7 @@ The monitor element must first be cast to an appropriate class. This should be d
 TH1* myHistogram = pMonitorElement->objectTo<TH1>();
 \end{lstlisting}
 
-After this, the object can be accessed using it's normal methods, and the qtest can be written using normal C++ code for ROOT objects.
+After this, the object can be accessed using it's normal methods, and the \acrshort{qtest} can be written using normal C++ code for ROOT objects.
 
 It is useful to include a check for whether the monitor element exists and is the correct type, to prevent segmentation faults, using a comparison to \texttt{nullptr} and throwing an appropriate status code if the check fails. For example:
 
@@ -775,25 +790,9 @@ if (nullptr == pMonitorElement->objectTo<TH1>())
 }
 \end{lstlisting}
 
-The meaning of these status codes is documented under \textit{Status codes and useful preprocessor macros} in the core tools section [NB here too].
+The meaning of these status codes is documented under \textit{Status codes and useful preprocessor macros} in the core tools section of the documentation.
 
 Once the quality statistic of the test is known, it is output using \texttt{report.m\_quality}. Any other information can be output using \texttt{report.m\_message} – this is useful for including comments on the result.
-
-
-%%			%%			%%			%%			%%
-
-\section{Adaptation to other detectors}
-Due to the modularity and genericity of \acrshort{DQM4hep}, the process of deploying it for a new detector is simple -- the only parts of \acrshort{DQM4hep} that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special \acrshort{DQM4hep}-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
-
-A file streamer or file reader must be written by the user given a specific data structure. This requires knowledge of both the event data model of the data acquisition setup, as well as the structure of the data files. The ideal person to write this code is someone with detailed knowledge of the data acquisition software being used, and the data storage or streaming. 
-
-In general, only one of the file streamer or file reader plugins will be needed. Both of these plugins are similar in structure and differ only on where they get the data from -- a file reader loads a file from disk, whereas a streamer loads it from the data acquisition system. If the data will be monitored offline or ``nearly-online'' by loading files from disk, then a file reader plugin must be written. If the data is to be monitored online, then a streamer plugin must be written. 
-
-Once the information is accessible from either the file reader or streamer, the framework handles passing this data to the analysis modules. Analysis modules are a type of plugin which take data that has been packaged into events by a file reader or streamer plugin and performs some analysis on it. The main action an analysis module must do is create a monitor element (a ROOT TObject) then emit it to the rest of the framework. Before this step an arbitrary amount of processing can be done, e.g. checking validation bits, thresholds, error-checking, and so on. Monitoring the data quality can be done from within analysis modules but this is not recommended as dedicated quality tests (see section above) are available.
-
-For each analysis module that is being run, an \acrshort{XML} steering file is required to provide the parameters and networking information to all the processes needed. A single steering file can call only a single analysis or standalone module, but multiple steering files can be run in parallel by the framework.
-
-Examples of using \acrshort{DQM4hep} with testbeams both within the AIDA-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.
 
 \section{Documentation and user manual} 
 One of the biggest hurdles for the promotion and uptake of a new framework is the lack of understanding or familiarity with it's use. Many research teams will continue to use existing software solutions, which may be suboptimal or difficult to use, according to the principle of ``better the devil you know than the devil you don't''. The first step to overcoming this is to produce clear, readable and complete documentation across the entire range of features the framework has.
@@ -828,3 +827,15 @@ There is extensive documentation of quality testing; each quality test is descri
 
 Finally there is a section explaining how to write new quality tests. This includes a detailed explanation of the purpose of each function within a quality test file, what the required outputs are and how to utilise them, error testing, and advice on maintaining a style consistent with the rest of the framework.
 
+\section{Adaptation to other detectors}
+Due to the modularity and genericity of \acrshort{DQM4hep}, the process of deploying it for a new detector is simple -- the only parts of \acrshort{DQM4hep} that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special \acrshort{DQM4hep}-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
+
+A file streamer or file reader must be written by the user given a specific data structure. This requires knowledge of both the event data model of the data acquisition setup, as well as the structure of the data files. The ideal person to write this code is someone with detailed knowledge of the data acquisition software being used, and the data storage or streaming. 
+
+In general, only one of the file streamer or file reader plugins will be needed. Both of these plugins are similar in structure and differ only on where they get the data from -- a file reader loads a file from disk, whereas a streamer loads it from the data acquisition system. If the data will be monitored offline or ``nearly-online'' by loading files from disk, then a file reader plugin must be written. If the data is to be monitored online, then a streamer plugin must be written. 
+
+Once the information is accessible from either the file reader or streamer, the framework handles passing this data to the analysis modules. Analysis modules are a type of plugin which take data that has been packaged into events by a file reader or streamer plugin and performs some analysis on it. The main action an analysis module must do is create a monitor element (a ROOT TObject) then emit it to the rest of the framework. Before this step an arbitrary amount of processing can be done, e.g. checking validation bits, thresholds, error-checking, and so on. Monitoring the data quality can be done from within analysis modules but this is not recommended as dedicated quality tests (see section above) are available.
+
+For each analysis module that is being run, an \acrshort{XML} steering file is required to provide the parameters and networking information to all the processes needed. A single steering file can call only a single analysis or standalone module, but multiple steering files can be run in parallel by the framework.
+
+Examples of using \acrshort{DQM4hep} with testbeams both within the AIDA-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.

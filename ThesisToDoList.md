@@ -5,12 +5,12 @@
 1. **Chapter 1**
    - Mathematics of SM and Higgs physics
    - top-Higgs Yukawa coupling (or in Chapter 5)
-   - Facts and figures of the colliders (e.g. luminosities, polarisation)
    - Diagrams of the collider complexes
+   - Facts and figures of the colliders (e.g. luminosities, polarisation)
    - Summary table of the "vital statistics" of the different colliders
 
 1. **Chapter 2**
-   - Finish off polishing analysis module section and qtest section
+   - Write summary
 
 1. **Chapter 3**
    - Explanation of Fig 3.6 (DQM4hep monitoring interface)
