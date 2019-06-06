@@ -6,6 +6,20 @@
 % Custom command to indicate that something needs a reference
 \newcommand{\refthis}{\textsuperscript{[reference this]}}
 
+% Package for code listings using listings and a custom style
+\usepackage{listings}
+\usepackage{color}
+\definecolor{backcolor}{rgb}{0.96,0.96,1.0}
+\lstdefinestyle{mystyle}{
+	frame=single,
+	breaklines,
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\footnotesize,
+	backgroundcolor=\color{backcolor}
+}
+\lstset{style=mystyle}
+
 % Epigraph package and it's settings, used for quotes at the beginning of chapters
 \usepackage{epigraph}
 \setlength{\epigraphwidth}{.5\textwidth}
