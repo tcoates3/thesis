@@ -11,5 +11,3 @@
 2. **Testbeam Analysis**
    - Make energy-to-ADC calibration, using the assumption that the calorimeter response is linear
    - Perform tower calibration, using the calibration electron runs
-4. **Thesis Writing**
-   - Full Draft 1 by 24th May
