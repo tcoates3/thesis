@@ -145,22 +145,245 @@ Previous versions of \acrshort{DQM4hep} did not have infrastructure to support d
 
 A quality test (or `qtest') processes a series of monitor elements (ROOT TObjects) according to a set of criteria defined in the test's code. This test produces a numerical result between 0 and 1, referred to as the ``quality''. Within the framework, quality tests are self-contained C++ code files, which hook into the framework's system for execution. Quality tests are run by using the executable \texttt{dqm4hep-run-qtests} and a steering file to define parameters, such as which files to load, which quality tests to execute, and what the passing and failing boundaries are for each quality test. 
 
+\subsection{Quality tests}
 The quality tests that have been implemented in \acrshort{DQM4hep} are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
 
-\subsection{Property within expected test}
+\subsubsection{Property within expected test}
 This is a quality test that takes either a TH1 or TGraph object, and finds some user-defined parameter. The parameter must be one of: mean, mean90, root mean square (RMS), root mean square 90 (RMS90), or median. It then checks whether either: that this parameter is within a user-specified range; or that it is above or below the user-specified threshold. If a range is being used, the result is the p-value of the property being within the specified range. If a threshold is being used, then the result is 1 if the property passes the threshold, 0 otherwise.
 
-\subsection{Exact reference comparison test}
+\subsubsection{Exact reference comparison test}
 This is a quality test that takes any TObject, and compares it to a user-specified reference object (which must be of the same type). The result is 1 if the two objects are exactly identical, 0 otherwise. 
 
-\subsection{Fit parameter in range test}
+\subsubsection{Fit parameter in range test}
 This is a quality test that takes either a TH1, TGraph, or TGraph2D object and plots a user-defined function onto it, solving for one of the parameters of the function, then checks it against a user-defined range. The result is the p-value of the parameter being within the specified range.
 
-\subsection{Kolmogorov-Smirnov test}
+\subsubsection{Kolmogorov-Smirnov test}
 This is a quality test that takes either a TH1 or a TGraph object, and performs the Kolmogorov-Smirnov test between that object and a specified reference. The result is the p-value of the Kolmogorov-Smirnov test. The Kolmogorov-Smirnov test is intended for unbinned data, not histograms, but ROOT provides a function for performing the Kolmogorov-Smirnov test on histograms, so this is functionality is also included for the sake of completeness.
 
-\subsection{Pearson $\chi^2$ test} % We should probably cite the Pearson chi^2 test itself
+\subsubsection{Pearson $\chi^2$ test} % We should probably cite the Pearson chi^2 test itself
 This is a quality test that takes a TH1 object and performs the Pearson $\chi^2$ test between that object and a specified reference. This test is analogous to the Kolmogorov-Smirnov test, but is designed specifically to work for binned histogram data. The result is the p-value output by the $\chi^2$ test. 
+
+\begin{table}[htp]
+\centering
+	\begin{tabular}{ l l l l }
+	\hline \hline
+	Quality test name & ROOT Objects & Required parameters & Optional paramters \\ \hline \hline
+
+	PropertyWithinExpectedTest & TH1, TGraph & Property, Method, plus others (see [ref]) & \\ \hline
+
+	ExactRefCompareTest & Any TObject & None & CompareUnderflow, CompareOverflow \\ \hline
+
+	FitParamInRangeTest & TH1, TGraph, TGraph2D & FitFormula, TestParameter, DeviationLower, DeviationUpper & GuessParameters, FunctionRange, UseLogLikelihood, UsePearsonChi2, ImproveFitResult \\ \hline
+
+	KolmogorovTest & TH1, TGraph & None & UseUnderflow, UseOverflow \\ \hline
+
+	Chi2Test & TH1 & None & ComparisonType, UseUnderflow, UseOverflow \\ \hline
+
+	\end{tabular}
+	\caption{Table summarising all quality tests implemented in \acrshort{DQM4hep} and their properties.}
+	\label{table:dqm4hep/qtests}
+\end{table}
+
+\subsection{Running quality tests}
+
+Quality tests can be run using the \texttt{dqm4hep-run-qtests} executable, found in \texttt{dqm4hep-core/bin/}. This executable handles the running of the actual binaries for each qtest, as well as obtaining monitor elements from the ROOT file and the setting of parameters. This executable has one required arguments and several optional ones, detailed below. 
+
+\subsubsection{Arguments}
+
+\begin{verbatim}
+-h
+--help
+\end{verbatim}
+
+Displays usage information, then exits.
+
+\begin{verbatim}
+-i <string>
+--input-qtest-file <string>
+\end{verbatim}
+
+(Required) Gives the path to the XML steering file that defines what quality tests to run, their parameters, and what monitor elements to run them on. See the section below for more information on these steering files.
+
+\begin{verbatim}
+-c
+--compress-json
+\end{verbatim}
+
+Turns on compression for the JSON qtest report output file. Off by default.
+
+\begin{verbatim}
+-w
+--write-monitor-elements
+\end{verbatim}
+
+Turns on writing of monitor elements in the qtest report. Off by default.
+
+\begin{verbatim}
+-p <string>
+--print-only <string>
+\end{verbatim}
+
+Prints only the quality reports of the given flag. Options are \texttt{undefined}, \texttt{invalid}, \texttt{insuf_stat}, \texttt{success}, \texttt{warning}, \texttt{error}.
+
+\begin{verbatim}
+-e <string>
+--exit-on <string>
+\end{verbatim}
+
+Forces the program to exit if any qtest results in the given code. or greater. Options are \texttt{ignore}, \texttt{failure}, \texttt{warning}, \texttt{error}. This is \texttt{failure} by default.
+
+\begin{verbatim}
+-v <string>
+--verbosity <string>
+\end{verbatim}
+
+The verbosity of the logger. Options are \texttt{trace}, \texttt{debug}, \texttt{info}, \texttt{warning}, \texttt{error}, \texttt{critical}, and \texttt{off}. This is \texttt{warning} by default.
+
+\begin{verbatim}
+-q <string>
+--qreport-file <string>
+\end{verbatim}
+
+Gives the path of the qtest report output file (in JSON) format.
+
+\begin{verbatim}
+-o <string>
+--root-output <string>
+\end{verbatim}
+
+Gives the path of a ROOT output file to save the processed mmonitor elements.
+
+\begin{verbatim}
+--
+--ignore_rest
+\end{verbatim}
+
+Ignores any arguments following this flag.
+
+\begin{verbatim}
+--version
+\end{verbatim}
+
+Displays version information, then exits.
+
+\subsubsection{Steering file}
+Steering files use XML to store all teh information needed to execute a qtest. An example steering file can be found in \texttt{dqm4hep-core/tests/test\_samples.xml}.
+
+There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
+
+The \texttt{<qtests>} block defines the qtests to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the qtest being used – see the section for each qtest above.
+
+The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag, within which each monitor element is opened with \texttt{<fileElement>}. Inside this tag, all of the qtests to execute on this monitor element are given. In this example below, the qtests \texttt{ExampleTest1} and \texttt{ExampleTest2} are both performed on the monitor element \texttt{TestHistogram}:
+
+\begin{verbatim}
+<monitorElements>
+
+  <file name="test_samples.root">
+    <fileElement path="\TestDirectory" name="TestHistogram">
+    <qtest name="ExampleTest1" />
+    <qtest name="ExampleTest2" />
+    </fileElement>
+  </file>
+
+</monitorElements>
+\end{verbatim}
+
+Some kinds of qtests require reference objects to compare against, which must be declared in the \texttt{<references>} block. References have a \texttt{name} parameter which gives the path to the file used as a reference, and an \texttt{id} which is a short tag for referring to them later in the XML file. For example:
+
+\begin{verbatim}
+<references>
+  <file id="mc-ref" name="montecarlo_reference_samples.root"/>
+  <file id="ex-ref" name="experiment_reference_samples.root"/>
+</references>
+\end{verbatim}
+
+When a qtest that requires a reference is declared, the reference is given within the \texttt{<fileElement>} tag:
+
+\begin{verbatim}
+<fileElement path="\TestDirectory" name="TestHistogram">
+  <reference id="MyReference"/>
+  <qtest name="ExampleTest1"/>
+</fileElement>
+\end{verbatim}
+
+This performs the qtest \texttt{ExampleTest1} on the monitor element \texttt{TestHistogram}, looking for another ROOT object of the same name within the file \texttt{MyReference} points to. It is also possible to use a specific object in a file as the reference:
+
+\begin{verbatim}
+<fileElement path="\TestDirectory" name="TestHistogram">
+  <reference id="MyReference" path="/path/to/the/reference/file" name="ReferenceHistogram"/>
+  <qtest name="ExampleTest2"/>
+</fileElement>
+\end{verbatim}
+
+In this case, this performs \texttt{ExampleTest2} on the monitor element \texttt{TestHistogram}, using the object \texttt{ReferenceHistogram} as the reference. 
+
+\subsection{Writing quality tests}
+Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see here [NB] for more information on plugins, including how to write and compile them.
+
+The code for the built-in quality tests can be found in \texttt{dqm4hep-core/source/src/plugins/} and can be used as references or templates. Files for quality tests should be given a descriptive name in CamelCase, and end with \texttt{Test}, e.g. \texttt{ExactRefCompareTest.cc}.
+
+The code for a quality test requires only a single .cc file, which has four functions: the constructor, the destructor, readSettings, and userRun. Each is discussed in a separate subsection below. If required, further functions can be implemented as needed. This is left for the user to decide.
+
+Code should be written to catch common errors and throw appropriate exceptions, especially for errors that cause segmentation faults. This will help to avoid a qtest preventing other qtests from running should an error occur. Errors are reported using the \texttt{report.m\_message()} function, and the error message will appear in the summary of the qtest after it has run.
+
+\subsubsection{Constructor and destructor}
+For the constructor and destructor, it's enough to copy existing code, changing the name of the qtest and the variables to be initialised. The program that runs qtests handles everything else. Care should be taken to initialise variables properly and to give the qtest a good description:
+
+\begin{verbatim}
+ExampleTest::ExampleTest(const std::string &qname)
+    : QualityTest("ExampleTest", qname),
+      m_someFloatParameter(0.f),
+      m_someIntParameter(0)
+{
+  m_description = "A description of the test's functionality, as well as the meaning of the quality statistic it outputs.";
+}
+\end{verbatim}
+
+\subsubsection{readSettings}
+The \texttt{readSettings} function initialises the variables of the qtest from the XML steering file, which is loaded into memory via \texttt{xmlHandle}. This function should be used to read in information from the XML file and validate it to make sure the test can be run. Variables are read in using a combination of pre-processor macros and XmlHelper. For example:
+
+\begin{verbatim}
+RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
+\end{verbatim}
+
+Note that the above example will fail if the parameter is not present in the XML file, so should only be used for parameters that are required. If a parameter is optional, use the \texttt{RETURN\_RESULT\_IF\_AND\_IF} macro instead. This allows the parameter to be returned if it is found, or does nothing if it is not. For example:
+
+\begin{verbatim}
+    RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
+\end{verbatim}
+
+For more information on status codes, pre-processor macros, and XML parsing with XmlHelper, see the core tools section [NB here].
+
+Parameters should be checked to make sure that the qtest can be run and that the result is meaningful. While \texttt{XmlHelper::readParameter} and similar functions can take an optional fourth argument for a validator delta function, users should make code clear and readable by using \texttt{if-else} statements. This is especially important when checking against more complicated criteria.
+
+\subsubsection{userRun}
+
+The \texttt{userRun} function defines the process of the qtest itself, using the monitor element. The result \textit{must} be a float between 0.0 and 1.0 that represents the ``quality'' or ``goodness'' of the test. The meaning of this quality statistic depends on the test but is often a p-value. At absolute minimum, it should represent a pass-fail case, so that a passing qtest gives a quality of 1 and a failing qtest gives a quality of 0.
+
+The monitor element must first be cast to an appropriate class. This should be done using the \texttt{objectTo} function. For example, if the monitor element is a TH1:
+
+\begin{verbatim}
+TH1* myHistogram = pMonitorElement->objectTo<TH1>();
+\end{verbatim}
+
+After this, the object can be accessed using it's normal methods, and the qtest can be written using normal C++ code for ROOT objects.
+
+It is useful to include a check for whether the monitor element exists and is the correct type, to prevent segmentation faults, using a comparison to \texttt{nullptr} and throwing an appropriate status code if the check fails. For example:
+
+\begin{verbatim}
+if (nullptr == pMonitorElement->objectTo<TH1>())
+{
+  report.m_message("Object does not exist or is of unrecognised type!");
+  throw StatusCodeException(STATUS_CODE_INVALID_PTR);
+}
+\end{verbatim}
+
+The meaning of these status codes is documented under \textit{Status codes and useful preprocessor macros} in the core tools section [NB here too].
+
+Once the quality statistic of the test is known, it is output using \texttt{report.m\_quality}. Any other information can be output using \texttt{report.m\_message} – this is useful for including comments on the result.
+
+
+%%			%%			%%			%%			%%
 
 \section{Adaptation to other detectors}
 Due to the modularity and genericity of \acrshort{DQM4hep}, the process of deploying it for a new detector is simple -- the only parts of \acrshort{DQM4hep} that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special \acrshort{DQM4hep}-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
@@ -208,204 +431,3 @@ There is extensive documentation of quality testing; each quality test is descri
 
 Finally there is a section explaining how to write new quality tests. This includes a detailed explanation of the purpose of each function within a quality test file, what the required outputs are and how to utilise them, error testing, and advice on maintaining a style consistent with the rest of the framework.
 
-%\textbf{Running a quality test}
-%
-%Quality tests can be run using the \texttt{dqm4hep-run-qtests} executable, found in \texttt{dqm4hep-core/bin/}. This executable handles the running of the actual binaries for each qtest, as well as obtaining monitor elements from the ROOT file and the setting of parameters. This executable has one required arguments and several optional ones, detailed below. 
-%
-%\textbf{Arguments}
-%
-%\begin{verbatim}
-%-h
-%--help
-%\end{verbatim}
-%
-%Displays usage information, then exits.
-%
-%\begin{verbatim}
-%-i <string>
-%--input-qtest-file <string>
-%\end{verbatim}
-%
-%(Required) Gives the path to the XML steering file that defines what quality tests to run, their parameters, and what monitor elements to run them on. See the section below for more information on these steering files.
-%
-%\begin{verbatim}
-%-c
-%--compress-json
-%\end{verbatim}
-%
-%Turns on compression for the JSON qtest report output file. Off by default.
-%
-%\begin{verbatim}
-%-w
-%--write-monitor-elements
-%\end{verbatim}
-%
-%Turns on writing of monitor elements in the qtest report. Off by default.
-%
-%\begin{verbatim}
-%-p <string>
-%--print-only <string>
-%\end{verbatim}
-%
-%%Prints only the quality reports of the given flag. Options are \texttt{undefined}, \texttt{invalid}, \texttt{insuf_stat}, \texttt{success}, \texttt{warning}, \texttt{error}.
-%
-%\begin{verbatim}
-%-e <string>
-%--exit-on <string>
-%\end{verbatim}
-%
-%Forces the program to exit if any qtest results in the given code. or greater. Options are \texttt{ignore}, \texttt{failure}, \texttt{warning}, \texttt{error}. This is \texttt{failure} by default.
-%
-%\begin{verbatim}
-%-v <string>
-%--verbosity <string>
-%\end{verbatim}
-%
-%The verbosity of the logger. Options are \texttt{trace}, \texttt{debug}, \texttt{info}, \texttt{warning}, \texttt{error}, \texttt{critical}, and \texttt{off}. This is \texttt{warning} by default.
-%
-%\begin{verbatim}
-%-q <string>
-%--qreport-file <string>
-%\end{verbatim}
-%
-%Gives the path of the qtest report output file (in JSON) format.
-%
-%\begin{verbatim}
-%-o <string>
-%--root-output <string>
-%\end{verbatim}
-%
-%Gives the path of a ROOT output file to save the processed mmonitor elements.
-%
-%\begin{verbatim}
-%--
-%--ignore_rest
-%\end{verbatim}
-%
-%Ignores any arguments following this flag.
-%
-%\begin{verbatim}
-%--version
-%\end{verbatim}
-%
-%Displays version information, then exits.
-%
-%\textbf{Steering files}
-%
-%Steering files use XML to store all teh information needed to execute a qtest. An example steering file can be found in \texttt{dqm4hep-core/tests/test\_samples.xml}.
-%
-%There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
-%
-%The \texttt{<qtests>} block defines the qtests to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the qtest being used – see the section for each qtest above.
-%
-%The \texttt{<monitorElements>} block opens a file using the \texttt{<file>} tag, within which each monitor element is opened with \texttt{<fileElement>}. Inside this tag, all of the qtests to execute on this monitor element are given. In this example below, the qtests \texttt{ExampleTest1} and \texttt{ExampleTest2} are both performed on the monitor element \texttt{TestHistogram}:
-%
-%\begin{verbatim}
-%<monitorElements>
-%
-%  <file name="test_samples.root">
-%    <fileElement path="\TestDirectory" name="TestHistogram">
-%    <qtest name="ExampleTest1" />
-%    <qtest name="ExampleTest2" />
-%    </fileElement>
-%  </file>
-%
-%</monitorElements>
-%\end{verbatim}
-%
-%Some kinds of qtests require reference objects to compare against, which must be declared in the \texttt{<references>} block. References have a \texttt{name} parameter which gives the path to the file used as a reference, and an \texttt{id} which is a short tag for referring to them later in the XML file. For example:
-%
-%\begin{verbatim}
-%<references>
-%  <file id="mc-ref" name="montecarlo_reference_samples.root"/>
-%  <file id="ex-ref" name="experiment_reference_samples.root"/>
-%</references>
-%\end{verbatim}
-%
-%When a qtest that requires a reference is declared, the reference is given within the \texttt{<fileElement>} tag:
-%
-%\begin{verbatim}
-%<fileElement path="\TestDirectory" name="TestHistogram">
-%  <reference id="MyReference"/>
-%  <qtest name="ExampleTest1"/>
-%</fileElement>
-%\end{verbatim}
-%
-%This performs the qtest \texttt{ExampleTest1} on the monitor element \texttt{TestHistogram}, looking for another ROOT object of the same name within the file \texttt{MyReference} points to. It is also possible to use a specific object in a file as the reference:
-%
-%\begin{verbatim}
-%<fileElement path="\TestDirectory" name="TestHistogram">
-%  <reference id="MyReference" path="/path/to/the/reference/file" name="ReferenceHistogram"/>
-%  <qtest name="ExampleTest2"/>
-%</fileElement>
-%\end{verbatim}
-%
-%In this case, this performs \texttt{ExampleTest2} on the monitor element \texttt{TestHistogram}, using the object \texttt{ReferenceHistogram} as the reference. 
-%
-%\textbf{Writing quality tests}
-%
-%Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see here [NB] for more information on plugins, including how to write and compile them.
-%
-%The code for the built-in quality tests can be found in \texttt{dqm4hep-core/source/src/plugins/} and can be used as references or templates. Files for quality tests should be given a descriptive name in CamelCase, and end with \texttt{Test}, e.g. \texttt{ExactRefCompareTest.cc}.
-%
-%The code for a quality test requires only a single .cc file, which has four functions: the constructor, the destructor, readSettings, and userRun. Each is discussed in a separate subsection below. If required, further functions can be implemented as needed. This is left for the user to decide.
-%
-%Code should be written to catch common errors and throw appropriate exceptions, especially for errors that cause segmentation faults. This will help to avoid a qtest preventing other qtests from running should an error occur. Errors are reported using the \texttt{report.m\_message()} function, and the error message will appear in the summary of the qtest after it has run.
-%
-%\textbf{Constructor and destructor}
-%
-%For the constructor and destructor, it's enough to copy existing code, changing the name of the qtest and the variables to be initialised. The program that runs qtests handles everything else. Care should be taken to initialise variables properly and to give the qtest a good description:
-%
-%\begin{verbatim}
-%ExampleTest::ExampleTest(const std::string &qname)
-%    : QualityTest("ExampleTest", qname),
-%      m_someFloatParameter(0.f),
-%      m_someIntParameter(0)
-%{
-%  m_description = "A description of the test's functionality, as well as the meaning of the quality statistic it outputs.";
-%}
-%\end{verbatim}
-%
-%\textbf{readSettings}
-%
-%The \texttt{readSettings} function initialises the variables of the qtest from the XML steering file, which is loaded into memory via \texttt{xmlHandle}. This function should be used to read in information from the XML file and validate it to make sure the test can be run. Variables are read in using a combination of pre-processor macros and XmlHelper. For example:
-%
-%\begin{verbatim}
-%RETURN_RESULT_IF(STATUS_CODE_SUCCESS, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
-%\end{verbatim}
-%
-%Note that the above example will fail if the parameter is not present in the XML file, so should only be used for parameters that are required. If a parameter is optional, use the \texttt{RETURN\_RESULT\_IF\_AND\_IF} macro instead. This allows the parameter to be returned if it is found, or does nothing if it is not. For example:
-%
-%\begin{verbatim}
-%    RETURN_RESULT_IF_AND_IF(STATUS_CODE_SUCCESS, STATUS_CODE_NOT_FOUND, !=, XmlHelper::readParameter(xmlHandle, "PropertyName", m_property))
-%\end{verbatim}
-%
-%For more information on status codes, pre-processor macros, and XML parsing with XmlHelper, see the core tools section [NB here].
-%
-%Parameters should be checked to make sure that the qtest can be run and that the result is meaningful. While \texttt{XmlHelper::readParameter} and similar functions can take an optional fourth argument for a validator delta function, users should make code clear and readable by using \texttt{if-else} statements. This is especially important when checking against more complicated criteria.
-%
-%\textbf{userRun}
-%
-%The \texttt{userRun} function defines the process of the qtest itself, using the monitor element. The result \textit{must} be a float between 0.0 and 1.0 that represents the ``quality'' or ``goodness'' of the test. The meaning of this quality statistic depends on the test but is often a p-value. At absolute minimum, it should represent a pass-fail case, so that a passing qtest gives a quality of 1 and a failing qtest gives a quality of 0.
-%
-%The monitor element must first be cast to an appropriate class. This should be done using the \texttt{objectTo} function. For example, if the monitor element is a TH1:
-%
-%\begin{verbatim}
-%TH1* myHistogram = pMonitorElement->objectTo<TH1>();
-%\end{verbatim}
-%
-%After this, the object can be accessed using it's normal methods, and the qtest can be written using normal C++ code for ROOT objects.
-%
-%It is useful to include a check for whether the monitor element exists and is the correct type, to prevent segmentation faults, using a comparison to \texttt{nullptr} and throwing an appropriate status code if the check fails. For example:
-%
-%\begin{verbatim}
-%if (nullptr == pMonitorElement->objectTo<TH1>())
-%{
-%  report.m_message("Object does not exist or is of unrecognised type!");
-%  throw StatusCodeException(STATUS_CODE_INVALID_PTR);
-%}
-%\end{verbatim}
-%
-%The meaning of these status codes is documented under \textit{Status codes and useful preprocessor macros} in the core tools section [NB here too].
-%
-%Once the quality statistic of the test is known, it is output using \texttt{report.m\_quality}. Any other information can be output using \texttt{report.m\_message} – this is useful for including comments on the result.
