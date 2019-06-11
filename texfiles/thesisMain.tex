@@ -105,7 +105,11 @@
 %		\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
 % Below is the new values, which are preserve the space but make it symmetrical:
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt]{geometry}
-\flushbottom
+
+% flushbottom was default, but changed to raggedbottom to avoid ugly text stretching
+%\flushbottom
+\raggedbottom
+
 % Pages should be numbered consecutively thorugh the main text.  Page numbers
 % should be located centrally at the top of the page.
 \usepackage{fancyhdr}

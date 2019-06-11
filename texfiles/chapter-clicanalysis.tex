@@ -1,26 +1,60 @@
+%Papers for top-Higgs Yukawa coupling, tth, and the analysis process: 
+%https://arxiv.org/pdf/1807.02441.pdf
+%http://cds.cern.ch/record/1690648/files/LCD_tth_note.pdf?version=1
+%http://cds.cern.ch/record/1982243/files/CLICdp-Note-2015-001.pdf?version=1
+%https://arxiv.org/pdf/1608.07538.pdf
+
 \chapter{Physics studies for the Compact Linear Collider}
 \label{chapter:analysis}
 
 \epigraph{Somewhere, something incredible is waiting to be known.}{Carl Sagan}
 
-One of the primary goals of future lepton colliders is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the \acrlong{SM} to be probed with unprecedented accuracy and coverage.
+This chapter will discuss the usage of full-scale detector simulations to assess the performance of the proposed \acrshort{CLIC}\textunderscore \acrshort{SiD} detector at the \acrlong{CLIC} machine, during the later stages where centre of mass energies in the tera-scale are possible.
 
-One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$.
+This work was undertaken under the \acrfull{CLICdp} collaboration to determine the uncertainty on the measurement of the top-Higgs Yukawa coupling at the proposed \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the \acrshort{CLIC}\textunderscore \acrshort{SiD} detector concept. The analysis as discussed here focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows the precision on the top-Higgs Yukawa coupling to be calculated.
 
-An important process used to study the coupling between the Higgs and the top is the tth process:
-$$e^+ e^- \rightarrow t\overline{t}h$$
+These results were then contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, which was submitted to \acrshort{CERN}'s European Strategy Update in 2019. See references \cite{clic-top-quark-physics} \cite{clic-2018-summary}.
+
+\section{Introduction}
+One of the primary goals of all the future lepton colliders discussed in Chapter \ref{chapter:colliders} is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the \acrlong{SM} to be probed with unprecedented accuracy and coverage.
+
+One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$. The \acrfull{SM} predicts the value of the top-Higgs Yukawa coupling to be:
+
+\begin{equation}
+	y_t^{SM} = \frac{\sqrt{2m_t}}{v}
+\label{eq:yukawacoupling-sm-value}
+\end{equation}
+
+Many new models for new physics predict a deviation from the \acrshort{SM} value, e.g two Higgs-doublet models, the \acrfull{MSSM}, as well as composite Higgs or Little Higgs models. Determining the top-Higgs Yukawa coupling to the percent level is possible at future lepton colliders operating at energies in the tera-scale, due to the sensitivity of the tth cross-section. This will provide an important test of both the \acrlong{SM} and a multitude of these new physics models. 
+
+In order to calculate the uncertainty on the Yukawa coupling, the uncertainty of the cross-section of the $e^+ e^- \rightarrow t\overline{t}h$ must first be calculated, and this can then be converted into the Yukawa coupling:
+
+\begin{equation}
+	\frac{\Delta y_t}{y_t} = \kappa \frac{\Delta \sigma}{\sigma}
+\label{eq:crosssection-to-yukawa}
+\end{equation}
+
+Where $\sigma$ is the cross-section of the process, and $\kappa$ is some prefactor, normally assumed to be 0.5. This means that by determining the uncertainty on the cross-section of the tth process $\frac{\Delta \sigma}{\sigma}$, the uncertainty on the Yukawa coupling can be determined directly in a model-independent manner. 
+
+%\begin{equation}
+%	\frac{\Delta y_t}{y_t} = \kappa \frac{\sqrt{S+B}}{S} 
+%\label{eq:signalbackground-to-yukawa}
+%\end{equation}
+%
+%Where $S$ and $B$ are the number of signal events and background events selected in the final sample [...]
+
+\section{The $e^+ e^- \rightarrow t\overline{t}h$ process}
+The process best suited for studying the top-Higgs Yukawa coupling $y_t$ is the $e^+ e^- \rightarrow t\overline{t}h$ process, also referred to as the tth process. This is due to the direct interaction between the top quark and Higgs boson at the vertex.
 
 % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
-The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of hadronic decays is 68\%, and the total branching ratio of the leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
+The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of all hadronic decays is 68\%, and the total branching ratio of all leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
 Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states: %Redid these, double check once rendered
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}$$
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu q \overline{q} b \overline{b}$$
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow \ell \nu \ell \nu b \overline{b}$$
 
-Due to the branching ratios, the hadronic and semi-leptonic final states are the most common, and the leptonic final state occurs less than ten percent of the time. This means that the most common final states all heavily rely upon jets, meaning that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this.
-
-This chapter describes an analysis performed to attain the uncertainty on the measurement of the top-Higgs Yukawa coupling at the proposed \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the CLIC\textunderscore SiD detector concept. This analysis focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows calculation of the precision on the top-Higgs Yukawa coupling. \\
+Due to the branching ratios, the hadronic and semi-leptonic final states are the most common, and the leptonic final state occurs less than ten percent of the time. This means that the most common final states all heavily rely upon jets, meaning that in order to perform accurate analysis of this process, jet energy resolution and jet reconstruction is of primary importance. As discussed in Chapter \ref{chapter:colliders}, the detector concepts for future lepton colliders are designed to focus on jet energy resolution and jet reconstruction, and utilise particle flow to augment this. \\
 
 \begin{figure}[h]
 	\centering
@@ -42,14 +76,36 @@ This chapter describes an analysis performed to attain the uncertainty on the me
 	\label{figure:physics/SM/feynman-tth}
 \end{figure}
 
-\section{Physics generation and samples}
-The samples used for the study had been generated previously using ILCDIRAC. The physics generation was done predominantly in WHIZARD 1.95, using PYTHIA 6.422 for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
+There are significant irreducible backgrounds in the form of the $t\overline{t}Z$ and $t\overline{t}b\overline{b}$ processes, both of which are able to produce similar decays with 2, 4 or 6 leptons in the final state. These processes form a large contribution to the background due to their large cross-sections. The $t\overline{t}$ process is also a huge contribution to background because of its extremely high cross-section. 
 
-All samples were simulated at $\sqrt{s}$ = 1.4 TeV using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the samples used. 
+Table \ref{table:physics/SM/generatedsamples} summarises the signal and background processes for this analysis.
 
-Following the generation of the underlying physics events, the interactions of the particles with the detector must be simulated. This was done using the \textsc{Geant4} toolkit, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}.
+\subsection{Higgstrahlung}
+There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means the final state is tth but there is no vertex between the top quark and Higgs, meaning this process is not sensitive to the coupling. Therefore these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling. 
 
-At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
+The effect of the higgstrahlung diagram is that the prefactor $\kappa$ from Equation \ref{eq:crosssection-to-yukawa} becomes greater than 0.5. The contribution from higgstrahlung is energy-dependent, and at low energies it is assumed to be negligible. However, for centre of mass ranges above 1 TeV, higgstrahlung contributes several percent or more of the tth events, and must be accounted for.
+
+For this analysis, new work used NLO corrections to \acrshort{QCD}, the initial state radiation, and beamstahlung effects, to determine that $\kappa$ = 0.503 \cite{kappa-NLOQCD}. \\
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[line width=1.3 pt,scale=2]
+		\draw[fermion]  (0,1) -- (1,0) ;
+		\draw[fermionbar]  (0,-1) -- (1,0) ;
+		\draw[vector]  (1,0) -- (2.5,0) ;
+		\draw[fermion]  (2.5,0) -- (3.5,1) ;
+		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
+		\draw[scalar]  (1.75,0) -- (2.5,-1.) ;
+		\node at (-0.3, 1) {$e^-$};
+		\node at (-0.3, -1) {$e^+$};
+		\node at (3.8, 1) {$t$};
+		\node at (3.8, -1) {$\overline{t}$};
+		\node at (2.8, -1) {$H$};
+		\node at (1.75, 0.3) {$Z/\gamma *$};
+	\end{tikzpicture} 
+	\caption{Feynman diagram of the higgstrahlung process.}
+	\label{figure:physics/SM/higgstrahlung}
+\end{figure}
 
 \begin{table}[htp]
 \centering
@@ -79,58 +135,39 @@ At the end of this process, the Monte Carlo dataset is in a format identical to 
 	\label{table:physics/SM/generatedsamples}
 \end{table}
 
+\section{Physics generation and samples}
+The samples used for the study had been generated previously using ILCDIRAC\cite{ilc-dirac}. The physics generation was done predominantly in WHIZARD 1.95\cite{whizard}, using PYTHIA 6.422\cite{pythia} for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim}, also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
+
+All samples were simulated at $\sqrt{s}$ = 1.4 TeV using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the samples used. 
+
+Following the generation of the underlying physics events, the interactions of the particles with the detector must be simulated. This was done using the \textsc{Geant4} toolkit\cite{geant4}, specifically the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}\cite{marlin}.
+
+At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
+
 \subsection{Detector model}
-The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR}.
+The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built virtually within \textsc{Geant4}\cite{clic-sid-geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR}.
 
 The CLIC\textunderscore SiD uses an all-silicon construction, with a design optimised for the needs of particle flow. It uses high-resolution vertex detectors and trackers, both based on silicon pixels and strips. The \acrshort{ECAL} and \acrshort{HCAL} use predominantly tungsten as the absorbing material, with steel used instead in the endcaps. These detectors are placed within a 5T solenoidal magnetic field, with an iron flux return yoke that is instrumented to act as a muon detector and tail catcher.
 
 A more in-depth description of the \acrshort{SiD} detector concept can be found in Chapter \ref{chapter:colliders}.
 
-\section{Analysis strategy}
-%Papers for top-Higgs Yukawa coupling, tth, and the analysis process: 
-%https://arxiv.org/pdf/1807.02441.pdf
-%http://cds.cern.ch/record/1690648/files/LCD_tth_note.pdf?version=1
-%http://cds.cern.ch/record/1982243/files/CLICdp-Note-2015-001.pdf?version=1
-%https://arxiv.org/pdf/1608.07538.pdf
-
-The tth event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. There are thus three possible combinations that can be seen in Table \ref{table:physics/final-states}. \\
+\section{Event reconstruction}
+The tth event has three possible final states, defined by the decay channel of the W bosons produced by the top quarks. The decay of a top quark will always produce a W boson and a bottom quark, while the W boson can decay one of two ways. Ignoring the decay of the Higgs boson, there are thus three possible combinations that can be seen in Table \ref{table:physics/final-states}. \\
 
 \begin{table}[h]
 \centering
-	\begin{tabular}{ l c c r }
+	\begin{tabular}{ l c c c r }
 	\hline \hline
-	Decay Channel & Final State & No. of leptons & Branching Ratio \\ \hline \hline
-	Fully hadronic & $q\overline{q}q\overline{q}b\overline{b}$ & 0 & 46\% \\ \hline
-	Semi-leptonic &  $\ell \nu q\overline{q}b\overline{b}$ & 1 & 45\% \\ \hline
-	Fully leptonic & $\ell \nu \ell \nu b\overline{b}$ & 2 & 9\% \\ \hline 
+	Decay Channel & Final State & No. of leptons & No. of jets & Branching Ratio \\ \hline \hline
+	Fully hadronic & $q\overline{q}q\overline{q}b\overline{b}$ & 0 & 6 & 46\% \\ \hline
+	Semi-leptonic &  $\ell \nu q\overline{q}b\overline{b}$ & 1 & 4 & 45\% \\ \hline
+	Fully leptonic & $\ell \nu \ell \nu b\overline{b}$ & 2 & 2 & 9\% \\ \hline 
 	\end{tabular}
 	\caption{ }
 	\label{table:physics/final-states}
 \end{table}
 
 Given the low branching ratio compared to the other channels, the fully leptonic state is not used in this analysis. Extended Feynman diagrams of the fully hadronic and semi-leptonic final states are shown in Figs. \ref{figure:physics/SM/feynman-tth-hadronic} and \ref{figure:physics/SM/feynman-tth-semileptonic}
-
-There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair. This means the final state is tth but no direct interaction between the top quark and Higgs has occurred (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means that the higgstrahlung process is not sensitive to the top-Higgs Yukawa coupling, and these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling. \\
-
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}[line width=1.3 pt,scale=2]
-		\draw[fermion]  (0,1) -- (1,0) ;
-		\draw[fermionbar]  (0,-1) -- (1,0) ;
-		\draw[vector]  (1,0) -- (2.5,0) ;
-		\draw[fermion]  (2.5,0) -- (3.5,1) ;
-		\draw[fermionbar]  (2.5,0) -- (3.5,-1) ;
-		\draw[scalar]  (1.75,0) -- (2.5,-1.) ;
-		\node at (-0.3, 1) {$e^-$};
-		\node at (-0.3, -1) {$e^+$};
-		\node at (3.8, 1) {$t$};
-		\node at (3.8, -1) {$\overline{t}$};
-		\node at (2.8, -1) {$H$};
-		\node at (1.75, 0.3) {$Z/\gamma *$};
-	\end{tikzpicture} 
-	\caption{Feynman diagram of the higgstrahlung process.}
-	\label{figure:physics/SM/higgstrahlung}
-\end{figure}
 
 \begin{figure}
 	\centering
@@ -172,7 +209,7 @@ There is also another contribution to the tth final state in the form of \textit
 		\node at (5.8,-1) {$q$};
 		\node at (5.8,-2) {$\overline{q}$};
 	\end{tikzpicture} 
-	\caption{Extended Feynman diagram of the tth event, showing the fully-hadronic decay channel with the final state $q\overline{q}q\overline{q}b\overline{b}$, where $q$ and $\overline{q}$ indicate a quark-antiquark pair. \newline}
+	\caption{Extended Feynman diagram of the tth event, showing the fully-hadronic decay channel with the final state $q\overline{q}q\overline{q}b\overline{b}$. \newline}
 	\label{figure:physics/SM/feynman-tth-hadronic}
 	\begin{tikzpicture}[line width=1.3 pt,scale=2.25]
 		% Initial electrons
@@ -212,7 +249,7 @@ There is also another contribution to the tth final state in the form of \textit
 		\node at (5.8,-1) {$q$};
 		\node at (5.8,-2) {$\overline{q}$};
 	\end{tikzpicture} 
-	\caption{Extended Feynman diagram of the tth event, showing the semi-leptonic decay channel  with the final state $\ell\nu q\overline{q}b\overline{b}$, where $\ell$ and $\nu$ indicate a lepton-neutrino pair.}
+	\caption{Extended Feynman diagram of the tth event, showing the semi-leptonic decay channel  with the final state $\ell\nu q\overline{q}b\overline{b}$.}
 	\label{figure:physics/SM/feynman-tth-semileptonic}
 \end{figure}
 
@@ -220,6 +257,13 @@ There is also another contribution to the tth final state in the form of \textit
 The first step of the analysis procedure is to distinguish between the hadronic and semi-leptonic final states. This is done by finding isolated leptons in the final state. If there are no final-state leptons it is classified as a hadronic event; if there is a single lepton in the final state it is classified as a semi-leptonic event. If there are two leptons in the final state it is classified as a leptonic event and discarded.
 
 Finding the leptons that have been produced by the decay of the W boson is relatively simple, as leptons produced in this decay have a much higher energy than leptons produced in jets. In general, these leptons have energies in the 50-350 GeV range, which can be found from the reconstructed track energy. However there are additional properties of these leptons that can be used to improve their selection.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/track-energy.png}
+	\caption{Plots of the track energy for truth-matched reconstructed electrons, muons and tau decay products, and all other reconstructed particles that were not truth-matched to a lepton.}
+	\label{figure:analysis/leptons/track-energy}
+\end{figure}
 
 Leptons produced within jets will detected within the same region as the other particles from the same jet, in a high-occupancy region of the detector. Therefore, an isolated lepton detected in a low-occupancy region of the detector is more likely to have originated from the decay of a W boson, rather than from a jet.
 
@@ -231,6 +275,13 @@ The impact parameter (\acrshort{IP-analysis}) is the distance between the primar
 \label{eq:impact-parameter}
 \end{equation}
 
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/impact-parameter.png}
+	\caption{Plots of the impact parameters $d_0$, $Z_0$, and $R_0$ for truth-matched reconstructed electrons, muons and tau decay products, and all other reconstructed particles that were not truth-matched to a lepton.}
+	\label{figure:analysis/leptons/impact-parameter}
+\end{figure}
+
 Another property useful for distinguishing electrons and muons decaying from W bosons is the profile of their energy deposition in the calorimeters. We can define a ratio of the energy deposited in the electromagnetic calorimeter to the total energy deposited in the calorimeters:
 
 \begin{equation}
@@ -240,8 +291,14 @@ Another property useful for distinguishing electrons and muons decaying from W b
 
 Since electrons are contained within the \acrshort{ECAL}, their value of $R_{CAL}$ will peak at 1. Muons deposit their energy throughout both calorimeters, so will peak at approximately 0.2. Taus cannot be identified this way, as their decay products do not deposit predictable amounts of energy in the calorimeters.
 
-\subsubsection{IsolatedLeptonFinder}
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/cal-energy.png}
+	\caption{Plot of the calorimeter energy ratio $R_{CAL}$ for truth-matched reconstructed electrons, muons and tau decay products, and all other reconstructed particles that were not truth-matched to a lepton. Electrons and muons from W boson decays can be clearly distinguished from each other, and from  other particles.}
+	\label{figure:analysis/leptons/cal-energy}
+\end{figure}
 
+\subsubsection{IsolatedLeptonFinder}
 To perform the selections to find isolated leptons, the \texttt{IsolatedLeptonFinder} processor within \textsc{Marlin} was used. This lepton finder processor uses criteria based on the properties described above to identify isolated leptons:
 
 \begin{itemize}
@@ -255,7 +312,7 @@ The first cut on track energy already retains 96.5\% of the reconstructed electr
 \subsection{Tau identification}
 Taus cannot be identified directly due their extremely short lifetime ($2.9 \times 10^{-13}$s), and must instead be identified from their decay products, which can vary significantly. Taus most commonly decay hadronically into a number of charged or neutral pions, or leptonically into a lepton-neutrino pair; in each case always also producing an undetectable tau neutrino. 
 
-Identification of taus was done using the \texttt{TauFinder} processor within \textsc{Marlin}, which was adapted for this analysis. The criteria were determined using truth-matching the simulation data to find the best strategy to identify taus.
+Identification of taus was done using the \texttt{TauFinder} processor\cite{taufinder} within \textsc{Marlin}, which was adapted for this analysis. The criteria were determined using truth-matching the simulation data to find the best strategy to identify taus.
 
 The processor looks at particles that may have decayed from taus, and forms a tau candidate based on their properties. First it creates a seed track with a $p_T$ greater than 10 GeV, adding all particles within a 0.04 rad cone of the seed track to the tau candidate if every particle has $p_T >$ 2 GeV and $R_0$ within the range 0.01-0.05mm. The reconstructed tau candidate must then be formed of an odd number of charged tracks, with an invariant mass of less than 1.5 GeV. This mass is slightly lower than the true tau invariant mass to account for missing energy in the form of the tau neutrinos. Then an isolation ring is defined in the region 0.04-0.24 rad around the tau candidate seed track. In order to be considered a tau, there must be fewer than five particles in the isolation ring, with a total energy of less than 5 GeV.
 
@@ -277,7 +334,7 @@ The majority of the backgrounds for this analysis do not have four b-jets in the
 
 For this analysis, b-tagging is done in the LCFIPlus package, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
 
-\subsection{Event selection}
+\section{Event selection}
 The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA}. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis. For the hadronic channel, the following variables are used:
 
 \begin{itemize}
@@ -296,6 +353,38 @@ The final event selection is done using \acrfull{BDT}, implemented in the \acrfu
 
 The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
 
+\begin{table}[ht]
+\centering
+	\begin{tabular}{ l r r r }
+	\hline \hline
+	Process & $N$ & fully hadronic & semi-leptonic \\ \hline \hline
+	$t\overline{t}h$, 6 jets, $h \rightarrow b\overline{b}$ & 647 & 367 & 38 \\
+	$t\overline{t}h$, 4 jets, $h \rightarrow b\overline{b}$ & 623 & 1 & 270 \\ \hline
+	$t\overline{t}h$, 2 jets, $h \rightarrow b\overline{b}$ & 150 & 2 & 22 \\
+
+	$t\overline{t}h$, 6 jets, $h \not\rightarrow b\overline{b}$ & 473 & 54 & 11	 \\
+	$t\overline{t}h$, 4 jets, $h \not\rightarrow b\overline{b}$ & 455 & 8 & 22\\
+	$t\overline{t}h$, 2 jets, $h \not\rightarrow b\overline{b}$ & 110 & 0 & 1 \\
+
+	$t\overline{t}Z$, 6 jets & 2843 & 345 & 34 \\
+	$t\overline{t}Z$, 4 jets & 2738 & 59 & 217 \\
+	$t\overline{t}Z$, 2 jets & 659 & 1 & 16 \\
+	
+	$t\overline{t}b\overline{b}$, 6 jets & 824 & 326 & 26 \\
+	$t\overline{t}b\overline{b}$, 4 jets & 794 & 57 & 226 \\
+	$t\overline{t}b\overline{b}$, 2 jets & 191 & 2 & 18 \\
+
+	$t\overline{t}$ & 203700 & 498 & 742 \\ \hline
+
+	total $t\overline{t}H$ signal & 2458 & 433 (17.6\%) & 365 (14.8\%) \\ 
+	total background & 211749 & 1287 (0.61\%) & 1280 (0.60\%) \\
+	Significance &   & 10.44 & 9.00 \\ \hline
+
+	\end{tabular}
+	\caption{Expected numbers of signal and background events classified by the \acrshort{BDT}s as either fully hadronic or semi-leptonic in 1.5 ab\textsuperscript{-1} at $\sqrt{s}$ = 1.4 TeV.}
+	\label{table:physics/SM/selections}
+\end{table}
+
 \section{Results}
 In order to extract the top-Higgs Yukawa coupling $y_t$, the total cross-section of the tth process must be calculated. Using  the output of the \acrshort{BDT}s, the precision on the cross-section of the tth process using just the hadronic channel is 9.6\%. A similar analysis by Yixuan Zhang found the precision for the semi-leptonic channel to be 11.1\%. Thus the combined uncertainty for the cross-section of both decay channels is:
 
@@ -303,13 +392,10 @@ $$\Delta\sigma = 7.30\% $$
 
 When extracting the top-Higgs Yukawa coupling $y_t$ from the total cross-section, the contribution of the higgstrahlung diagram (Fig. \ref{figure:physics/SM/higgstrahlung}) must be taken into account, as this is a tth final state that has no vertex between the top and the Higgs and thus is not sensitive to the coupling.
 
-In order to get the uncertainty on the coupling, the uncertainty on the cross-section has to be multiplied by a factor that was calculated using next-to-leading order (NLO) corrections to \acrshort{QCD}, the initial state radiation, and beamstrahlung\refthis . This factor is found to be 0.503, slightly higher than the 0.5 that would be expected if the higgstrahlung diagram were not included.
-
 Thus the uncertainty on the top-Higgs Yukawa coupling is:
 
 $$\frac{\Delta g_{tth}}{g_{tth}} = 0.503 \frac{\Delta\sigma(t\overline{t}H)}{\sigma(t\overline{t}H)} = 3.86\% $$
 
-These results were contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, which was submitted to \acrshort{CERN}'s European Strategy Update in 2019. See \refthis.
 
 
 
