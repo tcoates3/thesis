@@ -21,4 +21,3 @@
 
 1. **Chapter 5 -- top-Higgs Yukawa coupling**
    - Explanation of top-Higgs Yukawa coupling (or in Chapter 1)
-   - Explanation of the criteria for the BDTs
