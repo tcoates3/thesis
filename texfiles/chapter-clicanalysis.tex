@@ -332,7 +332,7 @@ where the numbered subscripts indicate the indices of the jets used to form the 
 \subsection{Flavour tagging}
 The majority of the backgrounds for this analysis do not have four b-jets in the final state. Therefore reliable b-tagging is an important source of discriminating power.
 
-For this analysis, b-tagging is done in the LCFIPlus package, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
+For this analysis, b-tagging is done in the LCFIPlus package \cite{lcfiplus}, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
 
 \section{Event selection}
 The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA}. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis. For the hadronic channel, the following variables are used:
@@ -352,6 +352,17 @@ The final event selection is done using \acrfull{BDT}, implemented in the \acrfu
 \end{itemize}
 
 The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
+
+The BDTs then produce a BDT response value, and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
+
+\begin{equation}
+	\frac{S}{\sqrt{S + B}}
+\label{eq:significance}
+\end{equation}
+
+Where $S$ is the number of signal events selected, and $B$ is the number of background events selected. This results in a significance of 10.44 for the fully hadronic channel.
+
+The result of of applying the selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
 
 \begin{table}[ht]
 \centering
@@ -397,6 +408,61 @@ Thus the uncertainty on the top-Higgs Yukawa coupling is:
 $$\frac{\Delta g_{tth}}{g_{tth}} = 0.503 \frac{\Delta\sigma(t\overline{t}H)}{\sigma(t\overline{t}H)} = 3.86\% $$
 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/BDTs/mva_BDTG.eps}
+	\caption{Normalised BDTG response for signal and background.}
+	\label{figure:analysis/results/bdt-response-sb}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/BDTs/MVA_BDTG_comb_had.png}
+	\caption{BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1}.}
+	\label{figure:analysis/results/bdt-response-combined}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.eps}
+	\caption{Signal and background efficiencies for different values of the cut valued applied on the results of the BDTs.}
+	\label{figure:analysis/results/tmva-efficiency}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c1.eps}
+	\caption{Input variables for the BDTs: Higgs mass from $b\overline{b}$ jets; number of particle flow objects; visible jet energy; missing transverse momentum; $\chi^2$ value from jets (Eq. \ref{eq:chi-square}); event thrust.}
+	\label{figure:analysis/results/tmva-inputs-1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c2.eps}
+	\caption{Input variables for the BDTs: event oblateness; event sphericity; event aplanarity; first, second and third highest b-tags.}
+	\label{figure:analysis/results/tmva-inputs-2}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c3.eps}
+	\caption{Input variables for the BDTs: four highest b-tag; first, second, third and fourth highest c-tags; [cos].}
+	\label{figure:analysis/results/tmva-inputs-3}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c4.eps}
+	\caption{Input variables for the BDTs: [cos]; [cos]; [log]; [log]; [log]; lowest jet energy}
+	\label{figure:analysis/results/tmva-inputs-4}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c5.eps}
+	\caption{Input variables for the BDTs: second, third, and fourth lowest jet energies; [jetT_0]; [jetT_1]}
+	\label{figure:analysis/results/tmva-inputs-5}
+\end{figure}
 
 
 %		%		%		%		%		%		%		%		%		%		%		%		%		%		%
