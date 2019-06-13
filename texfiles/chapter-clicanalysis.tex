@@ -11,32 +11,34 @@
 
 This chapter will discuss the usage of full-scale detector simulations to assess the performance of the proposed \acrshort{CLIC}\textunderscore \acrshort{SiD} detector at the \acrlong{CLIC} machine, during the later stages where centre of mass energies in the tera-scale are possible.
 
-This work was undertaken under the \acrfull{CLICdp} collaboration to determine the uncertainty on the measurement of the top-Higgs Yukawa coupling at the proposed \acrfull{CLIC} experiment at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the \acrshort{CLIC}\textunderscore \acrshort{SiD} detector concept. The analysis as discussed here focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows the precision on the top-Higgs Yukawa coupling to be calculated.
+This work was done with the \acrfull{CLICdp} collaboration to determine the uncertainty on the measurement of the top-Higgs Yukawa coupling at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the \acrshort{CLIC}\textunderscore \acrshort{SiD} detector concept. The analysis as discussed here focuses specifically on the hadronic channel, and when taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang\refthis allows the precision on the top-Higgs Yukawa coupling to be calculated.
 
-This analysis was an update of an earlier study into the sensitivity of the \acrshort{SiD} to the top Higgs Yukawa coupling [ref]. The analysis presented here used an updated version of the flavour-tagging software, and a better determination of the contributions of the higgstrahlung diagram.
+This analysis was an update of an earlier study into the sensitivity of the \acrshort{SiD} to the top-Higgs Yukawa coupling [ref]. The analysis presented here used an updated version of the flavour-tagging software, and a better determination of the contributions of the higgstrahlung diagram.
 
 These results were then contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, which was submitted to \acrshort{CERN}'s European Strategy Update in 2019. See references \cite{clic-top-quark-physics} \cite{clic-2018-summary}.
 
 \section{Introduction}
 One of the primary goals of all the future lepton colliders discussed in Chapter \ref{chapter:colliders} is to become ``Higgs factories'' -- machines that can produce large numbers of Higgs bosons in a variety of final states, allowing the Higgs sector of the \acrlong{SM} to be probed with unprecedented accuracy and coverage.
 
-One of the best way to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$. The \acrfull{SM} predicts the value of the top-Higgs Yukawa coupling to be:
+One of the best ways to examine the Higgs sector is via the production of Higgs bosons in association with top quarks. The coupling between these two particles is the strongest Higgs coupling in the \acrshort{SM}, making it one of the easiest ways to examine the properties of the Higgs boson and the Higgs sector. This is the top-Higgs Yukawa coupling $y_t$. The \acrlong{SM} predicts the value of the top-Higgs Yukawa coupling to be:
 
 \begin{equation}
 	y_t^{SM} = \frac{\sqrt{2m_t}}{v}
 \label{eq:yukawacoupling-sm-value}
 \end{equation}
 
-Many new models for new physics predict a deviation from the \acrshort{SM} value, e.g two Higgs-doublet models, the \acrfull{MSSM}, as well as composite Higgs or Little Higgs models. Determining the top-Higgs Yukawa coupling to the percent level is possible at future lepton colliders operating at energies in the tera-scale, due to the sensitivity of the tth cross-section. This will provide an important test of both the \acrlong{SM} and a multitude of these new physics models. 
+Many models for new physics predict a deviation from the \acrshort{SM} value, e.g two Higgs-doublet models, the \acrfull{MSSM}, as well as composite Higgs or Little Higgs models. Determining the top-Higgs Yukawa coupling will provide an important test of both the \acrlong{SM} and a multitude of these new physics models. The various detector models for future lepton colliders will enable this coupling to be measures at the percent level, making this a strong physics motivation for these machines.
 
-In order to calculate the uncertainty on the Yukawa coupling, the uncertainty of the cross-section of the $e^+ e^- \rightarrow t\overline{t}h$ must first be calculated, and this can then be converted into the Yukawa coupling:
+The process used for studying the top-Higgs Yukawa coupling is the $e^+ e^- \rightarrow t\overline{t}h$ process, also referred to as the tth process. This allows measurement of the coupling due to the direct interaction between the top quark and Higgs boson at the vertex.
+
+In order to calculate the uncertainty on the coupling, the uncertainty of the cross-section of the tth process must first be calculated, and this can then be converted into the coupling:
 
 \begin{equation}
 	\frac{\Delta y_t}{y_t} = \kappa \frac{\Delta \sigma}{\sigma}
 \label{eq:crosssection-to-yukawa}
 \end{equation}
 
-Where $\sigma$ is the cross-section of the process, and $\kappa$ is some prefactor, normally assumed to be 0.5. This means that by determining the uncertainty on the cross-section of the tth process $\frac{\Delta \sigma}{\sigma}$, the uncertainty on the Yukawa coupling can be determined directly in a model-independent manner. 
+Where $\sigma$ is the cross-section of the process, and $\kappa$ is some prefactor, normally assumed to be 0.5. This means that by determining the uncertainty on the cross-section of the tth process $\frac{\Delta \sigma}{\sigma}$, the uncertainty on the coupling can be determined directly in a model-independent manner. 
 
 %\begin{equation}
 %	\frac{\Delta y_t}{y_t} = \kappa \frac{\sqrt{S+B}}{S} 
@@ -46,10 +48,18 @@ Where $\sigma$ is the cross-section of the process, and $\kappa$ is some prefact
 %Where $S$ and $B$ are the number of signal events and background events selected in the final sample [...]
 
 \section{The $e^+ e^- \rightarrow t\overline{t}h$ process}
-The process best suited for studying the top-Higgs Yukawa coupling $y_t$ is the $e^+ e^- \rightarrow t\overline{t}h$ process, also referred to as the tth process. This is due to the direct interaction between the top quark and Higgs boson at the vertex.
-
 % Ref for old BRs: http://pdg.lbl.gov/2013/listings/rpp2013-list-w-boson.pdf
-The production of two top quarks in association with a Higgs makes this an ideal probe for this coupling. The top quark is only permitted to decay via the $t \rightarrow W^+ b $ process, but the decays of the W boson vary. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of all hadronic decays is 68\%, and the total branching ratio of all leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
+
+The tth process offers one of the best ways to examine the interaction of the Higgs boson and the top quark, due to the direct interaction between the two at the vertex where the Higgs boson is radiated from the top quark. This process is also uniquely accessible to the linear lepton colliders, as the production threshold is on the order of ~500 GeV, above the maximum design energy of both the \acrshort{FCC}-ee and the \acrshort{CEPC}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/tt-production-crosssection.png}
+	\caption{The cross-section of various top-quark pair production processes at a lepton collider. This plot assumes a top quark mass of $m_t$ = 174 GeV and a Higgs boson mass of $m_H$ = 125 GeV, as well as unpolarised beams. The $t\overline{t}$ and $t\overline{t}Z$ processes are important backgrounds for this analysis.}
+	\label{figure:analysis/leptons/track-energy}
+\end{figure}
+
+The final states of the tth process are complicated due to the variety of decay modes of the particles. The two top quarks are only permitted to decay via the $t \rightarrow W^+ b $ process. The bottom quark forms a jet, while the W boson has a variety of possible decay process. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of all hadronic decays is 68\%, and the total branching ratio of all leptonic decays is 32\%. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
 Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states: %Redid these, double check once rendered
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}$$
@@ -369,7 +379,6 @@ The result of of applying the selection to the BDT response on the event samples
 \subsection{PandoraPFOs}
 The number of particles reconstructed as Pandora\acrshort{PFO}s is used as a discriminator as it is correlated with the number of jets in the event, which is not directly measured as the jet clustering and re-clustering forces the event into a specific number of jets. 
 
-
 \subsection{Event shape}
 The thrust of event is an expression of the net momentum of the event. An event's thrust is given by:
 
@@ -409,7 +418,7 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c1.eps}
-	\caption{Input variables for the BDTs: Higgs mass from $b\overline{b}$ jets; number of particle flow objects; visible jet energy; missing transverse momentum; $\chi^2$ value from jets (Eq. \ref{eq:chi-square}); event thrust.}
+	\caption{Input variables for the BDTs: Higgs mass from $b\overline{b}$ jets; number of particle flow objects; visible jet energy; missing transverse momentum; $\chi^2$ value from jets (from Eq. \ref{eq:chi-square}); event thrust.}
 	\label{figure:analysis/results/tmva-inputs-1}
 \end{figure}
 
@@ -423,7 +432,7 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c3.eps}
-	\caption{Input variables for the BDTs: four highest b-tag; first, second, third and fourth highest c-tags; [cos].}
+	\caption{Input variables for the BDTs: the fourth highest b-tag; the four highest c-tags; [cos].}
 	\label{figure:analysis/results/tmva-inputs-3}
 \end{figure}
 
