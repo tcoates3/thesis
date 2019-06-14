@@ -3,9 +3,13 @@
 
 \epigraph{Before software can be reusable \\it first has to be usable.}{Ralph Johnson}
 
-[...] [Summary]
+This chapter will discuss the usage of online monitoring and data quality monitoring software for high energy physics testbeams, specifically the \acrshort{DQM4hep} tool. This tool was initially developed for a specific detector prototype, but was able to be expanded for the use of other detectors. This online monitor was then proposed as an option for Work Package 5 of the AIDA-2020 collaboration, to be used as a generic online monitor and data quality monitor.
 
-This work has been presented at the Beam Telescopes and Test Beams workshop twice, and has been presented as a poster and corresponding proceedings at the Topical Workshop for Electronics in Particle Physics in 2017. In addition, I led a software training session in the use of DQM4hep at the Beam Telescopes and Test Beams workshop in 2017 in Barcelona.
+This chapter describes \acrshort{DQM4hep} in detail, including the motivation for the usage of generic software tools as outlined by the AIDA-2020 collaboration. The codebase, structure, networking and implementation of the software framework is described in detail.
+
+Following this, detailed documentation for a user guide describing the structure, usage, running and authoring of the user-specific parts of the framework is presented. This represented the distillation of significant experience using the framework on many testbeams of different kinds and goals.
+
+This work was presented at the Beam Telescopes and Test Beams workshop in 2016, and was presented as a poster and corresponding conference proceedings at the Topical Workshop for Electronics in Particle Physics in 2017. In addition, I led a software training session in the use of \acrshort{DQM4hep} at the Beam Telescopes and Test Beams workshop in 2017. % Feels weird to say "I" here
 
 \section{Introduction}
 \acrfull{DAQ} is a critical component of all modern particle physics experiments across all stages of technological readiness, from the very beginning of hardware testing in tabletop experiments to full-scale international experiments like the Large Hadron Collider.
@@ -555,6 +559,7 @@ The quality tests that have been implemented in \acrshort{DQM4hep} are described
 A summary of the quality tests can be found in Table \ref{table:dqm4hep/qtests}.
 
 \subsubsection{Property within expected test}
+\label{sec:property-qtest}
 This is a quality test that takes either a TH1 or TGraph object, and finds some user-defined parameter. The parameter must be one of: mean, mean90, root mean square (RMS), root mean square 90 (RMS90), or median. It then checks whether either: that this parameter is within a user-specified range; or that it is above or below the user-specified threshold. If a range is being used, the result is the p-value of the property being within the specified range. If a threshold is being used, then the result is 1 if the property passes the threshold, 0 otherwise.
 
 \subsubsection{Exact reference comparison test}
@@ -571,29 +576,29 @@ This is a quality test that takes a TH1 object and performs the Pearson $\chi^2$
 
 \begin{table}[htp]
 \centering
-	\begin{tabular}{ | l | l | l | l | } 
-	\hline
-	Quality test name & ROOT Objects & Required parameters & Optional paramters \\ \hline
+	\begin{tabular}{ l l l l } 
+	\hline \hline 
+	\textbf{Quality Test} & \textbf{TObjects} & \textbf{Required} & \textbf{Optional} \\ \hline
 
-	PropertyWithinExpectedTest & TH1, & Property, & \\
-	 & TGraph, & Method, &  \\
-	 &  & plus others (see [ref]) &  \\ \hline
+	PropertyWithinExpectedTest & TH1 & Property & \\
+	 & TGraph & Method &  \\
+	 &  & (see \ref{sec:property-qtest}) &  \\ \hline
 
 	ExactRefCompareTest & Any TObject & None & CompareUnderflow\\
 	 &  &  & CompareOverflow \\ \hline
 	
-	FitParamInRangeTest & TH1, & FitFormula, & GuessParameters, \\
-	 & TGraph, & TestParameter, & FunctionRange, \\
-	 & TGraph2D & DeviationLower, & UseLogLikelihood, \\
-	 &  & DeviationUpper, & UsePearsonChi2, \\
+	FitParamInRangeTest & TH1 & FitFormula, & GuessParameters \\
+	 & TGraph & TestParameter & FunctionRange \\
+	 & TGraph2D & DeviationLower & UseLogLikelihood \\
+	 &  & DeviationUpper & UsePearsonChi2 \\
 	 &  &  & ImproveFitResult \\ \hline
 	
-	KolmogorovTest & TH1, & None & UseUnderflow, \\
+	KolmogorovTest & TH1 & None & UseUnderflow \\
 	 & TGraph &  & UseOverflow \\ \hline
 	
-	Chi2Test & TH1 & None & ComparisonType, \\
-	 &  &  & UseUnderflow, \\
-	 &  &  & UseOverflow \\ \hline
+	Chi2Test & TH1 & None & ComparisonType \\
+	 &  &  & UseUnderflow \\
+	 &  &  & UseOverflow \\ \hline \hline
 
 	\end{tabular}
 	\caption{Table summarising all quality tests implemented in \acrshort{DQM4hep} and their properties.}
