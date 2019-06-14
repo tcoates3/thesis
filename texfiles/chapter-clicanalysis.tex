@@ -93,6 +93,7 @@ There are significant irreducible backgrounds in the form of the $t\overline{t}Z
 Table \ref{table:physics/SM/generatedsamples} summarises the signal and background processes for this analysis.
 
 \subsection{Higgstrahlung}
+\label{section:higgstrahlung}
 There is also another contribution to the tth final state in the form of \textit{higgstrahlung}. This process is actually an $e^+e^- \rightarrow t\overline{t}$ event where the intermediate $Z/\gamma *$ radiates a Higgs boson \textit{before} producing the $t\overline{t}$ pair (see Fig. \ref{figure:physics/SM/higgstrahlung}). This means the final state is tth but there is no vertex between the top quark and Higgs, meaning this process is not sensitive to the coupling. Therefore these events must be taken into account when calculating the total cross-section of the tth process when trying to determine the coupling. 
 
 The effect of the higgstrahlung diagram is that the prefactor $\kappa$ from Equation \ref{eq:crosssection-to-yukawa} becomes greater than 0.5. The contribution from higgstrahlung is energy-dependent, and at low energies it is assumed to be negligible. However, for centre of mass ranges above 1 TeV, higgstrahlung contributes several percent or more of the tth events, and must be accounted for.
@@ -328,9 +329,17 @@ Identification of taus was done using the \texttt{TauFinder} processor\cite{tauf
 
 The processor looks at particles that may have decayed from taus, and forms a tau candidate based on their properties. First it creates a seed track with a $p_T$ greater than 10 GeV, adding all particles within a 0.04 rad cone of the seed track to the tau candidate if every particle has $p_T >$ 2 GeV and $R_0$ within the range 0.01-0.05mm. The reconstructed tau candidate must then be formed of an odd number of charged tracks, with an invariant mass of less than 1.5 GeV. This mass is slightly lower than the true tau invariant mass to account for missing energy in the form of the tau neutrinos. Then an isolation ring is defined in the region 0.04-0.24 rad around the tau candidate seed track. In order to be considered a tau, there must be fewer than five particles in the isolation ring, with a total energy of less than 5 GeV.
 
-\subsection{Reconstruction of Higgs, top and W boson candidates}
-Before jet clustering, any isolated leptons are removed from the event. The event is then clustered using the $k_t$ algorithm with $R = 1.0$. The jet clustering algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets. Once this is complete, the jet particles are then reclustered using the Durham algorithm .
+\subsection{Jet clustering}
+Any detected isolated leptons are removed from the event, then the event is run through jet clustering using the $k_t$ algorithm \cite{kt-jet-clustering} with $R = 1.0$. The algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets -- plus an additional two beam jets. The beam jets are due to beam-beam backgrounds, and once they have been identified they are removed. Once this is complete, the jet particles are then reclustered using the Durham algorithm \cite{durham-jet-clustering}.
 
+\subsection{Flavour tagging}
+The majority of the backgrounds for this analysis do not have four b-jets in the final state. Therefore reliable b-tagging is an important source of discriminating power.
+
+For this analysis, b-tagging is done in the LCFIPlus package \cite{lcfiplus}, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
+
+One of the major differences in this analysis was the upgrade of the flavour-tagging, which removed a bug that influenced the performance of b-tagging \cite{clic-yukawa-coupling-2014}.
+
+\subsection{Reconstruction of Higgs, top and W boson candidates}
 Following this, the properties of the jets are used to reconstruct candidates for the Higgs boson, top quarks, and W bosons. This is done by doing a calculation of the invariant masses of the tops, W bosons, and Higgs, resulting in a $\chi^2$ value. By computing this $\chi^2$ value for all possible combinations of jets and finding the combination that results in the minimum, the jets can be matched to which particles produced them. 
 
 \begin{equation}
@@ -340,11 +349,6 @@ Following this, the properties of the jets are used to reconstruct candidates fo
 \end{equation}
 
 where the numbered subscripts indicate the indices of the jets used to form the invariant masses $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
-
-\subsection{Flavour tagging}
-The majority of the backgrounds for this analysis do not have four b-jets in the final state. Therefore reliable b-tagging is an important source of discriminating power.
-
-For this analysis, b-tagging is done in the LCFIPlus package \cite{lcfiplus}, using simulated samples of $e^+ e^- \rightarrow qqqqqq$ where all quarks have the same flavour. The high number of jets in the final state means that the kinematic properties of the jets are similar to those in the analysis samples. Four \acrfull{BDT} are trained for b-tagging, and four for c-tagging, trained using the properties of the jets. These \acrshort{BDT}s then give b-tag and c-tag probabilities for each jet, which are used for event selection in the next step.
 
 \section{Event selection}
 The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA}. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. No pre-selection is used in this analysis. For the hadronic channel, the following variables are used:
@@ -365,14 +369,14 @@ The final event selection is done using \acrfull{BDT}, implemented in the \acrfu
 
 The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
 
-The BDTs then produce a BDT response value, and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
+The \acrshort{BDT}s then produce a \acrshort{BDT} response value, and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
 
 \begin{equation}
 	\frac{S}{\sqrt{S + B}}
 \label{eq:significance}
 \end{equation}
 
-Where $S$ is the number of signal events selected, and $B$ is the number of background events selected. This results in a significance of 10.44 for the fully hadronic channel.
+Where $S$ is the number of signal events selected, and $B$ is the number of background events selected. By looping over the possible values of the MVA cut, the cut value that gives the maximum signficance is found to be > 0.181 for the fully hadronic channel. This corresponds to a significance of 10.44.
 
 The result of of applying the selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
 
@@ -432,7 +436,7 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \begin{figure}[p]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c3.eps}
-	\caption{Input variables for the BDTs: the fourth highest b-tag; the four highest c-tags; [cos].}
+	\caption{Input variables for the BDTs: the fourth highest b-tag; the four highest c-tags; the cosine of the Higgs decay angle.}
 	\label{figure:analysis/results/tmva-inputs-3}
 \end{figure}
 
@@ -446,7 +450,7 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c5.eps}
-	\caption{Input variables for the BDTs: second, third, and fourth lowest jet energies; (jetT 0); (jetT 1)}
+	\caption{Input variables for the BDTs: second, third, and fourth lowest jet energies; the transverse momentum of the first and second jets.}
 	\label{figure:analysis/results/tmva-inputs-5}
 \end{figure}
 
@@ -483,16 +487,21 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \end{table}
 
 \section{Results}
-
 From the cross-section of the tth process, the top-Higgs Yukawa coupling $y_t$ can be calculated, as shown in Equation \ref{eq:crosssection-to-yukawa}. 
 
 Using the output of the \acrshort{BDT}s, the precision on the cross-section of the tth process using just the hadronic channel is found to be 9.6\%. A similar analysis by Yixuan Zhang found the precision for the semi-leptonic channel to be 11.1\%. Thus the combined uncertainty for the cross-section of both decay channels is:
 
-$$\Delta\sigma = 7.30\% $$
+\begin{equation}
+	\Delta\sigma = 7.30\%
+\label{eq:result-crosssection}
+\end{equation}
 
-In order to calculate the coupling, the contribution of the higgstrahlung diagram must be taken into account, as explained in Section [ref]. The value of $\kappa$ had been determined to be 0.503, therefore the uncertainty on the top-Higgs Yukawa coupling is:
+In order to calculate the coupling, the contribution of the higgstrahlung diagram must be taken into account, as explained in Section \ref{section:higgstrahlung}. The value of $\kappa$ had been determined to be 0.503, therefore the uncertainty on the top-Higgs Yukawa coupling is:
 
-$$\frac{\Delta g_{tth}}{g_{tth}} = 0.503 \frac{\Delta\sigma(t\overline{t}H)}{\sigma(t\overline{t}H)} = 3.86\% $$
+\begin{equation}
+	\frac{\Delta y_t}{y_t} = 0.503 \frac{\Delta\sigma}{\sigma} = 3.86\%
+\label{eq:result-coupling}
+\end{equation}
 
 This represents an improvement over the previous study, where the cross-section could be measured with an accuracy of 10.8\% in the fully hadronic channel and 12.0\% in the semi-leptonic channel, giving a combined precision of 8.1\%. This then translated to the precision on the coupling of 4.27\%. Therefore the study presented above represents an improvement of almost 0.5\% from the previous analysis.
 
