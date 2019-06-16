@@ -18,20 +18,153 @@ These proposed colliders share many of the same motivations, design consideratio
 \section{The Standard Model}
 The \acrlong{SM} of particle physics divides nature up into two domains: particles and forces. The four fundamental forces are electromagnetism, the strong interaction, the weak interaction, and gravitation\footnote{Gravitation is not contained within the \acrshort{SM}, although many \acrshort{BSM} models attempt to integrate it.}.
 
-The particle domain is further split along several different axes. The most fundamental is the distinction between the leptons and the quarks, both of which are spin-half fermions. Quarks are affected by the strong interaction, whereas leptons are not. 
+The particle domain is split into two -- the spin-half particles or \textit{fermions}, and the integer spin particles or \textit{bosons}. The fermions are further split into two -- the quarks and the leptons. These categories are defined by their relationship to the four funddamental forces: leptons can interact via the electroweak interaction only, while quarks can interact via both the electroweak and the strong interaction.
 
-In addition to this, there is another class of particles with integer spin called the bosons. These are the \textit{force carriers} or \textit{gauge bosons} -- the exchange of these particles is the medium through which the fundamental forces have their effect. The electromagnetic interaction is mediated by the photon ($\gamma$), the weak interaction is mediated by the W and Z bosons, and the strong interaction is mediated by the gluon ($g$). 
+The bosons are a special case, as they do not simply interact via certain forces, but are the medium through which these forces propogate. For instance, when two particles undergo an electromagnetic interaction, they exchange photons ($\gamma$). Likewise, weak interactions involve the exchange of W or Z bosons, and strong interactions the exchange of gluons ($g$). For this reason they are also called the \textit{force carriers} or \textit{gauge bosons}.
 
-Electroweak theory describes the unification of electromagnetism with the weak interaction at high energies, and was awarded the Nobel prize in 1979. One of the important features was electroweak symmetry, which describes the electroweak interaction as an $SU(2) \times U(1)$ gauge group. This then produces three bosons from the $SU(2)$ group ($W_1$, $W_2$, $W_3$), and one $B$ boson from the $SU(1)$ group. All of these are massless. The $W_{1,2,3}$ bosons correspond to the gauge bosons for the weak interaction ($W^+$, $W^-$, $Z^0$) and the $B$ boson to the photon, which mediates electromagnetism.
+A table summarising the particles of the \acrlong{SM} is shown in Fig. \ref{figure:colliders/SM}.
 
-However, experimental evidence shows that the W and Z bosons are \textit{not} massless. The $W^+$ and $W^-$ have the same mass of 80 GeV, while the $Z^0$ boson has a mass of 91 GeV.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.85\textwidth]{../Pictures/StandardModel.png}
+	\caption{Table of particles in the Standard Model, each with their mass, charge and spin.}
+	\label{figure:colliders/SM}
+\end{figure}
 
-\subsubsection{The Higgs mechanism and electroweak symmetry breaking}
-The solution to this problem comes in the form of the Higgs mechanism and electroweak symmetry breaking. This posits the existence of a scalar field permeating all of space -- the Higgs field. The potential of the Higgs over all space is found to be in the shape of the so-called `Mexican hat potential', with a high value at the origin, and a minimum value elsewhere. This means that the Higgs must `roll down' the slope, settling in the lower-energy regions. This in turn causes the Higgs to have a nonzero vacuum expectation value, and then spontaneous breaking of the electroweak symmetry.
+\subsection{The \acrlong{SM} as a quantum field theory}
+The \acrlong{SM} is conceived as a quantum field theory. This describes a number of quantum fields, whose values are defined over all space. In this conception of particle physics, all particles are in fact excitations of the underlying fields, called \textit{quanta}. So the \acrlong{SM} can be thought of as a system of several overlapping fields:
 
-With the breaking of the electroweak symmetry, three of the Higgs' four degrees of freedom (which would normally yield Goldstone bosons) instead mix with the $W^+$, $W^-$, and $Z^0$ bosons, giving them mass. The remaining fourth degree of freedom emerges as \textit{the} Higgs boson. 
+\begin{itemize}
+	\item the \textit{fermion fields} ($\psi$), whose quanta are the fermions (e.g. the leptons and quarks)
+	\item the \textit{electroweak fields}, whose quanta are the $W_1$, $W_2$, $W_3$, $B$ bosons 
+	\item the \textit{gluon field} ($G_a$), whose quanta is the gluon
+\end{itemize}
 
-The Higgs boson is an important probe of physics, as it couples to all massive particles in proportion to their mass. The top quark, being the most massive elementary particle, has the strongest coupling to the Higgs boson. This makes the top quark an extremely useful way to search the Higgs sector, as the strength of its coupling means that any divergences from the \acrshort{SM} in the Higgs sector will be most visible in the Higgs boson's interactions with the top quark. 
+The interactions of these quantum fields can be described by the Lagrangian density $\mathcal{L}$, usually referred to simply as the Lagrangian.
+
+We can mathematically formulate the \acrlong{SM} by writing out a Langrangian expression for the \acrlong{SM} $\mathcal{L}_{SM}$. We can define this Lagrangian as a combination of individual Lagrangians for the fields described above:
+
+\begin{equation}
+	\mathcal{L}_{SM} = \mathcal{L}_{\psi} + \mathcal{L}_{EW} + \mathcal{L}_{QCD}
+\label{eq:sm-lagrangian-1}
+\end{equation}
+
+where the $\mathcal{L}$ terms in order are the fermion or Dirac term, the electroweak term, and the quantum chromodynamic (or strong) term. 
+
+However, a problem arises if we try to define the masses of the fermions in the fermion Lagrangian $\mathcal{L}_{\psi}$. This can be seen if we try to add a mass term and write it out fully:
+
+\begin{equation}
+	m \overline{\psi} \psi = m(\overline{\psi}_L + \overline{\psi}_R)(\psi_L + \psi_R) = m(\overline{\psi}_L \psi_R + \overline{\psi}_R \psi_L)
+\label{eq:fermion-mass}
+\end{equation}
+
+This term then couples both to left-handed and right-handed fields. But these fields transform differently -- applying the same transformation to these fields has different results depending on the chirality of the field. The gauge symmetry is broken and the fermion mass term is \textit{not} invariant under electroweak symmetry -- the exact form depends on the choice of gauge. If we cannot write a mass term that is consistent with the theory and respects its symmetries, then it follows the fermions do not have mass. However this represents a clear conflict with empirical evidence. 
+
+In the bosons we find a similar problem. We cannot write a mass term in the electroweak Lagrangian $\mathcal{L}_{EW}$, as that mass term will also break the gauge symmetry in a similar way. This presents no problem for the photon $\gamma$, which is known to be massless, but the other electroweak bosons -- the $W^+$, $W^-$ and $Z^0$ -- are known to be massive.
+
+Therefore the \acrshort{SM} predicts that \textit{all} particles should be massless. Given that we know with certainty that all of the quarks, the charged leptons, and the W and Z bosons are massive, it follows that these particles do not have an intrinsic mass but instead acquire their mass from some interaction.
+
+\subsection{The Higgs mechanism}
+The problem of particle masses is solved by the introduction of the scalar Higgs field with four degrees of freedom:
+
+\begin{equation}
+	\phi = \frac{1}{\sqrt{2}} \begin{pmatrix}
+	\phi^+ \\
+	\phi^0
+	\end{pmatrix}
+\label{higgs-field}
+\end{equation}
+
+where the superscripts of $\phi$ denote electric charge. If we describe the Higgs field with a Lagrangian, we can separate it into a kinetic term and a potential term:
+
+\begin{equation}
+	\mathcal{L}_{H} = T_H - V(\phi)
+\label{eq:lagrangian-higgs}
+\end{equation}
+
+The Higgs potential $V(\phi)$ is found to be of an unusual but characteristic shape -- often called the Mexican hat potential (see Fig. \ref{figure:colliders/mexican-hat}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{../Pictures/MexicanHatPotential.png}
+	\caption{Diagram of the Higgs potential, or Mexican hat potential.}
+	\label{figure:colliders/mexican-hat}
+\end{figure}
+
+If we think of the Higgs begining at the origin -- at the apex of the sombrero -- then this potential is symmetrical. But the Higgs can `roll down' the slope into the trough to occupy a lower-energy state. Once this transition occurs, the potential is no longer symmetrical. This is the spontaneous symmetry breaking, and the result is that at low energies, the Higgs field has a nonzero vacuum expectation value $\braket{\phi^0} = v$.
+
+It is notable that this is the \textit{only} parameter of the \acrlong{SM} that is not dimensionless -- the vacuum expectation value of the Higgs field is in units of mass, and thus sets the scales of all other masses in the \acrshort{SM}. 
+
+Once the symmetry is broken, three of the four degrees of freedom of the Higgs field mix with the bosons of the electroweak fields, giving them mass. The fourth degree of freedom emerges as a scalar boson: the Higgs boson $H^0$.
+
+Thus the W and Z bosons have masses that are defined in terms of the Higgs vacuum expectation value $v$ and the strength of their coupling to the Higgs field $g$:
+
+\begin{equation}
+	m_W = \frac{gv}{2}
+\label{eq:w-mass}
+\end{equation}
+\begin{equation}
+	m_Z = \frac{v}{2}\sqrt{g^2 + g'^2}
+\label{eq:z-mass}
+\end{equation}
+
+This is the ``mixing'' of the degrees of freedom of the Higgs field -- the four degrees of freedom that would normally yield Goldstone bosons instead mix with the $W^+$, $W^-$, and $Z^0$ bosons, giving them mass. The fourth remaining degree of freedom emerges as the Higgs boson itself.
+
+\subsection{The Yukawa coupling}
+While the Higgs mechanism as described above explains the masses of the W and Z bosons, this does not explain the masses of the quarks and leptons. As we cannot add a consistent mass term to the fermion fields, and the degrees of freedom of the Higgs field do not mix with them, the fermions must acquire mass via some other mechanism.
+
+This is solved by the Yukawa coupling. This is an interaction between the Higgs scalar field $\phi$ and the fermion field $\psi$ that takes the form
+
+\begin{equation}
+	V \approx g \overline{\psi} \phi \psi
+\label{eq:yukawa-interaction}
+\end{equation}
+
+where $g$ is a coupling constant.
+
+However, due to the spontaneous symmetry breaking of the Higgs mechanism, the Yukawa potential will have a minimum nonzero value $\phi_0$. The Higgs field can be thus be thought of as a combination of the basic field term $\phi$ and a term represting the nonzero vacuum expectation value $\phi_0$:
+
+\begin{equation}
+	\tilde{\phi} = \phi - \phi_0
+\end{equation}
+
+If the Yukawa coupling (Eq. \ref{eq:yukawa-interaction}) is re-written using this formulation of the Higgs field, it becomes
+
+\begin{equation}
+	V \approx g \overline{\psi} \phi \psi - g \overline{\psi} \phi_0 \psi
+\end{equation}
+
+As $\phi_0$ is a constant, the second term instead becomes $g \phi_0 \overline{\psi} \psi$ which then simplifies to $g \phi_0$, resembling a mass term. Similarly to the W and Z bosons, fermion masses are then defined in terms of the Higgs vacuum expectation value $v$ and the strength of their coupling to the Higgs field $g$:
+
+\begin{equation}
+	m_i = -\frac{f_i v}{\sqrt{2}}
+\end{equation}
+
+where $i$ refers to the family of fermions -- either the charged leptons, up-type quarks, or down-type quarks.
+
+Returning back to the Lagrangian in Eq. \ref{eq:sm-lagrangian-1}, instead of attempting to write a mass term, we instead add a Yukawa coupling Lagrangian $\mathcal{L}_{YU}$. This Lagrangian is gauge-invariant, avoiding the problem of a fermion mass term.
+
+\subsection{The completed \acrlong{SM}}
+In light of the necessity of the Higgs field, and the part it plays in generating the masses of the fermions and vector bosons via spontaneous symmetry breaking, we must then rewrite the \acrshort{SM} Lagrangian from Equation \ref{eq:sm-lagrangian-1} to include the effects of the Higgs field and the Yukawa coupling:
+
+\begin{equation}
+	\mathcal{L}_{SM} = \mathcal{L}_{\psi} + \mathcal{L}_{EW} + \mathcal{L}_{QCD} + \mathcal{L}_{H} + \mathcal{L}_{YU}
+\label{eq:sm-lagrangian-2}
+\end{equation}
+
+This then constitutes a full Lagrangian density for all \acrlong{SM} fields.
+
+%%		%%		%%		%%		%%
+%Electroweak theory describes the unification of electromagnetism with the weak interaction at high energies, and was awarded the Nobel prize in 1979. One of the important features was electroweak symmetry, which describes the electroweak interaction as an $SU(2) \times U(1)$ gauge group. This then produces three bosons from the $SU(2)$ group ($W_1$, $W_2$, $W_3$), and one $B$ boson from the $SU(1)$ group. All of these are massless. The $W_{1,2,3}$ bosons correspond to the gauge bosons for the weak interaction ($W^+$, $W^-$, $Z^0$) and the $B$ boson to the photon, which mediates electromagnetism.
+
+%However, experimental evidence shows that the W and Z bosons are \textit{not} massless. The $W^+$ and $W^-$ have the same mass of 80 GeV, while the $Z^0$ boson has a mass of 91 GeV.
+%%		%%		%%		%%		%%
+%\subsubsection{The Higgs mechanism and electroweak symmetry breaking}
+%The solution to this problem comes in the form of the Higgs mechanism and electroweak symmetry breaking. This posits the existence of a scalar field permeating all of space -- the Higgs field. The potential of the Higgs over all space is found to be in the shape of the so-called `Mexican hat potential', with a high value at the origin, and a minimum value elsewhere. This means that the Higgs must `roll down' the slope, settling in the lower-energy regions. This in turn causes the Higgs to have a nonzero vacuum expectation value, and then spontaneous breaking of the electroweak symmetry.
+%
+%With the breaking of the electroweak symmetry, three of the Higgs' four degrees of freedom (which would normally yield Goldstone bosons) instead mix with the $W^+$, $W^-$, and $Z^0$ bosons, giving them mass. The remaining fourth degree of freedom emerges as \textit{the} Higgs boson. 
+%
+%The Higgs boson is an important probe of physics, as it couples to all massive particles in proportion to their mass. The top quark, being the most massive elementary particle, has the strongest coupling to the Higgs boson. This makes the top quark an extremely useful way to search the Higgs sector, as the strength of its coupling means that any divergences from the \acrshort{SM} in the Higgs sector will be most visible in the Higgs boson's interactions with the top quark. 
 
 \section{The physics case for a lepton collider}
 With the observation of a Higgs boson with a mass of 125 GeV, based on data from the \acrlong{LHC}, the Standard Model of particle physics is now functionally complete -- all of it's major predictions have been observed. This is a testament to it's quality as a theory, where it's predictive power and accuracy is one of the best in all of the sciences.
