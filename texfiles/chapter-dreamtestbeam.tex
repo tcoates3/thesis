@@ -2,63 +2,58 @@
 %https://www.sciencedirect.com/science/article/pii/S0168900219304991
 %https://www.sciencedirect.com/science/article/pii/S0168900217305703
 
-\chapter{IDEA testbeams}
+\chapter{\acrshort{IDEA} testbeam}
 \label{chapter:ideatestbeam}
 
 \epigraph{[new quote split \\ over two lines]}{[author]}
 
-While \acrshort{DQM4hep} was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the \acrshort{CALICE} collaboration. To be sure that \acrshort{DQM4hep} was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and \acrshort{CALICE} collaborations.
+In this chapter, the usage of \acrshort{DQM4hep} outside of the AIDA-2020 collaboration is discussed. This testbeam was the \acrfull{IDEA} combined testbeam. This was a complex testbeam environment, using five separate detector prototypes on the same testbeam, operating as a `vertical slice' of the detector concept for a future lepton collider.
 
-An ideal opportunity arose for this in the form of the \acrshort{IDEA} testbeam. This testbeam was run by a collaboration of Italian and American universities working on four different particle physics detectors of different types, intending to run a single combined testbeam of all four instruments at the \acrshort{CERN} \acrshort{SPS} in September 2018. \acrshort{DQM4hep} was offered as a possible unified monitoring solution that could integrate information from all four detectors into the same tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test \acrshort{DQM4hep} out of its established operating range.
+The \acrshort{IDEA} testbeam environment and the detectors present are described. Following this, the development of the file readers for all of the datatypes used by the data acquisition systems is described, paying attention to the different needs of the different types of files. Then the development of the analysis modules that took the read raw data and converted it into monitor elements and human-readable plots is discussed. For this testbeam, the aim was first to recreate the existing monitoring solutions, but using the simpler and more systemic approach of \acrshort{DQM4hep} to combine them all on one machine and in one program. 
+
+Following this, later work in using \acrshort{DQM4hep}'s analysis modules as a form of online data processing is described. Again, the usage of this aimed to recreate existing offline analysis that was done using ROOT. This was shown to be possible, and to be computationally lightweight enough to be done online during a testbeam.
 
 \section{Introduction}
-The combined testbeam took place between in September 2018 at the \acrshort{CERN} \acrshort{SPS} beamline facility. The testbeam itself lasted a week, from the 5th-12th September, with a preparation period of one week before this for installation, calibration, etc. [...]
+While \acrshort{DQM4hep} was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the \acrshort{CALICE} collaboration. To be sure that \acrshort{DQM4hep} was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and \acrshort{CALICE} collaborations.
 
-\subsection*{Detectors at the combined testbeam}
-The combined testbeam comprised four separate dectors: a calorimeter, a muon detector and preshower, a drift chamber, and a silicon photomultiplier. One of the biggest challenges involved in the testbeam was operating these four different detectors [...]
+An ideal opportunity arose for this in the form of the \acrshort{IDEA} testbeam. The \acrfull{IDEA} concept is a proposal for a detector for future lepton colliders such as the \acrshort{FCC}-ee or \acrshort{CEPC}, using a combination of a silicon vertex detector, large volume drift wire chamber with silicon micro-strips for tracking, a dual-readout calorimeter, and muon chambers. All of these subdetectors are contained within a low-mass superconducting solenoid and an iron flux return yoke. See Fig. \ref{figure:idea/detector-concept}.
 
-\subsubsection{RD52 calorimeter} % Another reference: https://arxiv.org/pdf/1703.09120.pdf
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.65\textwidth]{../Pictures/IDEA/IDEA-concept.png}
+	\caption{Schematic layout of the proposed \acrshort{IDEA} detector concept.}
+	\label{figure:idea/detector-concept}
+\end{figure}
+
+The \acrshort{IDEA} testbeam was to take place in the H8 beamline area at the \acrshort{CERN} \acrshort{SPS}, including five separate prototypes, each representative of one subdetector of the \acrshort{IDEA} detector concept. This testbeam formed a `vertical slice' of the detector, operating each of the components in one testbeam to test not only each individual component, but how they interacted and could be used together to generate richer information about the beam.
+
+\acrshort{DQM4hep} was offered as a possible unified monitoring solution that could integrate information from all of the detectors into a single tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test \acrshort{DQM4hep} out of its established operating range, using a wide variety of different detectors. The testbeam took place from the 5th-12th September, with a preparation period of one week before this for installation, setup and calibration.
+
+\section{Detector components}
+
+\subsection{RD52 dual-readout calorimeter} % Another reference: https://arxiv.org/pdf/1703.09120.pdf
 The \acrfull{DREAM} calorimeter, also called the RD52 calorimeter, is a dual-readout calorimeter built, developed and tested by the RD52 collaboration by researchers based in universities at Gagliari, Cosenza, Pavia, Pisa, Rome, Iowa State and Texas Tech. 
 
 The aim of the calorimeter is to use both the \v{C}erenkov and scintillator techniques simultaneously (hence ``dual-readout'') to improve calorimetry, especially using calorimeters to measure four-vectors of jets and single hadrons, which suffer a reduced precision compared to electrons and photons. By comparing signals from \v{C}erenkov light and scintillator light, the electromagnetic shower fraction can be measured on an event-by-event basis, eliminating the effects of fluctuations. %Reference here: https://iopscience.iop.org/article/10.1088/1742-6596/404/1/012068/pdf
 
-%-Nine lead modules (9.3x9.3x150cm^3)
-%-Sampling fraction 5%, PMT readout
-%-Hadronic energy resolution in 4pi geometry should be 30%/sqrt(E)
+The prototype of the calorimeter used in the testbeam consists of 9 lead modules, each 9.3 $\times$ 9.3 $\times$ 250 cm\textsuperscript{3} in size, with a sampling fraction of 9\% and using a photomultiplier tube readout. From simulation studies, the hadronic energy resolution is expected to be approximately 30\%$/\sqrt{E}$ \cite{idea-dual-readout} \cite{idea-rd52}.
 
-\subsubsection{Muon chamber and preshower}
-[...]
+\subsection{Preshower}
+The preshower uses two triple-GEM detectors with a surface area of 10 $\times$ 10 cm\textsuperscript{2}, using a strip readout with a 650 \textmu m pitch. The preshower also has a lead absorber layer of variable thickness, using a fixed layer of 5 mm plus additional interchangeable layers. The layers allow the absorber thickness to be varied between 1 and 2.5 $X_O$. The gas mixture used during the testbeam was Ar/CO\textsubscript{2}/CF\textsubscript{4}, and the efficiency expected was previous tests was 97\%. The spatial resolution is on the order of 100 \textmu m \cite{idea-gem}.
 
-%Muon chamber
-%-One triple-GEM, same as preshower
-%-Two micro-RWELL 10x10cm^2 (40 micron spatial resolution, rates up to 10MHz/cmm^2)
+\subsection{Muon chamber}
+The muon chamber comprises one triple-GEM detector (similar to the preshower) with an additional two \acrshort{muRWELL} prototypes of size 10 $\times$ 10 cm\textsuperscript{2}. The \acrshort{muRWELL} detectors have a spatial resolution of 40 \textmu m, and a rate capability of 10 MHz/cm\textsuperscript{2} \cite{idea-micro-rwell}.
 
-%Preshower
-%-Lead absorber with fixed 5mm layer, but can vary from 1 to 2.5 X_0
-%-Two triple-GEM detectors
-%-10x10cm^2 surface area, strip readout, 650 micron pitch
-%-Ar/CO2/CF4 gas used for testbeam
-%-Efficiency 97% based on previous testbeams
-%-Spatial resolution 100 microns
+\subsection{Drift chamber}
+The prototype of the drift chamber used for the testbeam consisted of 12 layers, each with 12 drift cells of size 1$\times$1 cm\textsuperscript{2}, giving a total of 144 channels. According to a study of a similar detector prototype, this should give it a resolution of 100 \textmu m in the x- and y-plane, and 1 mm in the z-plane \cite{idea-drift-chamber} .
 
-\subsubsection{Silicon photomultiplier GEM}
-[...]
-
-\subsubsection{Drift chamber}
-[...]
-
-%-12 layers, with 12 1x1cm^2 drift cells per layer
-%-144 channels total
-%-resolution is 100 micron in x-y, 1mm in z
-
-\subsubsection{Ancillary detectors}
-
-%-Two DWCs before and after drift chamber, for beam particle position, leakage, for particle ID
+\subsection{Ancillary detectors}
+The ancillary detectors are used to provide information about the position of the beam, the leakage of particles and showers from the detector volumes, and particle identification. They consist of two \acrlong{DWC}s (\acrshort{DWC}) in front of and behind the drift chamber; leakage counters surrounding the calorimeter; and a preshower detector and muon counter.
 
 \section{Monitoring}
 [...]
 
-Existing monitoring within the \acrshort{DREAM} collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in \acrshort{DQM4hep} quickly using for-loops in both the C++ code and \acrshort{XML} steering files, allowing this to be done with comparatively little code.
+%Existing monitoring within the \acrshort{DREAM} collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in \acrshort{DQM4hep} quickly using for-loops in both the C++ code and \acrshort{XML} steering files, allowing this to be done with comparatively little code.
 
 \subsection{File readers}
 Writing file readers for the different detectors meant first understanding the structure of their data and file types. Once data has arrived from the data acquisition device, each of the detectors wrote to a different `raw' format. However, the RD52 calorimeter, drift chamber, and muon and preshower all produced ROOT ntuple files as part of their data acquisition process, in addition to different file formats. It was decided to use these ROOT ntuples as the file format to read into \acrshort{DQM4hep}, as due to support for ROOT within the framework, reading data from ROOT ntuples is simpler.
