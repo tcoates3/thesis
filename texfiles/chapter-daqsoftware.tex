@@ -118,7 +118,7 @@ This interface is used in multiple places, including the run control process and
 
 In addition to this, there is an optional provision for a monitoring steering file, which contains presets of canvases, and the plots displayed on them. This is extremely useful when dealing with large datasets or large numbers of plots, as the plots required by the user can be opened automatically when the monitoring interface is run.
 
-An example of the Qt-based monitoring \acrshort{GUI} in use can 3be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. 
+An example of the Qt-based monitoring \acrshort{GUI} in use can be seen in Fig. \ref{figure:daq/dqm4hep/old-gui}. 
 
 \begin{figure}[h]
 	\centering
@@ -130,7 +130,7 @@ An example of the Qt-based monitoring \acrshort{GUI} in use can 3be seen in Fig.
 \subsubsection{New user interface and visualisation package}
 For the newer versions of \acrshort{DQM4hep}, the decision was made to overhaul the \acrshort{GUI} and visualisation packages, removing Qt from the framework and moving to a web-based interface.
 
-The removal of Qt was motivated by two reasons. Firstly, the integration with ROOT provided some complications, since running \acrshort{DQM4hep}'s Qt-based \acrshort{GUI} requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled. The majority of ROOT installations in remotely-accesible file systems based at \acrshort{CERN} and \acrshort{DESY} (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system, compiler tools, and environment of the machine, and thus less generic and easy to use. % Also isn't Qt support getting removed from ROOT soon? We'd need a citation for that though.
+The removal of Qt was motivated by two reasons. Firstly, the integration with ROOT provided some complications, since running \acrshort{DQM4hep}'s Qt-based \acrshort{GUI} requires an installation of ROOT compiled with the \texttt{--enable-Qt} flag enabled. The majority of ROOT installations in remotely-accessible file systems based at \acrshort{CERN} and \acrshort{DESY} (which are heavily used for analysis and testbeams) were not compiled this way. Secondly, Qt was an additional dependency that must be installed prior to use, making the software more dependent upon the operating system, compiler tools, and environment of the machine, and thus less generic and easy to use. % Also isn't Qt support getting removed from ROOT soon? We'd need a citation for that though.
 
 The removal of the Qt \acrshort{GUI} allows for greater freedom with development. The intended goal is to have a browser-based GUI, removing dependency on any external \acrshort{GUI} libraries and allowing it to function on any device. This will also make it more user-friendly and convenient, as the interfaces for run control, networking, and data monitoring and quality display can be simply run in different tabs of a web browser.
 
@@ -222,7 +222,7 @@ It is recommended to fork this repository before starting, so git and Github's v
 In addition to writing the analysis module code, a compiled analysis module needs to be declared as a plugin for \acrshort{DQM4hep} to be able to use it. The absolute path to the library file for new analysis modules needs to be appended to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable. 
 
 \subsubsection{Writing analysis modules}
-Analysis modules must be written specifically for the type of data they recieve and for a certain analysis or set of analyses to perform. This means that the ideal person to write an analysis module is someone familiar with both the experiment's event structure and the goals of the monitoring.
+Analysis modules must be written specifically for the type of data they receive and for a certain analysis or set of analyses to perform. This means that the ideal person to write an analysis module is someone familiar with both the experiment's event structure and the goals of the monitoring.
 
 Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} defines an analysis module called \textit{ExampleModule} that can be found in the \texttt{dqm4hep-example/source/src/plugins} directory.
 
@@ -245,7 +245,7 @@ The \texttt{startOfRun} function handles code that should be executed only once 
 %\subsubsection{endOfCycle}
 
 \subsubsection{endOfRun}
-This is the end-of-run counterpart to \texttt{startOfRun()}. In general, this function will encapsulate logic that must deal with counters or procedures that were intialised or begun in \texttt{startOfRun()}.
+This is the end-of-run counterpart to \texttt{startOfRun()}. In general, this function will encapsulate logic that must deal with counters or procedures that were initialised or begun in \texttt{startOfRun()}.
 
 \subsubsection{endModule}
 This function is called when the module ends, and is usually used for deleting or cleaning up any objects created during the \texttt{initModule()} function. Most normal use cases will not need this function, as cleanup of objects such as variables or monitor elements is handled by the framework.
@@ -286,7 +286,7 @@ The data acquisition device sends us an event made of four integer values:
 	\item xPos -- the position of a hit on the x-axis of the detector, from 0 to 5
 	\item yPos -- the position of a hit on the y-axis of the detector, from 0 to 5
 	\item ADC -- the \acrshort{ADC} of the hit, in arbitrary units, between 0 and 1500
-	\item timeHit -- the time the hit occured, in arbitrary units
+	\item timeHit -- the time the hit occurred, in arbitrary units
 \end{itemize}
 
 \subsubsection{Goals}
@@ -498,9 +498,9 @@ Similarly, the monitor element for the hitmap is defined:
 \end{lstlisting}
 
 \subsubsection{XML loops}
-In this example, loops aren't necessary, but defining monitor elements using a for-loop in \acrshort{XML} is a useful feature, so it is discussed here. For example, if one of the goals were to create a histogram for each of the 36 tiles in the detector, a for-loop would allow thtis to be created with a smaller amount of code
+In this example, loops aren't necessary, but defining monitor elements using a for-loop in \acrshort{XML} is a useful feature, so it is discussed here. For example, if one of the goals were to create a histogram for each of the 36 tiles in the detector, a for-loop would allow this to be created with a smaller amount of code
 
-To do this, the \texttt{<for>} environment is used, using \texttt{tileNumber} as the id. Then a template monitor element defintion is written out using \texttt{\$ FOR{tileNumber}} whenever the tile number should be inserted:
+To do this, the \texttt{<for>} environment is used, using \texttt{tileNumber} as the id. Then a template monitor element definition is written out using \texttt{\$ FOR{tileNumber}} whenever the tile number should be inserted:
 
 \begin{lstlisting}
 <for id="tileNumber" begin="0" end="35" increment="1">
@@ -671,7 +671,7 @@ Gives the path of the \acrshort{qtest} report output file (in \acrshort{JSON}) f
 --root-output <string>
 \end{lstlisting}
 
-Gives the path of a ROOT output file to save the processed mmonitor elements.
+Gives the path of a ROOT output file to save the processed monitor elements.
 
 \begin{lstlisting}
 --
@@ -687,7 +687,7 @@ Ignores any arguments following this flag.
 Displays version information, then exits.
 
 \subsubsection{Steering file}
-Steering files use \acrshort{XML} to store all teh information needed to execute a \acrshort{qtest}. An example steering file can be found in \texttt{dqm4hep-core/tests/test \textunderscore samples.xml}.
+Steering files use \acrshort{XML} to store all the information needed to execute a \acrshort{qtest}. An example steering file can be found in \texttt{dqm4hep-core/tests/test \textunderscore samples.xml}.
 
 There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
 
@@ -835,7 +835,7 @@ There is extensive documentation of quality testing; each quality test is descri
 Finally there is a section explaining how to write new quality tests. This includes a detailed explanation of the purpose of each function within a quality test file, what the required outputs are and how to utilise them, error testing, and advice on maintaining a style consistent with the rest of the framework.
 
 \section{Adaptation to other detectors}
-Due to the modularity and genericity of \acrshort{DQM4hep}, the process of deploying it for a new detector is simple -- the only parts of \acrshort{DQM4hep} that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special \acrshort{DQM4hep}-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
+Due to the modularity and genericness of \acrshort{DQM4hep}, the process of deploying it for a new detector is simple -- the only parts of \acrshort{DQM4hep} that need to be made for any specific use case are the analysis modules, standalone modules, streamer plugin, and file reader plugin. For all of these plugins, there are templates available in the codebase, as well as examples of in-use plugins for other detectors. A few special \acrshort{DQM4hep}-specific functions are necessary for these plugins to hook into the framework properly, but apart from these all user-provided plugins are written in normal C++ code that also integrates ROOT, so should be familiar to most users.
 
 A file streamer or file reader must be written by the user given a specific data structure. This requires knowledge of both the event data model of the data acquisition setup, as well as the structure of the data files. The ideal person to write this code is someone with detailed knowledge of the data acquisition software being used, and the data storage or streaming. 
 
