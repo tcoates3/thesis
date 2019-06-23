@@ -51,9 +51,9 @@ The prototype of the drift chamber used for the testbeam consisted of 12 layers,
 The ancillary detectors are used to provide information about the position of the beam, the leakage of particles and showers from the detector volumes, and particle identification. They consist of two \acrlong{DWC}s (\acrshort{DWC}) in front of and behind the drift chamber; leakage counters surrounding the calorimeter; and a preshower detector and muon counter.
 
 \section{Monitoring}
-[...]
+Existing monitoring within the collaboration was capable of producing histograms from the raw file formats, predominantly using C++ code directly to produce ROOT objects. Initially, the goal of the testbeam was to make the same plots used for the existing monitoring systems within \acrshort{DQM4hep}. The advantage of this would be that all of the plots were available in one place, making investigating any correlations between them easier.
 
-%Existing monitoring within the \acrshort{DREAM} collaboration could produce accurate histograms from raw data using ROOT, creating plots of the energy spectra of each detector channel per event, along with [...]. This facility was reproduced in \acrshort{DQM4hep} quickly using for-loops in both the C++ code and \acrshort{XML} steering files, allowing this to be done with comparatively little code.
+The necessary components within \acrshort{DQM4hep} for monitoring were the creation of file readers for each device to make the data available to \acrshort{DQM4hep}, and analysis modules to use this data to create monitor elements.
 
 \subsection{File readers}
 Writing file readers for the different detectors meant first understanding the structure of their data and file types. Once data has arrived from the data acquisition device, each of the detectors wrote to a different `raw' format. However, the RD52 calorimeter, drift chamber, and muon and preshower all produced ROOT ntuple files as part of their data acquisition process, in addition to different file formats. It was decided to use these ROOT ntuples as the file format to read into \acrshort{DQM4hep}, as due to support for ROOT within the framework, reading data from ROOT ntuples is simpler.
