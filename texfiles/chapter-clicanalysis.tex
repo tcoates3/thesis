@@ -54,7 +54,7 @@ The tth process offers one of the best ways to examine the interaction of the Hi
 	\label{figure:analysis/top-quark-plot}
 \end{figure}
 
-The final states of the tth process are complicated due to the variety of decay modes of the particles. The two top quarks are permitted to decay only via the $t \rightarrow W^+ b $ process. The bottom quark forms a jet, while the W boson has a variety of possible decay process. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of all hadronic decays is 68\%, and the total branching ratio of all leptonic decays is 32\% \cite{pdg-review}. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
+The final states of the tth process are complicated due to the variety of decay modes of the particles. In the analsysis considered in this thesis, the two top quarks are permitted to decay only via the $t \rightarrow W^+ b $ process. The bottom quark forms a jet, while the W boson has all possible decay processes. W bosons can decay \textit{hadronically} into a pair of one up-type quark and one down-type quark (e.g. $u\overline{d}$ or $c\overline{s}$). Or they can decay \textit{leptonically} into a charged lepton and a neutrino of the same flavour (e.g. $e^- \overline{\nu}_e$ or $\mu^+ \nu_\mu$). The total branching ratio of all hadronic decays is 68\%, and the total branching ratio of all leptonic decays is 32\% \cite{pdg-review}. We denote a quark-antiquark pair as $q\overline{q}$, and a lepton-neutrino pair as $\ell \nu$.
 
 Given that we focus only on events where the Higgs decays via the process $H \rightarrow b\overline{b}$, there are then three possible final states: %Redid these, double check once rendered
 $$e^+ e^- \rightarrow t\overline{t}h \rightarrow q\overline{q}q\overline{q}b\overline{b}$$
@@ -333,7 +333,7 @@ Identification of taus was done using the \texttt{TauFinder} processor\cite{tauf
 The processor looks at particles that may have decayed from taus, and forms a tau candidate based on their properties. First it creates a seed track with a $p_T$ greater than 10 GeV, adding all particles within a 0.04 rad cone of the seed track to the tau candidate if every particle has $p_T >$ 2 GeV and $R_0$ within the range 0.01-0.05mm. The reconstructed tau candidate must then be formed of an odd number of charged tracks, with an invariant mass of less than 1.5 GeV. This mass is slightly lower than the true tau invariant mass to account for missing energy in the form of the tau neutrinos. Then an isolation ring is defined in the region 0.04-0.24 rad around the tau candidate seed track. In order to be considered a tau, there must be fewer than five particles in the isolation ring, with a total energy of less than 5 GeV.
 
 \subsection{Jet clustering}
-Any detected isolated leptons are removed from the event, then the event is run through jet clustering using the $k_t$ algorithm \cite{kt-jet-clustering} with $R = 1.0$. The algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets -- plus an additional two beam jets. The beam jets are due to beam-beam backgrounds, and once they have been identified they are removed. Once this is complete, the jet particles are then reclustered using the Durham algorithm \cite{durham-jet-clustering}.
+Any detected isolated leptons are removed from the event, then the event is run through jet clustering using the $k_t$ algorithm \cite{kt-jet-clustering} with $R = 1.0$. The algorithm is run in exclusive mode, forcing the event into a specific number of jets -- in  the case of the hadronic analysis, eight jets -- plus an additional two beam jets, which are determined by finding the two jets with the lowest angles relative to the beam axis. The beam jets are due to beam-beam backgrounds, and once they have been identified they are removed. Once this is complete, the jet particles are then reclustered using the Durham algorithm \cite{durham-jet-clustering}.
 
 \subsection{Flavour tagging}
 \label{section:flavour-tagging}
@@ -343,9 +343,11 @@ For this analysis, b-tagging is done in the LCFIPlus package \cite{lcfiplus}, si
 
 One of the major differences in this analysis was the upgrade of the flavour-tagging, which removed a bug that influenced the performance of b-tagging \cite{clic-yukawa-coupling-2014}.
 
+An important variable to select the signal events is the b-tag probabilities of the jets with the four highest b-tags, as well the corresponding c-tag probabilities of these four jets.
+
 \subsection{Reconstruction of Higgs, top and W boson candidates}
 \label{section:chi-squared}
-Following this, the properties of the jets are used to reconstruct candidates for the Higgs boson, top quarks, and W bosons are computed. This is done by doing a calculation of the invariant masses of the tops, W bosons, and Higgs, resulting in a $\chi^2$ value. By computing this $\chi^2$ value for all possible combinations of jets and finding the combination that results in the minimum, the jets can be matched to which particles produced them. The $\chi^2$ is calculated as:
+After the flavour tagging is completed, the jet energies are used to reconstruct candidates for the Higgs boson, top quarks, and W bosons are computed. The invariant masses of the tops, W bosons, and Higgs are computed, resulting in a $\chi^2$ value. By computing this $\chi^2$ value for all possible combinations of jets and finding the combination that results in the minimum, the jets can be matched to which particles produced them. The $\chi^2$ is calculated as:
 
 \begin{equation}
   \centering
@@ -353,10 +355,21 @@ Following this, the properties of the jets are used to reconstruct candidates fo
 \label{eq:chi-square}
 \end{equation}
 
-where the numbered subscripts label the jets used in each combination to form the invariant masses $m$. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
+where the numbered subscripts are labels for the jets used in any particular grouping. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
 
 \section{Event selection}
-The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA}. The \acrshort{BDT}s for the hadronic channel are trained separately to the semi-leptonic channel. For the hadronic channel, the following variables are used:
+The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA} \refthis . In this method, a large number of event variables are fed into the toolkit, which are used to train \acrshort{BDT}s to distinguish signal events from background events. The generated events are split randomly into two halves. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}. In this analysis, the \acrshort{BDT}s are trained separately for each channel. 
+
+The \acrshort{BDT}s then produce a \acrshort{BDT} response value (Fig. \ref{figure:analysis/results/bdt-response}) and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
+
+\begin{equation}
+	\frac{S}{\sqrt{S + B}}
+\label{eq:significance}
+\end{equation}
+
+where $S$ is the number of signal events selected, and $B$ is the number of background events selected.
+
+For the hadronic channel, the following variables were used:
 
 \begin{itemize}
 	\item Reconstructed Higgs mass (Fig. \ref{figure:analysis/results/tmva-inputs-1})
@@ -372,21 +385,6 @@ The final event selection is done using \acrfull{BDT}, implemented in the \acrfu
 	\item The cosine of the angle of the two jets closest to the beam-axis 
 \end{itemize}
 
-The \acrshort{BDT}s use the sample split into two randomly. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}.
-
-The \acrshort{BDT}s then produce a \acrshort{BDT} response value (Fig. \ref{figure:analysis/results/bdt-response}) and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
-
-\begin{equation}
-	\frac{S}{\sqrt{S + B}}
-\label{eq:significance}
-\end{equation}
-
-where $S$ is the number of signal events selected, and $B$ is the number of background events selected. By looping over the possible values of the MVA cut, the cut value that gives the maximum significance is found. A plot of the MVA cut against the sigificance can be found in Fig. \ref{figure:analysis/results/tmva-efficiency}.
-
-For the the fully hadronic channel, the cut giving the maximum significance was found to be $>$ 0.181. This corresponds to a significance of 10.44.
-
-The result of of applying the selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.eps}
@@ -396,7 +394,7 @@ The result of of applying the selection to the BDT response on the event samples
 
 \subsection{PandoraPFOs}
 \label{section:pfos}
-The number of particles reconstructed as Pandora\acrshort{PFO}s is used as a discriminator as it is correlated with the number of jets in the event, which is not directly measured as the jet clustering and re-clustering forces the event into a specific number of jets. 
+The number of particles reconstructed as Pandora\acrshort{PFO}s is highly correlated with the number of jets in the event. As the number of jets in the event is not directly measured, since the jet clustering and re-clustering forces the event into a specific number of jets, the number of \acrshort{PFO}s can be used to help infer whether the event was a signal event with 8 jets, or a background event with fewer jets.
 
 \subsection{Event shape}
 \label{section:event-shape}
@@ -504,7 +502,9 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \end{table}
 
 \section{Results}
-The sensitivity to the top-Higgs Yukawa coupling can be calculated directly by taking the inverse of  the signal significance. With a signal significance of 10.44 in the hadronic channel, the precision on the cross-section is found to be 9.6\%. A similar analysis by Yixuan Zhang for the semi-leptonic channcel found a signal significance of 9.0 and thus a precision on the cross-section of 11.1\%. The combined uncertainty for the cross-section of both decay channels is: $\Delta\sigma$ = 7.5\%.
+In order to find the value of the cut on the \acrshort{BDT} response  that gives the maximal significance, the different possible values are looped over. A plot of the MVA cut against the sigificance can be found in Fig. \ref{figure:analysis/results/tmva-efficiency}. For the the fully hadronic channel, the cut giving the maximum significance was found to be $>$ 0.181. This corresponds to a significance of 10.44. The result of of applying this selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
+
+The sensitivity to the top-Higgs Yukawa coupling can then be calculated directly by taking the inverse of the signal significance. With a signal significance of 10.44 in the hadronic channel, the precision on the cross-section is found to be 9.6\%. A similar analysis by Yixuan Zhang for the semi-leptonic channcel found a signal significance of 9.0 and thus a precision on the cross-section of 11.1\%. The combined uncertainty for the cross-section of both decay channels is: $\Delta\sigma$ = 7.5\%.
 
 In order to use the precision on the measurement of the cross-section to calculate the precision on the measurement of the top-Higgs Yukawa coupling, the contribution of the higgstrahlung diagram must be taken into account, as explained in Section \ref{section:higgstrahlung}. The value of $\kappa$ had been determined to be 0.503, therefore the uncertainty on the top-Higgs Yukawa coupling is:
 
