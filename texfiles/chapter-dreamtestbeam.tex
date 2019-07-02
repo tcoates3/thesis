@@ -39,7 +39,7 @@ The aim of the calorimeter is to use both the \v{C}erenkov and scintillator tech
 The prototype of the calorimeter used in the testbeam consists of 9 lead modules, each 9.3 $\times$ 9.3 $\times$ 250 cm\textsuperscript{3} in size, with a sampling fraction of 9\% and using a photomultiplier tube readout. From simulation studies, the hadronic energy resolution is expected to be approximately 30\%$/\sqrt{E}$ \cite{idea-dual-readout} \cite{idea-rd52}.
 
 \subsection{Preshower}
-The preshower uses two triple-GEM detectors with a surface area of 10 $\times$ 10 cm\textsuperscript{2}, using a strip readout with a 650 \textmu m pitch. The preshower also has a lead absorber layer of variable thickness, using a fixed layer of 5 mm plus additional interchangeable layers. The layers allow the absorber thickness to be varied between 1 and 2.5 $X_O$. The gas mixture used during the testbeam was Ar/CO\textsubscript{2}/CF\textsubscript{4}, and the efficiency expected was previous tests was 97\%. The spatial resolution is on the order of 100 \textmu m \cite{idea-gem}.
+The preshower uses two triple-GEM detectors with a surface area of 10 $\times$ 10 cm\textsuperscript{2}, using a strip readout with a 650 \textmu m pitch. The preshower also has a lead absorber layer of variable thickness, using a fixed layer of 5 mm plus additional interchangeable layers. The layers allow the absorber thickness to be varied between 1 and 2.5 $X_O$. The gas mixture used during the testbeam was Ar/CO\textsubscript{2}/CF\textsubscript{4}, and the efficiency expected from previous tests was 97\%. The spatial resolution is on the order of 100 \textmu m \cite{idea-gem}.
 
 \subsection{Muon chamber}
 The muon chamber comprises one triple-GEM detector (similar to the preshower) with an additional two \acrshort{muRWELL} prototypes of size 10 $\times$ 10 cm\textsuperscript{2}. The \acrshort{muRWELL} detectors have a spatial resolution of 40 \textmu m, and a rate capability of 10 MHz/cm\textsuperscript{2} \cite{idea-micro-rwell}.
@@ -81,13 +81,10 @@ Following the testbeam, it was decided that \acrshort{DQM4hep} could be used to 
 Several analysis goals were outlined to attempt to implement in \acrshort{DQM4hep}. These were performing the tower \acrshort{ADC} calibration, the \acrshort{ADC} to energy calibration, and particle selection efficiencies. 
 
 \subsection{Tower ADC calibration}
-[...]
+\label{section:tower-calibration}
+Due to a large number of tasks for setting up the testbeam, performing a calibration of the high voltages of the individual towers was not possible, so the calorimeter \acrshort{ADC}s were not calibrated to have a uniform response. To account for this, calibration runs were taken, where the beam was incident on each individual tower for the whole run, repeated for each tower in the calorimeter. These runs allow the calibration to be done after the testbeam with the data.
 
-Due to a large number of tasks for setting up the testbeam, performing a calibration of the individual towers' high voltages was not possible, so the calorimeter \acrshort{ADC}s were not calibrated to each other [?]. In order to fix this, [...]
-
-Two sets of calibration runs were performed. The first set covered Towers 1-29 using an 80 GeV secondary beam ($\pi$ and $e^{-}$), with the beam pointed at each tower in sequence for 29 runs. The second set used a 20 GeV electon beam, covering Towers 30-36 plus Tower 15. Tower 15 recieved runs in both sets in order to calibrate the two sets to each other. 
-
-[...] The run numbers corresponding to each tower is given in Table \ref{table:idea/calibrationruns}.
+Two sets of calibration runs were performed. The first set covered Towers 1-29 with an 80 GeV secondary beam (primarily pions with some muons)\footnote{Due to the nature of the \acrshort{SPS} testbeam facility, the composition of secondary beams is not well-defined. Normally it is determined using detectors in the beamline.}. The second set used a 20 GeV pure electon beam, covering Towers 30-36 plus Tower 15. Tower 15 received runs in both sets in order to calibrate the two sets to each other. The run numbers corresponding to each tower is given in Table \ref{table:idea/calibrationruns}.
 
 \begin{table}[h]
 \centering
@@ -114,101 +111,118 @@ Two sets of calibration runs were performed. The first set covered Towers 1-29 u
 	\label{table:idea/calibrationruns}
 \end{table}
 
-%
-%\begin{table}[h]
-%\centering
-%	\begin{tabular}{ c c c c }
-%	\hline \hline
-%	\textbf{Tower} & \textbf{Run No.} & \textbf{Beam energy} & \textbf{Beam type} \\ \hline \hline
-%	 1 & 12545 & 80 GeV & secondary \\
-%	 2 & 12556 & 80 GeV & secondary \\
-%	 3 & 12558 & 80 GeV & secondary \\
-%	 4 & 12560 & 80 GeV & secondary \\
-%	 5 & 12601 & 80 GeV & secondary \\
-%	 6 & 12638 & 80 GeV & secondary \\
-%	 7 & 12598 & 80 GeV & secondary \\
-%	 8 & 12514 & 80 GeV & secondary \\
-%	 9 & 12518 & 80 GeV & secondary \\
-%	10 & 12521 & 80 GeV & secondary \\
-%	11 & 12600 & 80 GeV & secondary \\
-%	12 & 12636 & 80 GeV & secondary \\
-%	13 & 12539 & 80 GeV & secondary \\
-%	14 & 12628 & 80 GeV & secondary \\
-%	15 & 12512 & 80 GeV & secondary \\
-%	15 & 12659 & 20 GeV & electrons \\
-%	16 & 12526 & 80 GeV & secondary \\
-%	17 & 12567 & 80 GeV & secondary \\
-%	18 & 12633 & 80 GeV & secondary \\
-%	19 & 12591 & 80 GeV & secondary \\
-%	20 & 12612 & 80 GeV & secondary \\
-%	21 & 12530 & 80 GeV & secondary \\
-%	22 & 12528 & 80 GeV & secondary \\
-%	23 & 12569 & 80 GeV & secondary \\
-%	24 & 12639 & 80 GeV & secondary \\
-%	25 & 12610 & 80 GeV & secondary \\
-%	26 & 12609 & 80 GeV & secondary \\
-%	27 & 12607 & 80 GeV & secondary \\
-%	28 & 12604 & 80 GeV & secondary \\
-%	29 & 12602 & 80 GeV & secondary \\
-%	30 & 12664 & 20 GeV & electrons \\
-%	31 & 12677 & 20 GeV & electrons \\
-%	32 & 12672 & 20 GeV & electrons \\
-%	33 & 12671 & 20 GeV & electrons \\
-%	34 & 12670 & 20 GeV & electrons \\
-%	35 & 12669 & 20 GeV & electrons \\
-%	36 & 12667 & 20 GeV & electrons \\ \hline
-%	\end{tabular}
-%	\caption{Table of the run numbers and corresponding tower numbers for the calibration runs.}
-%	\label{table:idea/calibrationruns}
-%\end{table}
+The initial approach to calibrate the towers was to make a histogram of the \acrshort{ADC}s of the scintillators of all events in the tower under the beamspot, for each of the 29 pion runs, and determine the mean of each channel. A calibration coefficient was then found:
 
-The process for calibrating the towers was to make a histogram of the \acrshort{ADC}s registered in a tower, only in the run where the beam was centered on them, in order to find the mean and standard deviation. These histograms were then combined to show the overall responses of the entire set of calibration runs, which visualises the differences between the Towers. These can be seen in Fig. \ref{figure:testbeam/results/calibrationbefore}. 
+\begin{equation}
+	C_i = \frac{\mu_{15}}{\mu_i}
+\label{eq:calibration-coeff}
+\end{equation}
 
-Since Tower 15 was present in both runs, this was chosen as the reference, and all the other towers were given a coefficient that leveled their mean \acrshort{ADC} to the same value as Tower 15, in both sets of calibration runs. The \acrshort{ADC} values for each tower are then multiplied by their calibration coefficient. [...] [Difference between scintillator and Cherenkov] [...] The calibration coefficients are shown on Table \ref{table:idea/calibrationcoeffs}.
+where $C_i$ is the calibration coefficient for the i\textsuperscript{th} tower, $\mu_{15}$ is the mean \acrshort{ADC} for tower 15, $\mu_i$ is the mean \acrshort{ADC} of the i\textsuperscript{th} tower. Tower 15 was used as the reference as it was in both sets of runs.
 
-\begin{table}[h]
+The analysis module was then re-run, multiplying all ADC values by the calibration coefficient for each tower. The results can be seen in Fig. [ref]. This did not result in an even calibration of all \acrshort{ADC}s and it was proposed that this was due to the beam composition, as this calibration procedure was done without any particle selection.
+
+Because particles were not selected, the calibration here does not account for the different ways pions and muons deposit energy in the calorimeter. As pions are hadrons, they will produce hadronic showers, spreading their energy within the shower radius for a certain depth, then stop. Muons instead act as minimum ionising particles (\acrshort{MIP}s), depositing energy along their path through through the calorimeter ionisation losses.
+
+In order to address this, calibration was done twice more, using particle selection criteria described in Section \ref{section:particle-selection}.
+
+\subsubsection{Calibration with muons}
+Given that muons in the calorimeter will leave a \acrshort{MIP}-like signal, muons were chosen to be used for calibrating the calorimeter. Muons were selected using two cuts: 
+
+\begin{itemize}
+	\item ADC of the muon counter $>$ 10
+	\item ADC of the preshower detector $<$ 20
+\end{itemize}
+
+The same procedure as in Section \ref{section:tower-calibration} was then used, using only muons.
+
+[...]
+
+\subsubsection{Calibration with pions}
+As an alternative, the calibration procedure was also run with pions, as this was the majority component of the beam. Pions were selected using two cuts: 
+
+\begin{itemize}
+	\item ADC of the muon counter $<$ 5
+	\item ADC of the preshower detector $<$ 20
+\end{itemize}
+
+The same procedure as in Section \ref{section:tower-calibration} was then used, using only pions.
+
+[...]
+
+\begin{table}[hp]
 \centering
-	\begin{tabular}{ c c | c c }
+	\begin{tabular}{ c c c c c}
 	\hline \hline
-	\textbf{Tower} & \textbf{Coefficient} & \textbf{Tower} & \textbf{Coefficient} \\ \hline \hline
-	 1 & x & 16 & x \\
-	 2 & x & 17 & x \\
-	 3 & x & 18 & x \\
-	 4 & x & 19 & x \\
-	 5 & x & 20 & x \\
-	 6 & x & 21 & x \\
-	 7 & x & 22 & x \\
-	 8 & x & 23 & x \\
-	 9 & x & 24 & x \\
-	10 & x & 25 & x \\
-	11 & x & 26 & x \\
-	12 & x & 27 & x \\
-	13 & x & 28 & x \\
-	14 & x & 29 & x \\
-	15 & x &    &    \\ \hline
+	\textbf{Tower} & \textbf{Run No.} & $C_{all}$ & $C_{\mu}$ & $C_{\pi}$ \\ \hline
+	 1 & 12545 & 0.4551 & x & x \\
+	 2 & 12556 & 0.4450 & x & x \\
+	 3 & 12558 & 0.5842 & x & x \\
+	 4 & 12560 & 0.5008 & x & x \\
+	 5 & 12601 & 0.4417 & x & x \\
+	 6 & 12638 & 0.4845 & x & x \\
+	 7 & 12598 & 0.6026 & x & x \\
+	 8 & 12514 & 0.7617 & x & x \\
+	 9 & 12518 & 0.6953 & x & x \\
+	10 & 12521 & 0.7729 & x & x \\
+	11 & 12600 & 0.4607 & x & x \\
+	12 & 12636 & 0.5040 & x & x \\
+	13 & 12539 & 0.5203 & x & x \\
+	14 & 12628 & 1.0561 & x & x \\
+	15 & 12512 & 1.0000 & x & x \\
+	16 & 12526 & 0.7488 & x & x \\
+	17 & 12567 & 0.9609 & x & x \\
+	18 & 12633 & 0.7315 & x & x \\
+	19 & 12591 & 0.5163 & x & x \\
+	20 & 12612 & 1.5273 & x & x \\
+	21 & 12530 & 0.9764 & x & x \\
+	22 & 12528 & 0.7652 & x & x \\
+	23 & 12569 & 0.7056 & x & x \\
+	24 & 12639 & 0.6210 & x & x \\
+	25 & 12610 & 0.4735 & x & x \\
+	26 & 12609 & 0.4278 & x & x \\
+	27 & 12607 & 0.4738 & x & x \\
+	28 & 12604 & 0.5690 & x & x \\
+	29 & 12602 & 0.4405 & x & x \\ \hline \hline
 	\end{tabular}
-	\caption{Table of tower numbers and their calibration coefficients.}
-	\label{table:idea/calibrationcoeffs}
+	\caption{Table of towers in the RD52 calorimeter with the run number of their calibration run, and calibration coefficients for all particles ($C_{all}$), muons ($C_{\mu}$), and pions ($C_{\pi}$).}
+	\label{table:idea/calibrationruns}
 \end{table}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.65\textwidth]{../Pictures/Placeholder.png}
-	\caption{The plot of \acrshort{ADC}s for each tower before calibration.}
-	\label{figure:testbeam/results/calibrationbefore}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.65\textwidth]{../Pictures/Placeholder.png}
-	\caption{Comparison of the calibration plots for the \acrshort{ADC}s before and after calibration.}
-	\label{figure:testbeam/results/calibrationafter}
-\end{figure}
-
 \subsection{ADC to energy calibration}
-[...] It was known from prior testbeams that the response of the calorimeter was linear with ADC, therefore the energy calibration could be extrapolated from a single datapoint. [...]
+An important result for calibrating the RD52 detectors was to calibrate the \acrshort{ADC} response of the detector to the actual energy of the incident beam. It was known from prior testbeams that the \acrshort{ADC} response of the calorimeter was linear. Therefore, the calibration from \acrshort{ADC} to deposited energy can be extrapolated from a single run. This was done using Run 12659, a run using a 20 GeV electron beam incident on Tower 15, the centre of the calorimeter. The nature of the \acrshort{CERN} \acrshort{SPS} beamline means that electron beams are extremely pure, meaning that this run presents the most well-defined beam, making it ideal for energy calibration. This also means that particle selection to exclude other particles is not necessary.
+
+To calibrate for energy, the total \acrshort{ADC} for each event was found by summing the invidual ADC of each channel in the event after the pedestal subtraction. Three of these sums were done -- one of only the scintillator channels, one of only the Cherenkov channels, and one of both sets of channels. The resulted in three totals for each event.
+
+Three histograms were then made, filled with each one of the three totals, producing a spectrum of total \acrshort{ADC} count for all scintillator channels (Fig. \ref{figure:testbeam/results/total-adc-sc}), and all Cherenkov channels (Fig. \ref{figure:testbeam/results/total-adc-ch}), and both combined (Fig. \ref{figure:testbeam/results/total-adc-both}).
+
+The data was then fitted with a gaussian using ROOT to determine the mean and standard deviation, and the value of the mean \acrshort{ADC} taken to be the \acrshort{ADC} value for a 20 GeV event. This means that for a 20 GeV event, the total \acrshort{ADC} count will be [x], the scintillator \acrshort{ADC} count will be [x], and the Cherenkov \acrshort{ADC} count will be [x].
+
+This can then be checked by examining Run 12512, which is an 80 GeV run using a secondary beam of predominantly pions, with some muons. Taking the total \acrshort{ADC} count of these runs as [x], this gives an energy of [x]. [...]
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/IDEA/totalEnergySc.pdf}
+	\caption{Histogram of total \acrshort{ADC} in the scintillator channels in Run 12659 (20 GeV electrons, Tower 15).}
+	\label{figure:testbeam/results/total-adc-sc}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/IDEA/totalEnergyCh.pdf}
+	\caption{Histogram of total \acrshort{ADC} in the Cherenkov channels in Run 12659 (20 GeV electrons, Tower 15).}
+	\label{figure:testbeam/results/total-adc-ch}
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../Pictures/IDEA/totalEnergyBoth.pdf}
+	\caption{Histogram of total \acrshort{ADC} in the calorimeter in Run 12659 (20 GeV electrons, Tower 15).}
+	\label{figure:testbeam/results/total-adc-both}
+\end{figure}
 
 \subsection{Particle selection efficiencies}
+\label{section:particle-selection}
 An important result for the calorimeter was determining the efficiency with which it could determine the beam composition and select for certain types of particles based on kinematic properties. The calorimeter was designed with a set of ancillary detectors to help discriminate between particle of different types. These provide a first selection of different particles, allowing us to use kinematic properties from the calorimeter itself to perform a second particle selection, and then compare the two.
 
 The two ancillary detectors used for particle selection are the muon trigger and ...]
