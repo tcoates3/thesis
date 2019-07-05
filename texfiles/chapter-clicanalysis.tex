@@ -293,7 +293,7 @@ Figure \ref{figure:analysis/leptons/impact-parameter} shows the distribution of 
 
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/impact-parameter.png}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/impact-parameter.png}
 	\caption{Plots of the impact parameters $d_0$, $Z_0$, and $R_0$ for truth-matched reconstructed electrons, muons and tau decay products, and all other reconstructed particles that were not truth-matched to a lepton.}
 	\label{figure:analysis/leptons/impact-parameter}
 \end{figure}
@@ -387,7 +387,7 @@ For the hadronic channel, the following variables were used:
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.55\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.eps}
+	\includegraphics[width=0.75\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.png}
 	\caption{Signal and background efficiencies for different values of the cut valued applied on the results of the BDTs. The green line is the plot of the significance against the cut value.}
 	\label{figure:analysis/results/tmva-efficiency}
 \end{figure}
@@ -436,35 +436,35 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c1.eps}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/variables_id_c1.png}
 	\caption{Input variables for the BDTs: Higgs mass from $b\overline{b}$ jets; number of particle flow objects; visible jet energy; missing transverse momentum; $\chi^2$ value from jets (from Eq. \ref{eq:chi-square}); event thrust.}
 	\label{figure:analysis/results/tmva-inputs-1}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c2.eps}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/variables_id_c2.png}
 	\caption{Input variables for the BDTs: event oblateness; event sphericity; event aplanarity; first, second and third highest b-tags.}
 	\label{figure:analysis/results/tmva-inputs-2}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c3.eps}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/variables_id_c3.png}
 	\caption{Input variables for the BDTs: the fourth highest b-tag; the corresponding c-tags of the jets with the four highest b-tags; the cosine of the Higgs decay angle.}
 	\label{figure:analysis/results/tmva-inputs-3}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c4.eps}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/variables_id_c4.png}
 	\caption{Input variables for the BDTs: the cosine of the minimum and maximum angles between the top quark and Higgs boson; the Durham distance values $Y_{45}$, $Y_{56}$, and $Y_{67}$; lowest jet energy}
 	\label{figure:analysis/results/tmva-inputs-4}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.95\textwidth]{../Pictures/Analysis/BDTs/variables_id_c5.eps}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/variables_id_c5.png}
 	\caption{Input variables for the BDTs: second, third, and fourth lowest jet energies; the transverse momentum of the first and second jets.}
 	\label{figure:analysis/results/tmva-inputs-5}
 \end{figure}
@@ -519,14 +519,29 @@ These studies also represent a significant increase over the precision the \acrs
 
 The systematic uncertainties for this study from flavour tagging, lepton reconstruction, and jet energy scale are all expected to be below 10\%, making them significantly smaller than the statistical uncertainty of the cross-section. %Should cite the LCD note here, if I can find it in BibTex format
 
-\begin{figure}[h]%
+%\begin{figure}[h]%
+%	\centering
+%    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Analysis/BDTs/mva_BDTG.png} }}%
+%    \qquad
+%	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Analysis/BDTs/MVA_BDTG_comb_had.png} }}%
+%    \caption{Normalised BDTG response for signal and background (left); and BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1} (right).}%
+%    \label{figure:analysis/results/bdt-response}%
+%\end{figure}
+
+\begin{figure}[h]
 	\centering
-    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Analysis/BDTs/mva_BDTG.eps} }}%
-    \qquad
-	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/Analysis/BDTs/MVA_BDTG_comb_had.png} }}%
-    \caption{Normalised BDTG response for signal and background (left); and BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1} (right).}%
-    \label{figure:analysis/results/bdt-response}%
+	\includegraphics[width=0.65\textwidth]{../Pictures/Analysis/BDTs/mva_BDTG.png}
+	\caption{Normalised BDTG response for signal and background.}
+	\label{figure:analysis/results/bdt-response}
 \end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.60\textwidth]{../Pictures/Analysis/BDTs/MVA_BDTG_comb_had.png}
+	\caption{BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1}.}
+	\label{figure:analysis/results/bdt-response}
+\end{figure}
+
 
 %		%		%		%		%		%		%		%		%		%		%		%		%		%		%
 %\section{Determination of sensitivity to CP-violation}
