@@ -11,9 +11,9 @@
 
 This chapter will discuss the usage of full-scale detector simulations to assess the performance of the proposed \acrshort{CLIC}\textunderscore \acrshort{SiD} detector at the \acrlong{CLIC} machine, during the later stages where centre of mass energies in the tera-scale are possible.
 
-This work was done with the \acrfull{CLICdp} collaboration to determine the uncertainty on the measurement of the top-Higgs Yukawa coupling in the $e^+ e^- \rightarrow t\overline{t}H$ process at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the \acrshort{CLIC}\textunderscore \acrshort{SiD} detector concept. The analysis as discussed here focuses specifically on the hadronic decay channel, where both top quarks decay to a W boson and bottom quark, and both W bosons decay hadronically. When taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang \refthis allows the precision on the top-Higgs Yukawa coupling to be calculated.
+This work was done with the \acrfull{CLICdp} collaboration to determine the uncertainty on the measurement of the top-Higgs Yukawa coupling in the $e^+ e^- \rightarrow t\overline{t}H$ process at a centre-of-mass energy of $\sqrt{s}$ = 1.4 TeV, using the \acrshort{CLIC}\textunderscore \acrshort{SiD} detector concept. The analysis as discussed here focuses specifically on the hadronic decay channel, where both top quarks decay to a W boson and bottom quark, and both W bosons decay hadronically. When taken in combination with a similar analysis of the semi-leptonic channel performed by Yixuan Zhang allows the precision on the top-Higgs Yukawa coupling to be calculated.
 
-This analysis was an update of an earlier study into the sensitivity of the \acrshort{SiD} to the top-Higgs Yukawa coupling \refthis . The analysis presented here used an updated version of the flavour-tagging software, and a better determination of the contributions of the higgstrahlung diagram.
+This analysis was an update of an earlier study into the sensitivity of the \acrshort{SiD} to the top-Higgs Yukawa coupling \cite{clic-yukawa-coupling-2014}. The analysis presented here used an updated version of the flavour-tagging software, and a better determination of the contributions of the higgstrahlung diagram.
 
 These results were then contributed to a paper that summarised the top physics potential for \acrshort{CLIC} at $\sqrt{s}$ = 1.4 TeV, which was submitted to \acrshort{CERN}'s European Strategy Update in 2019 \cite{clic-top-quark-physics} \cite{clic-2018-summary}.
 
@@ -118,11 +118,11 @@ For this analysis, new work using NLO corrections to \acrshort{QCD}, initial sta
 \end{figure}
 
 \section{Generation of Monte Carlo samples}
-The samples used for the study had been generated using ILCDIRAC\cite{ilc-dirac}. The physics generation was done predominantly in WHIZARD 1.95\cite{whizard}, using PYTHIA 6.422\cite{pythia} for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim} \refthis , also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
+The samples used for the study had been generated using ILCDIRAC\cite{ilc-dirac}. The physics generation was done predominantly in WHIZARD 1.95\cite{whizard}, using PYTHIA 6.422\cite{pythia} for the simulation of hadronisation and fragmentation. Due to constraints of WHIZARD, samples with final states with eight fermions were generated in \textsc{PhysSim} \cite{physsim} , also using PYTHIA. The mass of the Higgs boson was set at 125.0 GeV, and the mass of the top quark at 174.0 GeV. 
 
 All samples were simulated at $\sqrt{s}$ = 1.4 TeV using unpolarised beams, assuming an integrated luminosity of 1.5 ab\textsuperscript{-1}. See Table \ref{table:physics/SM/generatedsamples} for a summary of all of the samples used. 
 
-Following the generation of the underlying physics events, the interactions of the particles with the detector must be simulated. This was done using the \textsc{Geant4} toolkit\cite{geant4}, specifically using the \textsc{Mokka} \refthis tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}\cite{marlin}.
+Following the generation of the underlying physics events, the interactions of the particles with the detector must be simulated. This was done using the \textsc{Geant4} toolkit\cite{geant4}, specifically using the \textsc{Mokka} tool. Simulation of the signals that result from the interactions in the detector was done in \textsc{Marlin}\cite{marlin}.
 
 At the end of this process, the Monte Carlo dataset is in a format identical to how information from the constructed detector would look. At this stage, the analysis can proceed as if the data were real. However, in addition to the simulated detector response, there is also the Monte Carlo truth information, which will allow correlation of the simulated detector response data with the ``true'' particles in the simulation itself. However, this is not used in this analysis.
 
@@ -157,7 +157,7 @@ The samples were then given weights associated with their expected cross-section
 \end{table}
 
 \subsection{Detector model}
-The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built within \textsc{Geant4}\cite{clic-sid-geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR} \refthis .
+The samples for this study were simulated using the CLIC\textunderscore SiD detector model, built within \textsc{Geant4}\cite{clic-sid-geant4}. This is the version of the \acrfull{SiD} as described in the \acrlong{CLIC} \acrfull{CDR} \cite{clic-cdr-physicsanddetector} .
 
 The CLIC\textunderscore SiD uses an all-silicon detector, with a design optimised for the needs of particle flow. It uses high-resolution vertex detectors and trackers, both based on silicon pixels and strips. The \acrshort{ECAL} and \acrshort{HCAL} use predominantly tungsten as the absorbing material, with steel used instead in the endcaps. These detectors are placed within a 5 T solenoidal magnetic field, with an iron flux return yoke that is instrumented to act as a muon detector and tail catcher (see Chapter \ref{chapter:colliders}).
 
@@ -358,7 +358,7 @@ After the flavour tagging is completed, the jet energies are used to reconstruct
 where the numbered subscripts are labels for the jets used in any particular grouping. A similar equation is used for the semi-leptonic channel, using only the 6 jets present in that process. The $\chi^2$ values are extremely useful for selection, as events that are not tth, or are tth events without the fully hadronic decay channel, will have poor $\chi^2$ values, as the jets the event was forced into do not represent physical jets.
 
 \section{Event selection}
-The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA} \refthis . In this method, a large number of event variables are fed into the toolkit, which are used to train \acrshort{BDT}s to distinguish signal events from background events. The generated events are split randomly into two halves. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}. In this analysis, the \acrshort{BDT}s are trained separately for each channel. 
+The final event selection is done using \acrfull{BDT}, implemented in the \acrfull{TMVA} \cite{tmva}. In this method, a large number of event variables are fed into the toolkit, which are used to train \acrshort{BDT}s to distinguish signal events from background events. The generated events are split randomly into two halves. The first half is used for training the \acrshort{BDT}s, and the other becomes the samples used by the \acrshort{BDT}. In this analysis, the \acrshort{BDT}s are trained separately for each channel. 
 
 The \acrshort{BDT}s then produce a \acrshort{BDT} response value (Fig. \ref{figure:analysis/results/bdt-response}) and a value for this is chosen to optimise the event selection. The criteria for an optimal event selection is the maximal significance:
 
@@ -513,7 +513,7 @@ In order to use the precision on the measurement of the cross-section to calcula
 \label{eq:result-coupling}
 \end{equation}
 
-This represents an improvement over the previous study \refthis where the cross-section could be measured with an accuracy of 10.8\% in the fully hadronic channel and 12.0\% in the semi-leptonic channel, giving a combined precision of 8.1\%. This then translated to the precision on the coupling of 4.27\%. Therefore the study presented above represents an improvement of almost 11\% from the previous analysis.
+This represents an improvement over the previous study \cite{clic-yukawa-coupling-2014} where the cross-section could be measured with an accuracy of 10.8\% in the fully hadronic channel and 12.0\% in the semi-leptonic channel, giving a combined precision of 8.1\%. This then translated to the precision on the coupling of 4.27\%. Therefore the study presented above represents an improvement of almost 11\% from the previous analysis.
 
 These studies also represent a significant increase over the precision the \acrshort{LHC} experiments. The full \acrshort{LHC} programme, including the high luminosity upgrade (\acrshort{HL-LHC}), is expected to accumulate 3000 fb\textsuperscript{-1} of data at $\sqrt{s}$ = 14 TeV, and achieve an uncertainty on the top-Higgs Yukawa coupling of between 7-10\% \cite{lhc-top-yukawa}.
 

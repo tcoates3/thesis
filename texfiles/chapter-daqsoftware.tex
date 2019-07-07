@@ -3,9 +3,9 @@
 
 \epigraph{Before software can be reusable \\it first has to be usable.}{Ralph Johnson}
 
-This chapter will discuss the usage of online monitoring and data quality monitoring software for high energy physics testbeams, specifically the \acrshort{DQM4hep} tool. This tool was initially developed for a specific detector prototype, but was able to be expanded for the use of other detectors. This online monitor was then proposed as an option for Work Package 5 of the AIDA-2020 collaboration, to be used as a generic online monitor and data quality monitor.
+This chapter will discuss the usage of online monitoring and data quality monitoring software for high energy physics testbeams, specifically the \acrshort{DQM4hep} tool. This tool was initially developed for a specific detector prototype, but was able to be expanded for the use of other detectors. This online monitor was then proposed as an option for Work Package 5 of the \acrshort{AIDA}-2020 collaboration, to be used as a generic online monitor and data quality monitor.
 
-This chapter describes \acrshort{DQM4hep} in detail, including the motivation for the usage of generic software tools as outlined by the AIDA-2020 collaboration. The codebase, structure, networking and implementation of the software framework is described in detail.
+This chapter describes \acrshort{DQM4hep} in detail, including the motivation for the usage of generic software tools as outlined by the \acrshort{AIDA}-2020 collaboration. The codebase, structure, networking and implementation of the software framework is described in detail.
 
 Following this, detailed documentation for a user guide describing the structure, usage, running and authoring of the user-specific parts of the framework is presented. This represented the distillation of significant experience using the framework on many testbeams of different kinds and goals.
 
@@ -33,10 +33,10 @@ Another aspect of this is data quality monitoring (\acrshort{DQM}), which assess
 
 In pursuit of all of the above aims, this chapter will discuss the \acrlong{DQM4hep} tool (\acrshort{DQM4hep}) developed for online monitoring and data quality monitoring, going into detail on its properties, principles, applications and development. Deployment and usage of the framework will be discussed in greater detail in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}.
 
-\subsection{The AIDA-2020 project}
-This work on \acrshort{DQM4hep} takes place within the context of the AIDA-2020 project, an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by \acrshort{CERN}.
+\subsection{The \acrshort{AIDA}-2020 project}
+This work on \acrshort{DQM4hep} takes place within the context of the \acrshort{AIDA}-2020 project \cite{aida-2020} , an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by \acrshort{CERN}.
 
-The overarching goal of AIDA-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests % Cite AIDA-2020 here 
+The overarching goal of \acrshort{AIDA}-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests.
 
 The goal of this work package is to create a suite of tools that are designed with a variety of possible uses in mind, thereby reducing the work and development time necessary to implement data acquisition and monitoring setups, speeding up the planning and deployment of physics testbeams. 
 
@@ -202,7 +202,7 @@ Ignores any arguments following this flag.
 Displays version information, then exits.
 
 \subsubsection{Steering files}
-An \acrshort{XML} steering file is used to pass parameters to the analysis module, including the type of analysis module, the plots to create, and what other processes to connect to. An example steering file can be found in the \texttt{dqm4hep-example/tests/} directory.
+An \acrshort{XML} steering file is used to pass parameters to the analysis module, including the type of analysis module, the plots to create, and what other processes to connect to. %An example steering file can be found in the \texttt{dqm4hep-example/tests/} directory.
 
 Steering files are broadly made of four sections: the application settings, the archiver settings, the analysis module, and the monitor elements.
 
@@ -215,16 +215,18 @@ The analysis module section sets the type of analysis module to run, and gives i
 The monitor element section specifies the monitor elements used in the file. Monitor elements is a general name for any kind of ROOT object, which may be a histogram, graph, plot, drawing, etc. The name, directory, and properties of monitor elements are set here, depending on what type of object the monitor element is.
 
 \subsection{Creating analysis modules}
-The \acrshort{DQM4hep} pages on Github have a repository to accompany this documentation – the \texttt{dqm4hep-example} package is available here\refthis. This package contains all of the tools necessary to immediately begin writing and compiling analysis modules for an existing installation of \acrshort{DQM4hep}. 
+%The \acrshort{DQM4hep} pages on Github have a repository to accompany this documentation – the \texttt{dqm4hep-example} package is available here\refthis. This package contains all of the tools necessary to immediately begin writing and compiling analysis modules for an existing installation of \acrshort{DQM4hep}. 
 
-It is recommended to fork this repository before starting, so git and Github's version control features can be used to back up code.
+%It is recommended to fork this repository before starting, so git and Github's version control features can be used to back up code.
+
+This sections describes the process of writing new analysis modules. begin writing and compiling analysis modules for an existing installation of \acrshort{DQM4hep}. 
 
 In addition to writing the analysis module code, a compiled analysis module needs to be declared as a plugin for \acrshort{DQM4hep} to be able to use it. The absolute path to the library file for new analysis modules needs to be appended to the \texttt{DQM4hep\textunderscore PLUGIN\textunderscore DLL} environment variable. 
 
 \subsubsection{Writing analysis modules}
 Analysis modules must be written specifically for the type of data they receive and for a certain analysis or set of analyses to perform. This means that the ideal person to write an analysis module is someone familiar with both the experiment's event structure and the goals of the monitoring.
 
-Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} defines an analysis module called \textit{ExampleModule} that can be found in the \texttt{dqm4hep-example/source/src/plugins} directory.
+Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} would define an analysis module called \textit{ExampleModule} that would be found in the \texttt{dqm4hep-exampleproject/source/src/plugins} directory.
 
 The .cc file then has several sections that must be written, described in separate sections below.
 
@@ -273,9 +275,9 @@ Once this is added, \acrshort{DQM4hep} can access the libraries and run the anal
 \subsection{SimpleModule – a worked example} 
 To explain the process of creating and writing analysis modules in more detail, a worked example is presented. For this we imagine a simplified particle physics detector, and write an analysis module called \texttt{SimpleModule.cc} to monitor data from it. We also write a steering file called \texttt{simple-test.xml} to run the analysis module. Each function of the analysis module will be described in depth, explaining in detail what the code is doing. 
 
-In this example, the built-in GenericEvent event type is used. For more information on the GenericEvent type, see\refthis . We will not be using the \texttt{startOfCycle} and \texttt{endOfCycle} functions.
+In this example, the built-in GenericEvent event type is used. For more information on the GenericEvent type, see \cite{dqm4hep-user-manual-genericevent}. We will not be using the \texttt{startOfCycle} and \texttt{endOfCycle} functions.
 
-The full version of these files can be found in the dqm4hep-example repository, available here \refthis .
+%The full version of these files can be found in the dqm4hep-example repository, available here \refthis .
 
 \subsubsection{Detector}
 We can imagine a simplified particle physics detector as a square plane split into 36 tiles (6 on each side). When a hit occurs the detector reads out the location, \acrshort{ADC}, and time of the hit. Each event will correspond to a single hit.
@@ -347,7 +349,7 @@ void SimpleModule::endOfRun(const core::Run &/*run*/) {
 }
 \end{lstlisting}
 
-For more information on the \texttt{dqm \textunderscore info()} function and it's syntax, see the section on the logging tools here \refthis .
+For more information on the \texttt{dqm\textunderscore info()} function and it's syntax, see the section on the logging tools here \cite{dqm4hep-user-manual-coretools}.
 
 \subsubsection{process}
 The first thing to do is make sure that the \texttt{process()} function has access to the GenericEvent. This is done by making it an argument of the function, calling it \texttt{pEvent} to make it clear that this is a pointer to an event and not an event object. Basic error-checking is then done, to ensure that the current event exists:
@@ -361,7 +363,7 @@ void SimpleModule::process(core::EventPtr pEvent) {
   }
 \end{lstlisting}
 
-The \texttt{dqm\textunderscore warning()} function publishes a message to the logger, with the \texttt{warning} level. See the section on the logging tools for more information \refthis .
+The \texttt{dqm\textunderscore warning()} function publishes a message to the logger, with the \texttt{warning} level. See the section on the logging tools for more information.
 
 Forcing this function to \texttt{return} ensures that the an analysis module doesn't attempt to access an event that does not exist. Otherwise, this would cause a segmentation fault and crash the analysis module. Since the \texttt{process()} function runs separately for each event, this has the effect of skipping to the next event.
 
@@ -738,7 +740,7 @@ This performs the \acrshort{qtest} \texttt{ExampleTest1} on the monitor element 
 In this case, this performs \texttt{ExampleTest2} on the monitor element \texttt{TestHistogram}, using the object \texttt{ReferenceHistogram} as the reference. 
 
 \subsection{Writing quality tests}
-Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see the \textit{plugin system} section of the \acrshort{DQM4hep} documentation \refthis for more information on plugins, including how to write and compile them.
+Users can create their own quality tests if the included tests do not satisfy their requirements. Quality tests are a type of plugin – see the \textit{plugin system} section of the \acrshort{DQM4hep} documentation \cite{dqm4hep-user-manual-plugins} for more information on plugins, including how to write and compile them.
 
 The code for the built-in quality tests can be found in \texttt{dqm4hep-core/source/src/plugins/} and can be used as references or templates. Files for quality tests should be given a descriptive name in CamelCase, and end with \texttt{Test}, e.g. \texttt{ExactRefCompareTest.cc}.
 
@@ -827,7 +829,7 @@ There is an in-depth explanation of each of the component functions of an analys
 
 In addition to this there is a worked example of an analysis module from start to finish. A simplified particle physics detector and it's data format is defined, and then the reader is lead through the process of writing an analysis module step-by-step and function-by-function to obtain certain plots and results from the data. This is intended to give a more concrete demonstration of usage, as an easier to follow example. This section is also written in simple and plain English in order to be as accessible as possible.
 
-Along with this documentation there is the \texttt{dqm4hep-example} Github repository [cite], which contains all of the code used in the analysis module user manuals, as well as the required cmake and make files to begin compiling projects right away. The intention of this repository is for new users to make a copy, write their own modules, and have everything needed for compiling and running them ``out of the box'' straight away. The user manual references this repository, so that users can see the files from the worked example in their full form.
+%Along with this documentation there is the \texttt{dqm4hep-example} Github repository [cite], which contains all of the code used in the analysis module user manuals, as well as the required cmake and make files to begin compiling projects right away. The intention of this repository is for new users to make a copy, write their own modules, and have everything needed for compiling and running them ``out of the box'' straight away. The user manual references this repository, so that users can see the files from the worked example in their full form.
 
 \subsubsection*{Quality testing guide}
 There is extensive documentation of quality testing; each quality test is described in detail, including their purpose, output, required parameters, and optional parameters. In addition to this, there is a guide for how to run quality tests, including an explanation of running from the command line and an in-depth look at the structure of the \acrshort{XML} steering files required.
@@ -845,4 +847,4 @@ Once the information is accessible from either the file reader or streamer, the 
 
 For each analysis module that is being run, an \acrshort{XML} steering file is required to provide the parameters and networking information to all the processes needed. A single steering file can call only a single analysis or standalone module, but multiple steering files can be run in parallel by the framework.
 
-Examples of using \acrshort{DQM4hep} with testbeams both within the AIDA-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.
+Examples of using \acrshort{DQM4hep} with testbeams both within the \acrshort{AIDA}-2020 community and outside of it can be found in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}, respectively.

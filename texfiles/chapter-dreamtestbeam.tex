@@ -7,14 +7,14 @@
 
 \epigraph{[new quote split \\ over two lines]}{[author]}
 
-In this chapter, the usage of \acrshort{DQM4hep} outside of the AIDA-2020 collaboration is discussed. This testbeam was the \acrfull{IDEA} combined testbeam. This was a complex testbeam environment, using five separate detector prototypes on the same testbeam, operating as a `vertical slice' of the detector concept for a future lepton collider.
+In this chapter, the usage of \acrshort{DQM4hep} outside of the \acrshort{AIDA}-2020 collaboration is discussed. This testbeam was the \acrfull{IDEA} combined testbeam. This was a complex testbeam environment, using five separate detector prototypes on the same testbeam, operating as a `vertical slice' of the detector concept for a future lepton collider.
 
 The \acrshort{IDEA} testbeam environment and the detectors present are described. Following this, the development of the file readers for all of the datatypes used by the data acquisition systems is described, paying attention to the different needs of the different types of files. Then the development of the analysis modules that took the read raw data and converted it into monitor elements and human-readable plots is discussed. For this testbeam, the aim was first to recreate the existing monitoring solutions, but using the simpler and more systemic approach of \acrshort{DQM4hep} to combine them all on one machine and in one program. 
 
 Following this, later work in using \acrshort{DQM4hep}'s analysis modules as a form of online data processing is described. Again, the usage of this aimed to recreate existing offline analysis that was done using ROOT. This was shown to be possible, and to be computationally lightweight enough to be done online during a testbeam.
 
 \section{Introduction}
-While \acrshort{DQM4hep} was intended from the beginning as a generic tool, it was developed largely within the AIDA-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the \acrshort{CALICE} collaboration. To be sure that \acrshort{DQM4hep} was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the AIDA-2020 and \acrshort{CALICE} collaborations.
+While \acrshort{DQM4hep} was intended from the beginning as a generic tool, it was developed largely within the \acrshort{AIDA}-2020 collaboration, which also promoted a variety of standards and guidelines for data acquisition devices, data formats, etc. In addition to this, it was also only tested on calorimeter-type detectors within the \acrshort{CALICE} collaboration. To be sure that \acrshort{DQM4hep} was truly generic -- capable of adapting to \textit{any} detector -- it was necessary to test it on a wider variety of detectors outside of the \acrshort{AIDA}-2020 and \acrshort{CALICE} collaborations.
 
 An ideal opportunity arose for this in the form of the \acrshort{IDEA} testbeam. The \acrfull{IDEA} concept is a proposal for a detector for future lepton colliders such as the \acrshort{FCC}-ee or \acrshort{CEPC}, using a combination of a silicon vertex detector, large volume drift wire chamber with silicon micro-strips for tracking, a dual-readout calorimeter, and muon chambers. All of these subdetectors are contained within a low-mass superconducting solenoid and an iron flux return yoke. See Fig. \ref{figure:idea/detector-concept}.
 
@@ -221,7 +221,7 @@ A pattern of increasing mean ADCs can be seen from Towers 14-19, which repeats i
 
 Because particles were not selected, the calibration here does not account for the different ways pions and muons deposit energy in the calorimeter. As pions will produce hadronic showers, spreading their energy within a certain radius and depth dependent upon the pion's energy and the nuclear interaction length of the calorimeter. Muons instead act as minimum ionising particles (\acrshort{MIP}s), depositing energy along their path through the calorimeter via ionisation losses.
 
-In order to address this, calibration was done twice more, using particle selection criteria determined by another member of the collaboration\textsuperscript{[cite Sam's work]}.
+In order to address this, calibration was done twice more, using particle selection criteria determined by another member of the collaboration \cite{idea-particle-selection}.
 
 \subsubsection{Calibration with muons}
 Given that muons in the calorimeter will leave a \acrshort{MIP}-like signal, muons were chosen to be used for calibrating the calorimeter. Muons were selected using two cuts: 
@@ -265,7 +265,7 @@ The same calibration coefficients were then applied to all particles (Fig. \ref{
 
 While the equalisation of pions using the muon response is not as uniform as that for equalising all towers using all particles, it does perform some equalisation, and removes the geometric pattern in the towers. It highlights that Tower 17 appears to have had an unusually high muon response, and as a result of the extremely low equalisation coefficient used to remedy this, produces very low ADC responses in that Tower to other particles. This may be due to a technical fault with that tower, or some geometric effect.
 
-The usage of DQM4hep to perform this calibration, similar to that completed by another member of the RD52 collaboration\textsuperscript{[cite Iacopo's work]} demonstrates that DQM4hep can be used not only for online monitoring and data quality monitoring, but also online or nearly-online analysis of testbeam data.
+The usage of DQM4hep to perform this calibration, similar to that completed by another member of the RD52 collaboration \cite{idea-equalisation} demonstrates that DQM4hep can be used not only for online monitoring and data quality monitoring, but also online or nearly-online analysis of testbeam data.
 
 %\subsubsection{Calibration with pions}
 %As an alternative, the calibration procedure was also run with pions, as this was the majority component of the beam. Pions were selected using two cuts: 
