@@ -7,7 +7,7 @@ This chapter discusses the \acrshort{DQM4hep} framework, specifically focusing o
 
 For the early testbeams, the detector prototypes being tested are described, along with the data format being used, in order to explain the particular needs of the detector. The results of the testbeam are discussed, in the form of what analysis modules are developed and their uses. In later testbeams, only the elements that changed are discussed, to demonstrate the ongoing refinement of the framework and its expanded use.
 
-The work presented here formed part of several papers, journal articles, and presentations, including presentations at the Beam Telescopes and Testbeam workshop over the years 2016-2018.
+The work presented here formed part of several papers, journal articles, and presentations, including presentations at the Beam Telescopes and Testbeam workshop over the years 2016-2018 \cite{dqm4hep-twepp} \cite{dqm4hep-ieee}.
 
 \section{Introduction}
 One of the most important aspects of testing and developing \acrshort{DQM4hep} was to ensure that it was as generic as it was intended to be, and this meant deploying and using the framework on physics testbeams. \acrshort{DQM4hep} was originally developed during testbeams of the \acrfull{SiWECAL}, and its early testing phases were predominantly based on this detector, so it was apparent that it could be used in the originally-intended setting. However, in trying to develop it as a generic monitor, and to satisfy the requirements of a generic data monitoring and quality monitoring tool for \acrshort{AIDA}-2020, it was essential that it was tested on other detectors of different types to demonstrate its generic nature. 
@@ -125,11 +125,11 @@ In this case, the \texttt{TDC14bit[NC]} and \texttt{ADC14bit[NC]} are arrays, ea
 \end{figure}
 
 \subsection{Results}
-Over the course of the preparation week, the foundations were laid for the analysis module. This involved gaining a familiarity with the data structure, loading data from previous testbeams into \acrshort{DQM4hep} offline, and attempting to read it in basic ways. The first module was not ready for the beginning of the testbeam proper, but a few days afterwards we were able to produce plots in \acrshort{DQM4hep} from ``nearly-online'' testbeam data.
+Over the course of the preparation week, the foundations were laid for the analysis module. This involved gaining a familiarity with the data structure, loading data from previous testbeams into \acrshort{DQM4hep} offline, and attempting to read it in basic ways. The first module was not ready for the beginning of the testbeam proper, but a few days afterward plots were being produced in \acrshort{DQM4hep} from ``nearly-online'' testbeam data.
 
 The first analysis module developed was the \texttt{AHCALRawModule}. The majority of the processing in this module was decoding of the data from the binary format and extracting the information from it. After this, validation bits and hit bits in the data were checked to classify data as `good' or `bad' hits. Then the actual \acrshort{ADC}s and \acrshort{TDC}s were filled into their respective histograms. 
 
-The first module acted as a proof-of-concept, and once this was done further work started on creating more modules with a wider variety of features and plots to provide better coverage for online monitoring. We created and refined two separate modules during this testbeam -- \texttt{AHCALRawModuleChannel} and \texttt{AHCALRawModuleGlobal}. 
+The first module acted as a proof-of-concept, and once this was done further work started on creating more modules with a wider variety of features and plots to provide better coverage for online monitoring. Two separate modules were created and refined during this testbeam -- \texttt{AHCALRawModuleChannel} and \texttt{AHCALRawModuleGlobal}. 
 
 The channel module created a per-spectrum channel of all \acrshort{ADC}s, integrated over the whole run. It was able to load a number of individual channels, though due to the memory requirement, it could not track all channels simultaneously. To work around this, we implemented a facility for the module to read which channels to monitor from the \acrshort{XML} steering file, so that these could be defined at runtime. An example of some of the per-channel spectra created using this module can be seen in Fig. \ref{figure:aida/may2016/channelmodule}
 
@@ -199,14 +199,13 @@ During May 2017, testbeam time at the \acrshort{CERN} \acrfull{SPS} facility was
 
 Part of the programme for the testbeam was to use the electron and muon beams available at the \acrshort{SPS} for calibrating the newly-produced layers, as well as doing an energy scan with a pion beam.
 
-The monitoring with \acrshort{DQM4hep} in this testbeam included analysis modules that monitored the individual channels of all 40 large layers, as well as producing hitmaps of several types, such as unweighted, \acrshort{ADC}-weighted, and near-pedestal. Standalone modules monitoring the temperature of the detector hardware was also used. 
+The monitoring with \acrshort{DQM4hep} in this testbeam included analysis modules that monitored the individual channels of all 40 large layers, as well as producing hitmaps of several types, such as unweighted, \acrshort{ADC}-weighted, and near-pedestal. Standalone modules monitoring the temperature of the detector hardware were also used. 
 
 At this point in the testbeam process, the online monitoring system with \acrshort{DQM4hep} had matured, partially due to the data format of the detector having been fixed for some time. Experience with running, using, and modifying the analysis modules had been disseminated throughout the team, and team members wrote their own analysis modules for producing plots.
 
 Because of this, during the testbeam \acrshort{DQM4hep} was used as intended -- as a tool for shifters to use to diagnose and troubleshoot problems with the beams or detectors. A specific expert on \acrshort{DQM4hep} was not necessary, as enough people operating the testbeam understood \acrshort{DQM4hep} to be able to modify analysis modules on the fly according to their needs.
 
-% In previous testbeams, analysis modules that produced correlation plots were developed by other team members,
-For example, [correlation plots].
+For example, when a beam telescope was in use, DQM4hep modules were developed to produce correlation plots, determining whether hits in the AHCAL corresponded to hits in the telescope, allowing quicker debugging of the detectors. See Fig. \ref{figure:aida/may2017/correlation}.
 
 \begin{figure}[p]
 	\centering
@@ -234,4 +233,13 @@ For example, [correlation plots].
 	\includegraphics[width=1\textwidth]{../Pictures/AHCAL-CERN-2017-Area-2.jpg}
 	\caption{The \acrshort{CALICE}-\acrshort{AHCAL} placed inside the solenoid, covered with black fabric to block ambient light from the \acrshort{SiPM}s.}
 	\label{figure:aida/may2017/area-2}
+\end{figure}
+
+\begin{figure}[h]%
+	\centering
+    \subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AIDA/AHCAL-Uncorrelated.png} }}%
+    \qquad
+	\subfloat{{\includegraphics[width=0.45\textwidth]{../Pictures/AIDA/AHCAL-Correlated.png} }}%
+    \caption{Correlation plots showing the correlation between hits in the AHCAL and the beam telescope. Left is an uncorrelated hit, right is a correlated hit.}%
+    \label{figure:aida/may2017/correlation}%
 \end{figure}

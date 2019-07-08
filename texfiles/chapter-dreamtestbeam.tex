@@ -5,7 +5,7 @@
 \chapter{\acrshort{IDEA} testbeam}
 \label{chapter:ideatestbeam}
 
-\epigraph{[new quote split \\ over two lines]}{[author]}
+\epigraph{Ideas won't keep. Something \\ must be done about them.}{Alfred North Whitehead}
 
 In this chapter, the usage of \acrshort{DQM4hep} outside of the \acrshort{AIDA}-2020 collaboration is discussed. This testbeam was the \acrfull{IDEA} combined testbeam. This was a complex testbeam environment, using five separate detector prototypes on the same testbeam, operating as a `vertical slice' of the detector concept for a future lepton collider.
 
@@ -27,7 +27,7 @@ An ideal opportunity arose for this in the form of the \acrshort{IDEA} testbeam.
 
 The \acrshort{IDEA} testbeam was to take place in the H8 beamline area at the \acrshort{CERN} \acrshort{SPS}, including five separate prototypes, each representative of one subdetector of the \acrshort{IDEA} detector concept. This testbeam formed a `vertical slice' of the detector, operating each of the components in one testbeam to test not only each individual component, but how they interacted and could be used together to generate richer information about the beam.
 
-\acrshort{DQM4hep} was offered as a possible unified monitoring solution that could integrate information from all of the detectors into a single tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test \acrshort{DQM4hep} out of its established operating range, using a wide variety of different detectors. The testbeam took place from the 5th-12th September, with a preparation period of one week before this for installation, setup and calibration.
+\acrshort{DQM4hep} was offered as a possible unified monitoring solution that could integrate information from all of the detectors into a single tool. This provided convenience for the teams operating the testbeam and detectors, and an extremely valuable opportunity to test \acrshort{DQM4hep} out of its established operating range, using a wide variety of different detectors. The testbeam took place from the 5\textsuperscript{th}-12\textsuperscript{th} September, with a preparation period of one week before this for installation, setup and calibration.
 
 \begin{figure}[hp]
 	\centering
@@ -74,7 +74,7 @@ Writing file readers for the different detectors meant first understanding the s
 
 For each of these three instruments a file reader was developed that walked through the ROOT trees, extracting data from the leaves event-by-event, then converted it to \acrshort{DQM4hep}'s inbuilt \texttt{GenericEvent} format. Choosing to make them into GenericEvents meant that there was no need to implement an additional event type, simplifying the connection between the file readers and analysis modules. The GenericEvent type was also easily suited to the type of data, as the majority of the data were series of numbers, which were easily converted into C++ vectors to store in the GenericEvent.
 
-An additional motivation for using the ROOT ntuple as the data source was that some of the file type, notably the drift chamber, had not finalised their data structure at the beginning of the testbeam. Using the higher-level structure provided by a ROOT file would be easier to change in the future than reading in data in a binary, hex, text or \acrshort{CSV} format.
+An additional motivation for using the ROOT ntuple as the data source was that some of the file types, notably the drift chamber, had not finalised their data structure at the beginning of the testbeam. Using the higher-level structure provided by a ROOT file would be easier to change in the future than reading in data in a binary, hex, text or \acrshort{CSV} format.
 
 For the silicon photomultiplier \acrshort{GEM} data, the ``raw'' data format was a text file, containing an \acrshort{XML} header followed by a large amount of data in \acrfull{CSV}. This file could be loaded directly into \acrshort{DQM4hep}, the \acrshort{XML} header separated and parsed with \acrshort{DQM4hep}'s internal \acrshort{XML} parsing libraries, and the remaining data parsed. The comma-separated values could be easily parsed using the \texttt{dqm4hep::core::tokenize} function, which takes a string, a delimiter, and a vector, and parses the string into values separated by the delimiter, loading them into the vector. This made extracting the \acrshort{GEM} data extremely simple, even in this format. It also allowed the parameters in the \acrshort{XML} header, which included run numbers and physical information of the detector, to be passed into DQM4hep and the analysis module, using the \texttt{core::Run} object type.
 
@@ -97,7 +97,7 @@ The analysis goals outlined to attempt to implement in \acrshort{DQM4hep} were p
 \subsection{ADC to energy calibration}
 An important result for calibrating the RD52 detectors was to calibrate the \acrshort{ADC} response of the detector to the actual energy of the incident beam. It was known from prior testbeams that the \acrshort{ADC} response of the calorimeter was linear. Therefore, the calibration from \acrshort{ADC} to deposited energy can be extrapolated from a single run. This was done using Run 12659, a run using a 20 GeV electron beam incident on Tower 15, the centre of the calorimeter. The nature of the \acrshort{CERN} \acrshort{SPS} beamline means that electron beams are extremely pure, meaning that this run presents the most well-defined beam, making it ideal for energy calibration. This also means that particle selection to exclude other particles is not necessary.
 
-To calibrate for energy, the total \acrshort{ADC} for each event was found by summing the invidual \acrshort{ADC} of each channel in the event after the pedestal subtraction. This produced a spectrum of the total \acrshort{ADC} count for all channels (Fig. \ref{figure:testbeam/results/total-adc-20}).
+To calibrate for energy, the total \acrshort{ADC} for each event was found by summing the individual \acrshort{ADC} of each channel in the event after the pedestal subtraction. This produced a spectrum of the total \acrshort{ADC} count for all channels (Fig. \ref{figure:testbeam/results/total-adc-20}).
 
 The data was then fitted with a gaussian using ROOT to determine the mean and standard deviation, and the value of the mean \acrshort{ADC} taken to be the \acrshort{ADC} value for a 20 GeV event. This means that for a 20 GeV event, the total \acrshort{ADC} count will be 296.3 $\pm$ 0.9. The energy of any given ADC can then be found using:
 
@@ -140,7 +140,7 @@ This can then be checked by examining Run 12512, which is an 80 GeV run using a 
 
 \subsection{Tower ADC calibration}
 \label{section:tower-calibration}
-Due to a large number of tasks for setting up the testbeam, performing a calibration of the high voltages of the individual towers was not possible, so the calorimeter \acrshort{ADC}s were not calibrated to have a uniform response. To account for this, calibration runs were taken, where the beam was incident on each individual tower for the whole run, repeated for each tower in the calorimeter. These runs allow the calibration to be done after the testbeam with the data. The layout of the towers in the calorimeter for the testbeam can be seen in Fig. \ref{figure:testbeam/results/tower-layout}.
+Due to a large number of tasks for setting up the testbeam, performing a calibration of the high voltages of the individual towers was not possible in time, so the calorimeter \acrshort{ADC}s were not calibrated to have a uniform response. To account for this, calibration runs were taken, where the beam was incident on each individual tower for the whole run, repeated for each tower in the calorimeter. These runs allow the calibration to be done after the testbeam with the data. The layout of the towers in the calorimeter for the testbeam can be seen in Fig. \ref{figure:testbeam/results/tower-layout}.
 
 \begin{figure}[h]
 	\centering
@@ -176,20 +176,20 @@ Two sets of calibration runs were performed. The first set covered Towers 1-29 w
 	\label{table:idea/calibrationruns}
 \end{table}
 
-The initial approach to calibrate the towers was to make a histogram of the \acrshort{ADC}s of the scintillators of all events in the tower under the beamspot, for each of the 29 pion runs (see Fig. \ref{figure:testbeam/results/towerplot-raw-uncalibrated}). From these, a gaussian fit is used to determine the mean of each channel, shown in Fig. \ref{figure:testbeam/results/towerplot-mean-uncalibrated-all}. The calibration coefficient is then calculated:
+The initial approach to calibrate the towers was to make a histogram of the \acrshort{ADC}s of the scintillators of all events in the tower under the beamspot, for each of the 29 pion runs (see Fig. \ref{figure:testbeam/results/towerplot-raw-uncalibrated}). From these, a gaussian fit is used to determine the mean of each channel, shown in Fig. \ref{figure:testbeam/results/towerplot-mean-uncalibrated-all}. The calibration coefficient is then calculated: \\
 
 \begin{equation}
 	C_i = \frac{\mu_{15}}{\mu_i}
 \label{eq:calibration-coeff}
 \end{equation}
 
-where $C_i$ is the calibration coefficient for the i\textsuperscript{th} tower, $\mu_{15}$ is the mean \acrshort{ADC} for tower 15, $\mu_i$ is the mean \acrshort{ADC} of the i\textsuperscript{th} tower. Tower 15 was used as the reference as it was in both sets of runs.
+where $C_i$ is the calibration coefficient for the i\textsuperscript{th} tower, $\mu_{15}$ is the mean \acrshort{ADC} for tower 15, $\mu_i$ is the mean \acrshort{ADC} of the i\textsuperscript{th} tower. Tower 15 was used as the reference.
 
-The process needed to perform this calibration is the use of a bash script that automates the generation of XML steering files for the 29 runs, another bash script that automates the execution of the DQM4hep analysis modules. The final step is to used the \texttt{hadd} command provided by ROOT to add the histograms from the 29 runs together to produce the final histogram displaying the ADCs of all 29 towers.
+The process needed to obtain the calibration coefficients was the use of a bash script that automated the generation of \acrshort{XML} steering files for the 29 runs and another bash script that automated the execution of the \acrshort{DQM4hep} analysis modules. The final step was to use the \texttt{hadd} command provided by ROOT to add the histograms from the 29 runs together to produce the final histograms displaying the \acrshort{ADC}s and mean \acrshort{ADC}s of all 29 towers.
 
-The analysis module was then re-run, multiplying all ADC values by the calibration coefficient for each tower. The results of the calibration are shown in Figs. \ref{figure:testbeam/results/towerplot-raw-calibrated} and \ref{figure:testbeam/results/towerplot-mean-calibrated-all}. This did not result in an even calibration of all \acrshort{ADC}s. This is possibly due to the composition of the beam, as this calibration procedure was done without any particle selection.
+The analysis module was then re-run, multiplying all \acrshort{ADC} values by the calibration coefficient for each tower. The results of the calibration are shown in Figs. \ref{figure:testbeam/results/towerplot-raw-calibrated} and \ref{figure:testbeam/results/towerplot-mean-calibrated-all}. This did not result in an even calibration of all \acrshort{ADC}s. This is possibly due to the composition of the beam, as this calibration procedure was done without any particle selection.
 
-A pattern of increasing mean ADCs can be seen from Towers 14-19, which repeats in Towers 20-25. These align with the rows on the calorimeter, and this periodic pattern is is likely due to some form of leakage or other geometric effect in the calorimeter. 
+A pattern of increasing mean \acrshort{ADC}s can be seen from Towers 14-19, which repeats in Towers 20-25. These align with the rows on the calorimeter, and this periodic pattern is is likely due to some form of leakage or other geometric effect in the calorimeter. 
 
 \begin{figure}[hp]
 	\centering
@@ -219,7 +219,7 @@ A pattern of increasing mean ADCs can be seen from Towers 14-19, which repeats i
 	\label{figure:testbeam/results/towerplot-mean-calibrated-all}
 \end{figure}
 
-Because particles were not selected, the calibration here does not account for the different ways pions and muons deposit energy in the calorimeter. As pions will produce hadronic showers, spreading their energy within a certain radius and depth dependent upon the pion's energy and the nuclear interaction length of the calorimeter. Muons instead act as minimum ionising particles (\acrshort{MIP}s), depositing energy along their path through the calorimeter via ionisation losses.
+Because particles were not selected, the calibration here does not account for the different ways pions and muons deposit energy in the calorimeter. Pions will produce hadronic showers, spreading their energy within a certain radius and depth dependent upon the pion's energy and the nuclear interaction length of the calorimeter. Muons instead act as minimum ionising particles (\acrshort{MIP}s), depositing energy along their path through the calorimeter via ionisation losses.
 
 In order to address this, calibration was done twice more, using particle selection criteria determined by another member of the collaboration \cite{idea-particle-selection}.
 
@@ -263,9 +263,9 @@ The same calibration coefficients were then applied to all particles (Fig. \ref{
 	\label{figure:testbeam/results/towerplot-mean-muoncalibrated-all}
 \end{figure}
 
-While the equalisation of pions using the muon response is not as uniform as that for equalising all towers using all particles, it does perform some equalisation, and removes the geometric pattern in the towers. It highlights that Tower 17 appears to have had an unusually high muon response, and as a result of the extremely low equalisation coefficient used to remedy this, produces very low ADC responses in that Tower to other particles. This may be due to a technical fault with that tower, or some geometric effect.
+While the equalisation of pions using the muon response is not as uniform as that for equalising all towers using all particles, it does perform some equalisation, and removes the geometric pattern in the towers. It highlights that Tower 17 appears to have had an unusually high muon response, and as a result of the extremely low equalisation coefficient used to remedy this, produces very low \acrshort{ADC} responses in that Tower to other particles. This may be due to a technical fault with that tower, or some geometric effect.
 
-The usage of DQM4hep to perform this calibration, similar to that completed by another member of the RD52 collaboration \cite{idea-equalisation} demonstrates that DQM4hep can be used not only for online monitoring and data quality monitoring, but also online or nearly-online analysis of testbeam data.
+The usage of \acrshort{DQM4hep} to perform this calibration, similar to that completed by another member of the RD52 collaboration \cite{idea-equalisation} demonstrates that DQM4hep can be used not only for online monitoring and data quality monitoring, but also online or nearly-online analysis of testbeam data.
 
 %\subsubsection{Calibration with pions}
 %As an alternative, the calibration procedure was also run with pions, as this was the majority component of the beam. Pions were selected using two cuts: 

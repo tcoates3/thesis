@@ -18,7 +18,7 @@ In the modern era of particle physics, the interplay of hardware and software at
 
 Of particular interest in this thesis is the data acquisition software during the development phase, where individual detector subcomponents are undergoing prototyping and testing. These development and iteration cycles are tied closely to testbeam facilities such as the \acrfull{SPS} at \acrshort{CERN} and the DESY II synchrotron at \acrshort{DESY}. At this point in the development cycle, the detectors are beginning to take shape and this is where data acquisition (or \acrshort{DAQ}) becomes an important consideration. 
 
-In addition to this, the data acquisition solutions used during the testbeam phase of detector development is likely to inform the final data acquisition solution; either by evolving directly into the final software, or by identifying and evaluating the particular features or challenges of the subdetector components that the software must take into account or accommodate.
+In addition to this, the data acquisition solutions used during the testbeam phase of detector development are likely to inform the final data acquisition solution; either by evolving directly into the final software, or by identifying and evaluating the particular features or challenges of the subdetector components that the software must take into account or accommodate.
 
 During this stage, each individual detector component -- such as a vertex tracker or hadronic calorimeter -- will be developed by small teams, and the natural tendency is for each of these groups to set their own standards and develop their own tools, prioritising the features that are important to their specific case. However, in the past this approach has generated a variety of \textit{ad hoc} solutions for testbeam software, many of which cannot be applied outside of their original scope. This results in different teams solving the same problems and implementing the same solutions for each subdetector.
 
@@ -29,34 +29,30 @@ The area of this that we have chosen to contribute to is the development of onli
 
 Online monitoring addresses these issues by allowing the experimenters to see a ``preview'' of the data being collected. It can provide both a quantitative and qualitative look into how the detectors are responding, and what the data will look like when properly processed, allowing any potential issues to be identified and fixed in a timely manner. This means that good online monitoring can improve the efficiency of a testbeam, increasing the ``yield'' of data from a given experiment.
 
-Another aspect of this is data quality monitoring (\acrshort{DQM}), which assesses the `quality' of the data being taken. The definition of data's `quality' will vary depending on the hardware, software, and goals of the experiment, but will usually constitute a some from of statistical measure. In this regard, data quality monitoring can be seen as an extension of the concept of online monitoring, focusing more closely on the quantitative aspects. In general, \acrshort{DQM} provides the most benefit in more mature experiments, relying on previous experience with the detector and collected data to understand how the data appears when the device is functioning correctly.  
+Another aspect of this is data quality monitoring (\acrshort{DQM}), which assesses the `quality' of the data being taken. The definition of data's `quality' will vary depending on the hardware, software, and goals of the experiment, but will usually constitute some from of statistical measure. In this regard, data quality monitoring can be seen as an extension of the concept of online monitoring, focusing more closely on the quantitative aspects. In general, \acrshort{DQM} provides the most benefit in more mature experiments, relying on previous experience with the detector and collected data to understand how the data appears when the device is functioning correctly.  
 
 In pursuit of all of the above aims, this chapter will discuss the \acrlong{DQM4hep} tool (\acrshort{DQM4hep}) developed for online monitoring and data quality monitoring, going into detail on its properties, principles, applications and development. Deployment and usage of the framework will be discussed in greater detail in Chapters \ref{chapter:aidatestbeams} and \ref{chapter:ideatestbeam}.
 
 \subsection{The \acrshort{AIDA}-2020 project}
-This work on \acrshort{DQM4hep} takes place within the context of the \acrshort{AIDA}-2020 project \cite{aida-2020} , an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by \acrshort{CERN}.
+This work on \acrshort{DQM4hep} takes place within the context of the \acrshort{AIDA}-2020 project \cite{aida-2020}, an EU-funded research programme for developing infrastructure and technologies for particle physics detector development and testing, comprising 24 member countries and lead by \acrshort{CERN}.
 
 The overarching goal of \acrshort{AIDA}-2020 is to develop common tools and infrastructures for physics testbeams. The collaboration is split into work packages focusing on specific areas, and the work detailed in this thesis takes place within Work Package 5 for data acquisition systems for beam tests.
 
 The goal of this work package is to create a suite of tools that are designed with a variety of possible uses in mind, thereby reducing the work and development time necessary to implement data acquisition and monitoring setups, speeding up the planning and deployment of physics testbeams. 
 
 \section{Overview of DQM4hep}
-Data Quality Monitoring for High-Energy Physics (abbreviated \acrshort{DQM4hep}) is an online monitoring and data quality monitoring framework developed for physics testbeams for high-energy and particle physics, developed by R\'{e}mi Et\'{e} and Antoine Pingault. It is designed to be able to fulfil the requirements of monitoring for physics testbeams in a generic way. The framework is written in the C++11 standard and can run on any Linux distribution. The only requirements for installation are a compiler compliant with the C++11 standard, cmake 3.4 or higher, and ROOT 6. All other dependencies are downloaded and compiled automatically during installation. 
+Data Quality Monitoring for High-Energy Physics (abbreviated \acrshort{DQM4hep}) is an online monitoring and data quality monitoring framework developed for physics testbeams for high-energy and particle physics, developed by R\'{e}mi Et\'{e} and Antoine Pingault \cite{aida2020-milestone-dqm4hep}. It is designed to be able to fulfil the requirements of monitoring for physics testbeams in a generic way. The framework is written in the C++11 standard and can run on any Linux distribution. The only requirements for installation are a compiler compliant with the C++11 standard, cmake 3.4 or higher, and ROOT 6. All other dependencies are downloaded and compiled automatically during installation. 
 
-The two core principles of \acrshort{DQM4hep} are genericness and modularity. The framework is based upon a plugin system that allows shared libraries to be loaded and hook classes for further use \cite{aida2020-milestone-dqm4hep}. This structure allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into independent processes. The components that are specific to any particular use case are written by the users, and the rest of the framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. 
+The two core principles of \acrshort{DQM4hep} are genericness and modularity. The framework is based upon a plugin system that allows shared libraries to be loaded and hook classes for further use. This structure allows for independent components of the framework to be used, not used, or exchanged, by isolating each function of the program into independent processes. The components that are specific to any particular use case are written by the users, and the rest of the framework then handles packaging this information in a useful way and networking to transmit it to where it is needed, meaning that the user does not have to worry about the mechanics of data storage, serialisation or transmission. 
 
 The experiment-specific components have to be written by the user, but these components use standard C++ code with a few \acrshort{DQM4hep}-specific functions to handle their integration into the framework, making them easy to understand for users who already have experience coding in C++. This also means that the framework is capable of working with any data format that can packed into, decoded from, and accessed with normal C++ methods, including those that can be loaded from external libraries. This results in a framework that is able to deal with any kind of data, including user-defined data types, making it more flexible, portable and easily reusable.
 
 \subsection{Architecture}
 \acrshort{DQM4hep} is designed with genericness as its core paradigm, using processes and algorithms that are independent of data type. The ability to run multiple instances of each process of the framework is also key to its flexibility, allowing users to, for example, separate sub-detector data from data that has undergone event building, operate in online or offline modes, or distribute the computational load of the analysis over several networked computers.
 
-The generic nature of the framework lies in two core features:
+The generic nature of the framework lies in two core features. Firstly, the abstract \acrfull{EDM}. An event data model is the structure of the events in the data. For instance, a software `event' might in fact be a readout cycle, where the detector writes data to the data acquisition device when its memory is full. Or it might be a physical event, in which case the event is further defined by the trigger -- an event that is triggered internally by the detector itself will have a different structure to an event that is externally triggered, such as by a bunch-crossing ID. \acrshort{DQM4hep} uses an abstract container for the event itself and allows the user to define its type, structure, and how serialisation should be handled. This means it can handle \textit{any} type of data.
 
-Firstly, the abstract \acrfull{EDM}. An event data model is the structure of the events in the data. For instance, a software `event' might in fact be a readout cycle, where the detector writes data to the data acquisition device when its memory is full. Or it might be a physical event, in which case the event is further defined by the trigger -- an event that is triggered internally by the detector itself will have a different structure to an event that is externally triggered, such as by a bunch-crossing ID. \acrshort{DQM4hep} uses an abstract container for the event itself and allows the user to define its type, structure, and how serialisation should be handled. This means it can handle \textit{any} type of data.
-
-Second, the plugin system. This is a system that allows the inclusion of any user-defined classes or methods via external libraries. These can be used to specify the serialisation method for data, the procedure for online analysis, or many other purposes. 
-
-The plugin system for end-users consists of four different types of plugins: analysis modules, standalone modules, file reader plugins, and file streamer plugins. Each of these will be discussed in-depth in the sections below.
+Second, the plugin system. This is a system that allows the inclusion of any user-defined classes or methods via external libraries. These can be used to specify the serialisation method for data, the procedure for online analysis, or many other purposes. The plugin system for end-users consists of four different types of plugins: analysis modules, standalone modules, file reader plugins, and file streamer plugins.
 
 A diagram of the overall structure of the framework can be seen in Fig. \ref{figure:daq/dqm4hep/architecture}.
 
@@ -165,7 +161,7 @@ Displays usage information, then exits.
 --steering-file
 \end{lstlisting}
 
-(Required) Gives the path to the XML steering file that defines what analysis modules to run and their parameters. See the section below (need link) for more information on these steering files. 
+(Required) Gives the path to the XML steering file that defines what analysis modules to run and their parameters. See Section \ref{section:steering-files} for more information on these steering files. 
 
 \begin{lstlisting}
 -t
@@ -202,6 +198,7 @@ Ignores any arguments following this flag.
 Displays version information, then exits.
 
 \subsubsection{Steering files}
+\label{section:steering-files}
 An \acrshort{XML} steering file is used to pass parameters to the analysis module, including the type of analysis module, the plots to create, and what other processes to connect to. %An example steering file can be found in the \texttt{dqm4hep-example/tests/} directory.
 
 Steering files are broadly made of four sections: the application settings, the archiver settings, the analysis module, and the monitor elements.
@@ -212,7 +209,7 @@ The archiver setting specify whether the results of running the analysis module 
 
 The analysis module section sets the type of analysis module to run, and gives it a unique name to distinguish it from other instances of the same module. Both of these parameters can be set at the command line (see above).
 
-The monitor element section specifies the monitor elements used in the file. Monitor elements is a general name for any kind of ROOT object, which may be a histogram, graph, plot, drawing, etc. The name, directory, and properties of monitor elements are set here, depending on what type of object the monitor element is.
+The monitor element section specifies the monitor elements used in the file. ``Monitor element'' is a generic name for any kind of ROOT object, which may be a histogram, graph, plot, drawing, etc. The name, directory, and properties of monitor elements are set here, depending on what type of object the monitor element is.
 
 \subsection{Creating analysis modules}
 %The \acrshort{DQM4hep} pages on Github have a repository to accompany this documentation – the \texttt{dqm4hep-example} package is available here\refthis. This package contains all of the tools necessary to immediately begin writing and compiling analysis modules for an existing installation of \acrshort{DQM4hep}. 
@@ -226,7 +223,7 @@ In addition to writing the analysis module code, a compiled analysis module need
 \subsubsection{Writing analysis modules}
 Analysis modules must be written specifically for the type of data they receive and for a certain analysis or set of analyses to perform. This means that the ideal person to write an analysis module is someone familiar with both the experiment's event structure and the goals of the monitoring.
 
-Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} would define an analysis module called \textit{ExampleModule} that would be found in the \texttt{dqm4hep-exampleproject/source/src/plugins} directory.
+Each analysis module is a single .cc file. E.g. \texttt{ExampleModule.cc} would define an analysis module called ExampleModule that would be found in the \texttt{dqm4hep-exampleproject/ source/src/plugins} directory.
 
 The .cc file then has several sections that must be written, described in separate sections below.
 
@@ -234,7 +231,7 @@ The .cc file then has several sections that must be written, described in separa
 In this section of the file, the variables that must be persistent over the entire running of the module are declared. These variables will not go out of scope, so are usually reserved for the monitor elements themselves, or counters that must persist over the entire module. Monitor elements must be declared as the \texttt{online::OnlineElementPtr} type. None of the declared variables are initialised here; initialision is done in later functions.
 
 \subsubsection{readsettings}
-This function reads the settings from the XML steering file, meaning that anything that needs to be initialised from the steering file is done here. This notably includes all monitor elements. Typically the \texttt{core::OnlineElementPtr} will have been declared during the (preamble), then is assigned here based on the steering file using the \texttt{online::ModuleApi::getMonitorElement()} function. 
+This function reads the settings from the XML steering file, meaning that anything that needs to be initialised from the steering file is done here. This notably includes all monitor elements. Typically the \texttt{core::OnlineElementPtr} will have been declared during the (preamble), then is assigned here based on the steering file using the \texttt{online::ModuleApi::get MonitorElement()} function. 
 
 \subsubsection{initModule}
 This process is run once, when the analysis module is initialised. Anything that needs to be done only once at the beginning should be done here. The use of this function is limited, as most tasks that need to be reset are reset at the beginning of a run using \texttt{startOfRun()} below.
@@ -349,7 +346,7 @@ void SimpleModule::endOfRun(const core::Run &/*run*/) {
 }
 \end{lstlisting}
 
-For more information on the \texttt{dqm\textunderscore info()} function and it's syntax, see the section on the logging tools here \cite{dqm4hep-user-manual-coretools}.
+For more information on the \texttt{dqm\textunderscore info()} function and its syntax, see the section on the logging tools here \cite{dqm4hep-user-manual-coretools}.
 
 \subsubsection{process}
 The first thing to do is make sure that the \texttt{process()} function has access to the GenericEvent. This is done by making it an argument of the function, calling it \texttt{pEvent} to make it clear that this is a pointer to an event and not an event object. Basic error-checking is then done, to ensure that the current event exists:
@@ -556,7 +553,7 @@ Previous versions of \acrshort{DQM4hep} did not have infrastructure to support d
 A quality test (or \acrshort{qtest}) processes a series of monitor elements (ROOT TObjects) according to a set of criteria defined in the test's code. This test produces a numerical result between 0 and 1, referred to as the ``quality''. Within the framework, quality tests are self-contained C++ code files, which hook into the framework's system for execution. Quality tests are run by using the executable \texttt{dqm4hep-run-qtests} and a steering file to define parameters, such as which files to load, which quality tests to execute, and what the passing and failing boundaries are for each quality test. 
 
 \subsection{Quality tests}
-The quality tests that have been implemented in \acrshort{DQM4hep} are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
+The quality tests that were implemented in \acrshort{DQM4hep} are described in detail below. Each test requires a certain type of object as an input and has it's own definition of what the ``quality'' statistic represents. Some quality tests also require a reference to compare against the input data, which is also described.
 
 A summary of the quality tests can be found in Table \ref{table:dqm4hep/qtests}.
 
@@ -689,9 +686,7 @@ Ignores any arguments following this flag.
 Displays version information, then exits.
 
 \subsubsection{Steering file}
-Steering files use \acrshort{XML} to store all the information needed to execute a \acrshort{qtest}. An example steering file can be found in \texttt{dqm4hep-core/tests/test \textunderscore samples.xml}.
-
-There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
+Steering files use \acrshort{XML} to store all the information needed to execute a \acrshort{qtest}. There are two main sections: the \texttt{<qtests>} block and the \texttt{<monitorElements>} block, both of which must be within the \texttt{<dqm4hep>} XML tag.
 
 The \texttt{<qtests>} block defines the \acrshort{qtest}s to execute along with their settings or parameters, without reference to what they will be run on. The structure and parameters of these is highly dependent upon the \acrshort{qtest} being used – see the section for each \acrshort{qtest} above.
 
@@ -813,7 +808,7 @@ Doxygen is a tool for automatically generating documentation resources for C++ c
 
 Doxygen can also generate an HTML- or \LaTeX -based document that can be used as a local reference guide or hosted online. This makes Doxygen a powerful tool for documenting the technical aspects of code, demonstrating hierarchies of functions and objects, and an extremely useful reference guide for large programs or frameworks.
 
-While Doxygen documentation is extremely useful, it does have some limitations. Doxygen functions more as a technical reference for code, lacking any overviews or instructions due to it's automatic generation. This kind of documentation lacks a holistic element, and has no way for new users or those less familiar with the codebase to understand the overarching concepts. This can make it inaccessible for new users. The way this was addressed will be discussed in the next section.
+While Doxygen documentation is extremely useful, it does have some limitations. Doxygen functions more as a technical reference for code, lacking any overviews or instructions due to its automatic generation. This kind of documentation lacks a holistic element, and has no way for new users or those less familiar with the codebase to understand the overarching concepts. This can make it inaccessible for new users. The way this was addressed will be discussed in the next section.
 
 DQM4hep has a Doxygen website hosted on the internet, which is available here\cite{dqm4hep-doxygen}.
 
@@ -825,9 +820,9 @@ My contribution to this was to write in-depth explanations on the structure, usa
 The user manual can be found online here\cite{dqm4hep-user-manual}.
 
 \subsubsection*{Analysis module guide}
-There is an in-depth explanation of each of the component functions of an analysis module, discussing which actions or data processing should be done in each, and their intended purposes. There is also an explanation of the \acrshort{XML} steering files that are necessary to run an analysis module, and instructions on how the executable is run, along with it's arguments.
+There is an in-depth explanation of each of the component functions of an analysis module, discussing which actions or data processing should be done in each, and their intended purposes. There is also an explanation of the \acrshort{XML} steering files that are necessary to run an analysis module, and instructions on how the executable is run, along with its arguments.
 
-In addition to this there is a worked example of an analysis module from start to finish. A simplified particle physics detector and it's data format is defined, and then the reader is lead through the process of writing an analysis module step-by-step and function-by-function to obtain certain plots and results from the data. This is intended to give a more concrete demonstration of usage, as an easier to follow example. This section is also written in simple and plain English in order to be as accessible as possible.
+In addition to this there is a worked example of an analysis module from start to finish. A simplified particle physics detector and its data format is defined, and then the reader is lead through the process of writing an analysis module step-by-step and function-by-function to obtain certain plots and results from the data. This is intended to give a more concrete demonstration of usage, as an easier to follow example. %This section is also written in simple and plain English in order to be as accessible as possible.
 
 %Along with this documentation there is the \texttt{dqm4hep-example} Github repository [cite], which contains all of the code used in the analysis module user manuals, as well as the required cmake and make files to begin compiling projects right away. The intention of this repository is for new users to make a copy, write their own modules, and have everything needed for compiling and running them ``out of the box'' straight away. The user manual references this repository, so that users can see the files from the worked example in their full form.
 
