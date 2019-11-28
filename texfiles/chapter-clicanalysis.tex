@@ -91,8 +91,7 @@ If these events are not accounted for when calculating the cross-section of the 
 
 The effects of higgstrahlung are accounted for by the value of the prefactor $\kappa$ from Equation \ref{eq:crosssection-to-yukawa}. If the contribution from higgstrahlung is negligible, then $\kappa$ = 0.5. When the effect is significant, the value of $\kappa$ will become greater than 0.5. 
 
-% Get better "approx less than or equal to" sign
-This contribution is energy-dependent and at lower energies ($\sqrt{s}$ $\leqslant$ $\sim 500$ GeV) it is assumed to be negligible. However, for energies above 1 TeV, higgstrahlung contributes a non-negligible number of tth events and must be accounted for.
+This contribution is energy-dependent and at lower energies ($\sqrt{s} \lessapprox 500$ GeV) it is assumed to be negligible. However, for energies above 1 TeV, higgstrahlung contributes a non-negligible number of tth events and must be accounted for.
 
 % Need to introduce or discuss or use references for terms such as NLO to NNLO? beamstrahlung also not introduced so far either?
 For this analysis, new work using NLO corrections to \acrshort{QCD}, initial state radiation, and beamstrahlung effects, determined that $\kappa$ = 0.503 \cite{kappa-NLOQCD}. \\
@@ -389,10 +388,17 @@ For the hadronic channel, the following variables were used request, where some 
 	\item The cosine of the angle of the two jets closest to the beam-axis 
 \end{itemize}
 
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.75\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.png}
+%	\caption{Signal and background efficiencies for different values of the cut valued applied on the results of the BDTs. The green line is the plot of the significance against the cut value.}
+%	\label{figure:analysis/results/tmva-efficiency}
+%\end{figure}
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{../Pictures/Analysis/BDTs/mvaeffs_BDTG.png}
-	\caption{Signal and background efficiencies for different values of the cut valued applied on the results of the BDTs. The green line is the plot of the significance against the cut value.}
+	\includegraphics[width=1.0\textwidth]{../Pictures/Analysis/BDTs/sigopt_had.png}
+	\caption{Plot showing number of signal events (left) and background events (right) passing the MVA for given cut values; plot showing the significance as a function of MVA cut (right).}
 	\label{figure:analysis/results/tmva-efficiency}
 \end{figure}
 
@@ -507,7 +513,7 @@ where $i$ represents the $n$\textsuperscript{th} jet, and $j$ represents the $(n
 \end{table}
 
 \section{Results}
-In order to find the value of the cut on the \acrshort{BDT} response  that gives the maximal significance, the different possible values are looped over. A plot of the MVA cut against the sigificance can be found in Fig. \ref{figure:analysis/results/tmva-efficiency}. For the the fully hadronic channel, the cut giving the maximum significance was found to be $>$ 0.181. This corresponds to a significance of 10.44. The result of of applying this selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
+In order to find the value of the cut on the \acrshort{BDT} response  that gives the maximal significance, the different possible values are looped over. A plot of the MVA cut against the significance can be found in Fig. \ref{figure:analysis/results/tmva-efficiency}. For the the fully hadronic channel, the cut giving the maximum significance was found to be $>$ 0.18. This corresponds to a significance of 10.4. The result of of applying this selection to the BDT response on the event samples can be seen in Table \ref{table:physics/SM/selections}.
 
 The sensitivity to the top-Higgs Yukawa coupling can then be calculated directly by taking the inverse of the signal significance. With a signal significance of 10.44 in the hadronic channel, the precision on the cross-section is found to be 9.6\%. A similar analysis for the semi-leptonic channel found a signal significance of 9.0 and thus a precision on the cross-section of 11.1\%. The combined uncertainty for the cross-section of both decay channels is: $\Delta\sigma$ = 7.5\%.
 
@@ -522,8 +528,7 @@ This represents an improvement over the previous study \cite{clic-yukawa-couplin
 
 These studies also represent a significant increase over the precision the \acrshort{LHC} experiments. The full \acrshort{LHC} programme, including the high luminosity upgrade (\acrshort{HL-LHC}), is expected to accumulate 3000 fb\textsuperscript{-1} of data at $\sqrt{s}$ = 14 TeV, and achieve an uncertainty on the top-Higgs Yukawa coupling of between 7-10\% \cite{lhc-top-yukawa}.
 
-% Give reference for "under 10%", e.g. from [43]
-The systematic uncertainties for this study from flavour tagging, lepton reconstruction, and jet energy scale are all expected to be below 10\%, making them significantly smaller than the statistical uncertainty of the cross-section.  \\
+The systematic uncertainties for this study from flavour tagging, lepton reconstruction, and jet energy scale are all expected to be below 10\%, making them significantly smaller than the statistical uncertainty of the cross-section \cite{clic-yukawa-coupling-2014}.  \\
 
 %\begin{figure}[h]%
 %	\centering
@@ -541,10 +546,9 @@ The systematic uncertainties for this study from flavour tagging, lepton reconst
 	\label{figure:analysis/results/bdt-response}
 \end{figure}
 
-% Comment on the structure of the tt distribution. As discussed in viva, I expect this is do to tt being a large, high cross-section process and so the number of events simulated corresponds to a lower lumi than that of other sources, and therefore every event that get through the selection carries a higher weight.  If unclear, please ask us.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.60\textwidth]{../Pictures/Analysis/BDTs/MVA_BDTG_comb_had.png}
-	\caption{BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1}.}
+	\caption{BDTG scaled to the number of events expected in 1.5 ab\textsuperscript{-1}. The structure is likely due to the tt process' high cross-section, resulting in the tth events that pass the selection carry a higher weight.}
 	\label{figure:analysis/results/bdt-response}
 \end{figure}
