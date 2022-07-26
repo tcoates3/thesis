@@ -1,0 +1,13 @@
+Possible Citations:
+	https://arxiv.org/pdf/hep-ph/9812285.pdf
+	http://inspirehep.net/record/1489868/files/openaccess_cpc_40_10_100001.pdf?version=1
+
+another readthrough i guess??
+
+outline of key processes in table, discovery potential
+
+=		=		=
+
+Multply defined:
+  table:idea/calibrationruns
+  figure:analysis/results/bdt-response

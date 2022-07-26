@@ -1,0 +1,36 @@
+\documentclass[
+11pt, % Main document font size
+a4paper,
+oneside,
+]{scrartcl}
+
+\pagestyle{empty}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\begin{document}
+
+
+\section*{Summary of changes}
+Following the comments of the examiners and our discussion during the viva, I have implemented the following changes to my thesis:
+
+\begin{itemize}
+	\item Fixed spelling and grammatical errors throughout.
+	\item Rephrased and recontextualised some points for clarity and precision, according to examiners' suggestions.
+	\item Added citations in Chapter 1 to support the description and discussion of the Standard Model which was previously unsupported.
+	\item Added citations for figures in Chapter 1 that were previously not attributed.
+	\item Added section in Chapter 2 on existing online monitoring and data quality monitoring solutions, justifying the motivation for DQM4hep in the context of existing tools.
+	\item Added ``heatmap'' of detector in Chapter 4, showing the mean ADCs of the calibration runs, as a way of potentially identifying geometric patterns by eye. Also added text commenting that this is a good demonstration of easily creating ad hoc analysis plots using DQM4hep
+	\item Added summary figure of raw ADCs for all channels of the detector in Chapter 4, demonstrating that the histograms are approximately Gaussian.
+	\item Replaced Figure 5.9 with the correct plot and updated the caption appropriately.
+	\item Fixed formatting errors and inconsistencies in the bibliography, especially ensuring that all authors are given in the format ``F Surname''. Entries with a large number of authors are now credited either by their collaboration, or by the name of the first author \textit{et al}.
+\end{itemize}
+
+If an exact account of all changes is required, the Github repository I used to backup and store my thesis provides a list of all differences between the version submitted for the viva, and the corrected version. This can be found \href{https://github.com/tcoates3/thesis/compare/viva...corrections}{here}.
+
+\end{document}
